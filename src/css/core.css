@@ -5,8 +5,6 @@
 \___/ \____//_/    \___/(_)\___//____//____/  
                                                */
 
-
-
 /* 
 ========
  + Import +
@@ -119,8 +117,14 @@ html, body {
   }
 }
 
-
 /* [The Pill] Button */
 .the-pill {
   opacity: 0.7;
+}
+
+/* Add border radius to line
+TODO: Handle this better.
+ */
+.line {
+  border-radius: 2px;
 }
