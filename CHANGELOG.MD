@@ -6,8 +6,14 @@
 **Style**:
 - Add a opacity affect on setting toggle or the pill.
 - Add border radius to <code>line</code>
+- Improve deletion warning description. 
+- Fixed confusing greeting header.
+- All background notifications are now displayed using Bulma CSS `notification` class.
+- Added support for gifs as background image. (Experimental)
 
+**BUG**:
 
+- Background reload inconsistency ()
 
 
 ## [Version 7.81.1] - 2025-18-01
