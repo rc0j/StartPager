@@ -1,11 +1,23 @@
 # Changelog
 
-## [Version 7.81.1] - 
+
+## [Version 7.81.2] - 2025-XX-XX
+
+**Style**:
+- Add a opacity affect on setting toggle or the pill.
+- Add border radius to <code>line</code>
+
+
+
+
+## [Version 7.81.1] - 2025-18-01
+
 - Fix backgroud notification position.
 - Fix a bug that caused the browser to become unresponsive when the username exceeded 20 characters.
 - Remove debug `console.log` statements for shortcut key presses.
-- Added a "Notification" when a shortcut is pressed. (Beta)
+- Added a "Notification" when a shortcut is pressed.
 - Replace twitter.com -> x.com (shortcut changed to x)
+- Faster sidebar opening animation.
 
 
 ## [Version 7.81.0] - 2025-04-01
