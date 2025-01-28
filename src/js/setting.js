@@ -46,44 +46,47 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="modal-background"></div>
       <div class="modal-content">
       <div class="box">
-        <h1 class="title">Welcome to Start Pager <i class="fas fa-ghost"></i></h1>
+        <h6 class="title is-6">Start Pager - Welcome</h6>
         <div id="modal-pages">
         <div id="page1" class="modal-page">
-          <p>Start Pager is a free and open-source new-tab replacement, designed to be minimal and fast, with a focus on keyboard navigation.</p>
+          <h3 class="title is-3">Hey there! 👋</h3>
+          <p>Start Pager is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
           <br/>
-          <div class="buttons">
-          <button class="button is-link" data-page="page2">Learn how to navigate...</button>
+          <div class="buttons is-centered">
+          <button class="button is-link" data-page="page2">Get started</button>
           </div>
         </div>
         <div id="page2" class="modal-page" style="display: none;">
+          <h3 class="title is-3">Shortcuts</h3>
           <p>Learn some quick shortcuts to get started.</p>
           <br/>
           <h5 class="title is-5">Setting page</h5>
           <h6 class="subtitle is-6">To open the settings sidebar either click on the small pill near the top left of the screen or use <code>Shift</code> + <code>S</code> (You can try it now)</h6>
-          <h6 class="subtitle is-6"> More shortcuts can be found under the shortcuts section in the settings sidebar. </h6>
-          <button class="button is-link" data-page="page1">Previous...</button>
-          <button class="button is-link" data-page="page3">Next...</button>
+          <h6 class="subtitle is-6">More shortcuts can be found under the shortcuts section in the settings sidebar.</h6>
+          <div class="buttons is-centered">
+          <button class="button is-link" data-page="page1">Previous</button>
+          <button class="button is-link" data-page="page3">Next</button>
           </div>
         </div>
         <div id="page3" class="modal-page" style="display: none;">
-          <h6 class="subtitle is-6"> Thank you for using Start Pager</h6>
-          <div class="buttons">
-            <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
-              <span class="icon">
-                <i class="fab fa-github"></i>
-              </span>
-              <span>Github</span>
-            </a>
-            <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
-              <span class="icon">
-                <i class="fas fa-sad-tear"></i>
-              </span>
-              <span>Something wrong? Report a bug...</span>
-            </a>
+          <h6 class="subtitle is-6">Thank you for using Start Pager</h6>
+          <div class="buttons is-centered">
+          <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
+            <span class="icon">
+            <i class="fab fa-github"></i>
+            </span>
+            <span>GitHub</span>
+          </a>
+          <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
+            <span class="icon">
+            <i class="fas fa-sad-tear"></i>
+            </span>
+            <span>Report a bug</span>
+          </a>
           </div>
-          <div class="buttons">
-          <button class="button is-link" data-page="page2">Previous...</button>
-          <button class="button is-primary" id="close_welcome_modal">Close...</button>
+          <div class="buttons is-centered">
+          <button class="button is-link" data-page="page2">Previous</button>
+          <button class="button is-primary" id="close_welcome_modal">Close</button>
           </div>
         </div>
         </div>
