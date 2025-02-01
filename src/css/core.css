@@ -69,7 +69,6 @@ html, body {
 
 .sidebar.open {
   left: 0;
-  backdrop-filter: blur(10px);
 }
 
 .sidebar-trigger {
