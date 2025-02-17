@@ -8,12 +8,13 @@
 - Add border radius to <code>line</code>
 - Improve deletion warning description. 
 - Fixed confusing greeting header.
+- Fix other minor bugs.
 - All background notifications are now displayed using Bulma CSS `notification` class.
 - Added support for gifs as background image. (Experimental)
 
 **BUG**:
 
-- Background reload inconsistency ()
+- Background reload inconsistency, backend is very buggy with new codebase (somehow?)
 
 
 ## [Version 7.81.1] - 2025-18-01
