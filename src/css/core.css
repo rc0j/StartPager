@@ -10,12 +10,13 @@
  + Import +
 ========
 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css";
 @import "https://use.fontawesome.com/releases/v5.15.4/css/all.css";
 
-html, body {
-  font-family: 'Inter', sans-serif;
+html,
+body {
+  font-family: "Inter", sans-serif;
   height: 100%;
   margin: 0;
   background-size: cover;
@@ -39,7 +40,7 @@ html, body {
   color: #ffffff;
 }
 
-.line{ 
+.line {
   border-top: 2px solid #d7d7d7e7;
   width: 12%;
   margin-top: 10px;
@@ -72,8 +73,8 @@ html, body {
 }
 
 .sidebar-trigger {
-  position: absolute; 
-  top: 10px; 
+  position: absolute;
+  top: 10px;
   left: 10px;
   color: #00d1b2; /* Bulma primary color */
 }
