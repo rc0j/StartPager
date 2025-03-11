@@ -1,9 +1,9 @@
-//           __                  __                __        _      
+//           __                  __                __        _
 //    _____ / /_   ____   _____ / /_ _____ __  __ / /_      (_)_____
 //   / ___// __ \ / __ \ / ___// __// ___// / / // __/     / // ___/
-//  (__  )/ / / // /_/ // /   / /_ / /__ / /_/ // /_ _    / /(__  ) 
-// /____//_/ /_/ \____//_/    \__/ \___/ \__,_/ \__/(_)__/ //____/  
-//          
+//  (__  )/ / / // /_/ // /   / /_ / /__ / /_/ // /_ _    / /(__  )
+// /____//_/ /_/ \____//_/    \__/ \___/ \__,_/ \__/(_)__/ //____/
+//
 
 const shortcuts = {
   g: "https://github.com",
@@ -18,12 +18,15 @@ const shortcuts = {
 };
 
 document.addEventListener("keydown", function (event) {
-  if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable) {
+  if (
+    ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) ||
+    document.activeElement.isContentEditable
+  ) {
     return;
   }
 
-  if (event.shiftKey && event.key === 'S') {
-    document.querySelector('.sidebar-trigger').click();
+  if (event.shiftKey && event.key === "S") {
+    document.querySelector(".sidebar-trigger").click();
     return;
   }
 
@@ -51,5 +54,5 @@ function showTooltip(message) {
 
   setTimeout(() => {
     tooltip.remove();
-  }, 2000);
+  }, 1500);
 }
