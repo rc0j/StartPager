@@ -32,12 +32,10 @@ body {
   align-items: center;
   height: 100vh;
   text-align: center;
-  color: #ffffff;
 }
 
 .quote {
   font-style: italic;
-  color: #ffffff;
 }
 
 .line {
