@@ -1,12 +1,19 @@
 # Changelog
 
+## [Version 7.81.3] - 2025-03-12
+
+- Update to Bulma.css 1.0.3
+- Switched to local bulma.css to improve loading speed, this may however result in a slightly bigger extention size.
+- Fix `main_section` when using Light theme.
+- Hide `Opening {shortcut}` tooltip quicker (-500ms)
 
 ## [Version 7.81.2] - 2025-XX-XX
 
 **Style**:
+
 - Add a opacity affect on setting toggle or the pill.
 - Add border radius to <code>line</code>
-- Improve deletion warning description. 
+- Improve deletion warning description.
 - Fixed confusing greeting header.
 - Fix other minor bugs.
 - All background notifications are now displayed using Bulma CSS `notification` class.
@@ -16,7 +23,6 @@
 
 - Background reload inconsistency, backend is very buggy with new codebase (somehow?)
 
-
 ## [Version 7.81.1] - 2025-18-01
 
 - Fix backgroud notification position.
@@ -25,7 +31,6 @@
 - Added a "Notification" when a shortcut is pressed.
 - Replace twitter.com -> x.com (shortcut changed to x)
 - Faster sidebar opening animation.
-
 
 ## [Version 7.81.0] - 2025-04-01
 
@@ -39,11 +44,8 @@
 - Add `fontawesome v5.14` support.
 - Updated `html header`.
 - Add a welcome modal.
-- Instead of using a single index.js file for everything, several new files were created:
-        - settings.js -> for everything setting related including sidebar js code etc..
-        - time.js -> for everything related to username and time
-        - keyboard.js (now named shortcut.js) -> for everything keyboard shortcut related.
-        - background.js -> everything related to the background.
+- Instead of using a single index.js file for everything, several new files were created: - settings.js -> for everything setting related including sidebar js code etc.. - time.js -> for everything related to username and time - keyboard.js (now named shortcut.js) -> for everything keyboard shortcut related. - background.js -> everything related to the background.
 
-#### Shortcut: 
+#### Shortcut:
+
 - Added "G" to open gitlab
