@@ -4,7 +4,6 @@
 
 - Update to Bulma.css 1.0.3
 - Switched to local bulma.css to improve loading speed, this may however result in a slightly bigger extention size.
-- Fix `main_section` when using Light theme.
 - Hide `Opening {shortcut}` tooltip quicker (-500ms)
 
 ## [Version 7.81.2] - 2025-XX-XX
