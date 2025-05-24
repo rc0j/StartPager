@@ -19,7 +19,7 @@ document.querySelector("#save-image").addEventListener("click", () => {
     return;
   }
   processingBg.className = "notification is-success";
-  processingBg.innerHTML = 'Background saved successfully. Please reload the page to see the changes take effect.';
+  processingBg.innerHTML = 'Background saved successfully..';
   localStorage.setItem("image_url", imageUrlValue);
   localStorage.removeItem("imageupload");
   background_body.style.backgroundImage = `url(${imageUrlValue})`;
@@ -38,7 +38,7 @@ inputFile.addEventListener("change", (event) => {
 
   processingBg.className = "notification is-success";
   processingBg.innerHTML =
-    'Image uploaded and set as background successfully. Please reload the page to see this change in effect...';
+    'Image uploaded and set as background successfully..';
   localStorage.removeItem("image_url");
 
   const reader = new FileReader();
