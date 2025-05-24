@@ -50,13 +50,26 @@ document.addEventListener("DOMContentLoaded", function () {
         <div id="modal-pages">
         <div id="page1" class="modal-page">
           <h3 class="title is-3">Hey there! 👋</h3>
-          <p>Start Pager is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
+          <p>Start Pager or previously named is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
           <br/>
           <div class="buttons is-centered">
-          <button class="button is-link" data-page="page2">Get started</button>
+          <button class="button is-link" data-page="page2">Let's roll!</button>
           </div>
         </div>
         <div id="page2" class="modal-page" style="display: none;">
+  <h3 class="title is-3">What's new since Saturn?</h3>
+  <p>Coming from the Saturn startpage? You might notice some exciting differences!</p>
+  <br/>
+  <h5 class="title is-5">Why the Change?</h5>
+  <h6 class="subtitle is-6">Saturn, while a familiar starting point, was built using older web technologies (basic HTML, CSS & JS). This made it increasingly challenging to keep things feeling modern, fast, and feature-rich without significant effort.</h6>
+  <h6 class="subtitle is-6">Introducing StartPager! We've embraced Bulma.css, a modern CSS framework, allowing us to focus on bringing you more features and a more stable experience.</h6>
+  <h6 class="subtitle is-6">StartPager is a fresh start, quite different from Saturn. We truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
+  <div class="buttons is-centered">
+    <button class="button is-link" data-page="page1">Previous</button>
+    <button class="button is-link" data-page="page3">Next</button>
+  </div>
+</div>
+        <div id="page3" class="modal-page" style="display: none;">
           <h3 class="title is-3">Shortcuts</h3>
           <p>Learn some quick shortcuts to get started.</p>
           <br/>
@@ -64,11 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
           <h6 class="subtitle is-6">To open the settings sidebar either click on the small pill near the top left of the screen or use <code>Shift</code> + <code>S</code> (You can try it now)</h6>
           <h6 class="subtitle is-6">More shortcuts can be found under the shortcuts section in the settings sidebar.</h6>
           <div class="buttons is-centered">
-          <button class="button is-link" data-page="page1">Previous</button>
-          <button class="button is-link" data-page="page3">Next</button>
+          <button class="button is-link" data-page="page2">Previous</button>
+          <button class="button is-link" data-page="page4">Next</button>
           </div>
         </div>
-        <div id="page3" class="modal-page" style="display: none;">
+        <div id="page4" class="modal-page" style="display: none;">
           <h6 class="subtitle is-6">Thank you for using Start Pager</h6>
           <div class="buttons is-centered">
           <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
@@ -85,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </a>
           </div>
           <div class="buttons is-centered">
-          <button class="button is-link" data-page="page2">Previous</button>
+          <button class="button is-link" data-page="page3">Previous</button>
           <button class="button is-primary" id="close_welcome_modal">Close</button>
           </div>
         </div>
