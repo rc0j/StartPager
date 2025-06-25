@@ -44,8 +44,8 @@ function showTooltip(message) {
   tooltip.style.bottom = "10px";
   tooltip.style.left = "50%";
   tooltip.style.transform = "translateX(-50%)";
-  tooltip.style.borderRadius = "12px";
-  tooltip.style.padding = "10px 20px";
+  tooltip.style.borderRadius = "9px";
+  tooltip.style.padding = "10px 15px";
   tooltip.style.zIndex = "1000";
   tooltip.style.fontFamily = "monospace";
   tooltip.innerText = message;
