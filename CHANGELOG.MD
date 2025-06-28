@@ -1,10 +1,11 @@
 # Changelog
 
-## [Version 7.82.0] - 2025-03-12
-- Minor text changes to improve ux
-- Improved stability of background feature, a reload is no longer needed (after testing)
-
-
+## [Version 7.82.0] - 2025-X
+- Update to Bulma.css 1.0.4
+- Setting sidebar now also includes the current version of Bulma.
+- Several fixes to WelcomeModal
+- Setting a background no longer requires a reload.
+- StartPager now properly supports chromium-based browsers.
 
 ## [Version 7.81.3] - 2025-03-12
 

@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div id="modal-pages">
         <div id="page1" class="modal-page">
           <h3 class="title is-3">Hey there! 👋</h3>
-          <p>Start Pager or previously named is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
+          <p>Start Pager or previously known as Saturn Startpage is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
           <br/>
           <div class="buttons is-centered">
           <button class="button is-link" data-page="page2">Let's roll!</button>
@@ -58,12 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div id="page2" class="modal-page" style="display: none;">
   <h3 class="title is-3">What's new since Saturn?</h3>
-  <p>Coming from the Saturn startpage? You might notice some exciting differences!</p>
+  <p>Coming from the Saturn startpage? You might notice some stuff have changed</p>
   <br/>
   <h5 class="title is-5">Why the Change?</h5>
-  <h6 class="subtitle is-6">Saturn, while a familiar starting point, was built using older web technologies (basic HTML, CSS & JS). This made it increasingly challenging to keep things feeling modern, fast, and feature-rich without significant effort.</h6>
-  <h6 class="subtitle is-6">Introducing StartPager! We've embraced Bulma.css, a modern CSS framework, allowing us to focus on bringing you more features and a more stable experience.</h6>
-  <h6 class="subtitle is-6">StartPager is a fresh start, quite different from Saturn. We truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
+  <h6 class="subtitle is-6">Saturn Startpage was a fork of a already unmaintained startpage built using basic HTML, CSS & JS. This made it increasingly challenging to keep things feeling modern, fast and stable without significant effort.</h6>
+  <h6 class="subtitle is-6">Introducing StartPager! Powered heavily by Bulma.css, a modern CSS framework, this  allows a much more stable and feature first approach.</h6>
+  <h6 class="subtitle is-6">StartPager is a fresh start, quite different coming from Saturn. I truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
   <div class="buttons is-centered">
     <button class="button is-link" data-page="page1">Previous</button>
     <button class="button is-link" data-page="page3">Next</button>
@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
         <div id="page3" class="modal-page" style="display: none;">
           <h3 class="title is-3">Shortcuts</h3>
-          <p>Learn some quick shortcuts to get started.</p>
+          <p>StartPager is heavily focus on a keyboard-first workflow, let's learn the basics before we continue.</p>
           <br/>
           <h5 class="title is-5">Setting page</h5>
-          <h6 class="subtitle is-6">To open the settings sidebar either click on the small pill near the top left of the screen or use <code>Shift</code> + <code>S</code> (You can try it now)</h6>
+          <h6 class="subtitle is-6">To open Settings sidebar: <code>Shift</code> + <code>S</code> (Give it a try, its free!)</h6>
           <h6 class="subtitle is-6">More shortcuts can be found under the shortcuts section in the settings sidebar.</h6>
           <div class="buttons is-centered">
           <button class="button is-link" data-page="page2">Previous</button>
@@ -90,16 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
             </span>
             <span>GitHub</span>
           </a>
-          <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
-            <span class="icon">
-            <i class="fas fa-sad-tear"></i>
-            </span>
-            <span>Report a bug</span>
-          </a>
           </div>
           <div class="buttons is-centered">
           <button class="button is-link" data-page="page3">Previous</button>
-          <button class="button is-primary" id="close_welcome_modal">Close</button>
+          <button class="button is-primary" id="close_welcome_modal">Close, goodbye!</button>
           </div>
         </div>
         </div>
