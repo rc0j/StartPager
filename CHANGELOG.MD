@@ -6,6 +6,7 @@
 - Several fixes to WelcomeModal
 - Setting a background no longer requires a reload.
 - StartPager now properly supports chromium-based browsers.
+- Added slight border around pill icon.
 
 ## [Version 7.81.3] - 2025-03-12
 
