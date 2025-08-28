@@ -1,6 +1,6 @@
 # Changelog
 
-## [Version 7.82.0] - 2025-X
+## [Version 7.83.0] - 2025-X
 - Update to Bulma.css 1.0.4
 - Setting sidebar now also includes the current version of Bulma.
 - Several fixes to WelcomeModal

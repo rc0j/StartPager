@@ -119,6 +119,11 @@ body {
 /* [The Pill] Button */
 .the-pill {
   opacity: 0.7;
+  border: 1px solid transparent;
+}
+
+.the-pill:hover {
+  border: 1px solid hsl(217, 71%, 53%);
 }
 
 /* Add border radius to line
