@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <p>Start Pager or previously known as Saturn Startpage is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
           <br/>
           <div class="buttons is-centered">
-          <button class="button is-link" data-page="page2">Let's roll!</button>
+          <button class="button is-link" data-page="page2">Let's roll...</button>
           </div>
         </div>
         <div id="page2" class="modal-page" style="display: none;">
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
         <div id="page4" class="modal-page" style="display: none;">
-          <h6 class="subtitle is-6">Thank you for using Start Pager</h6>
+          <h6 class="subtitle is-6">Thank you for using Start Pager <3</h6>
           <div class="buttons is-centered">
           <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
             <span class="icon">
