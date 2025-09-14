@@ -8,6 +8,13 @@
 - StartPager now properly supports chromium-based browsers.
 - Added slight border around pill icon.
 
+#### Settings sidebar
+- If buttons have a single action (ex. erase..) they will use the `is-fullwidth` css.
+- When pressing erase button instead of browser popup, a bulma css modal is shown to keep things consistent.
+
+#### Shortcuts 
+- You can use add custom shortcuts, keep in mind this is still an expiremental feature and may contain bugs. 
+
 ## [Version 7.81.3] - 2025-03-12
 
 - Update to Bulma.css 1.0.3
