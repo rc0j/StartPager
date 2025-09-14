@@ -30,6 +30,11 @@ StartPager is an open-source, community-driven new tab replacement designed for 
 
 <sub>Note: Saturn Startpage doesn't rely on Mozilla’s add-on store for distribution or updates, but this will change in the future.</sub>
 
+### Chrome
+1. Visit the [release page](https://github.com/mraif13/Saturn-startpage/releases).
+2. Download the `.zip` file named startpager-chrome.zip
+3. Unzip, access chrome's extention page > Enable developer mode > Load unpack > Select extracted directory of the extention > Voila!
+
 ------
 ###### Demo Status
 [![Netlify Status](https://api.netlify.com/api/v1/badges/90679166-d81f-4831-b8f8-82ada4af6e1f/deploy-status)](https://app.netlify.com/sites/demo-saturnstartpage/deploys)
