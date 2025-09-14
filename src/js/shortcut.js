@@ -156,7 +156,6 @@ function saveCustomShortcuts(list) {
 document.addEventListener("DOMContentLoaded", renderCustomShortcuts);
 
 document.addEventListener("keydown", function (event) {
-  // Don't trigger if typing in input/textarea/contenteditable..
   const tag = document.activeElement.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA" || document.activeElement.isContentEditable) return;
   const shortcuts = {

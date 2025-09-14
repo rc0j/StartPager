@@ -8,6 +8,8 @@
 - StartPager now properly supports chromium-based browsers.
 - Added slight border around pill icon.
 - Fix bug that causes homepage text to disappear when using light theme.
+- Update FontAwesome 5.15.4 -> 7.0.1 (Experimental)
+- Added notification about deprecated Default shortcuts.
 
 #### Settings sidebar
 - If buttons have a single action (ex. erase..) they will use the `is-fullwidth` css.
