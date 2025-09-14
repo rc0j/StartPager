@@ -1,12 +1,13 @@
 # Changelog
 
-## [Version 7.83.0] - 2025-X
+## [Version 7.84.0] - 2025-X
 - Update to Bulma.css 1.0.4
 - Setting sidebar now also includes the current version of Bulma.
 - Several fixes to WelcomeModal
 - Setting a background no longer requires a reload.
 - StartPager now properly supports chromium-based browsers.
 - Added slight border around pill icon.
+- Fix bug that causes homepage text to disappear when using light theme.
 
 #### Settings sidebar
 - If buttons have a single action (ex. erase..) they will use the `is-fullwidth` css.

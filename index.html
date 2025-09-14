@@ -35,7 +35,7 @@
             <button id="close_sidebar" class="delete is-medium is-pulled-right"></button>
           </button>
             <h4 class="title is-4">Greeting message</h4>
-            <h6 class="subtitle is-6">Type your username, this will be displayed on the homepage.</h6>
+            <h6 class="subtitle is-6">Type your username, this will be displayed on the homepage. You will see changes in real time</h6>
             <div class="field">
               <div class="control">
               <input class="input" type="text" id="username" placeholder="Username..." />
@@ -94,13 +94,13 @@
               <b>This action cannot be undone.</b></h6>
             <div class="field">
               <div class="control">
-              <button id="reset_button" class="button is-danger" aria-label="Erase Data">Erase Data...
+              <button id="reset_button" class="button is-danger is-fullwidth" aria-label="Erase Data">Erase Data...
               </button>
               </div>
             </div>
 
-            <h4 class="title is-4"><i class="las la-trash-alt"></i> Shortcut</h4>
-            <h6 class="subtitle is-6">Access sites quickly using these shortcuts </h6>
+            <h4 class="title is-4"><i class="las la-trash-alt"></i> Default Shortcut</h4>
+            <h6 class="subtitle is-6">Access sites quickly using these default shortcuts.</h6>
             <table class="table is-fullwidth">
               <thead>
                 <tr>
@@ -121,9 +121,18 @@
                 <tr><td>G</td><td><a href="https://gitlab.com" target="_blank">https://gitlab.com</a></td></tr>
               </tbody>
             </table>
+            <h4 class="title is-4"><i class="las la-trash-alt"></i>Custom Shortcut (Beta)</h4>
+            <h6 class="subtitle is-6">Access sites quickly using these shortcuts.</h6>
+            <div id="custom-shortcut-list" class="mt-3"></div>
+            <br/>
+            <button id="open-custom-shortcut-modal" class="button is-info is-fullwidth mb-3">
+              <span class="icon"><i class="fas fa-plus"></i></span>
+                <span>Add Shortcut</span>
+            </button>
 
+            <p class="line"></p>
             <h6 class="title is-6">Version</h6>
-            <h6 class="subtitle is-6">7.83.0-RC7 | bulma.io v1.0.4</h6>
+            <h6 class="subtitle is-6">7.84.0 | bulma.io v1.0.4</h6>
             <div class="buttons">
               <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
                 <span class="icon">
@@ -131,11 +140,11 @@
                 </span>
                 <span>Github</span>
               </a>
-              <a class="button is-danger is-light" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
+              <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
                 <span title="report a bug..." class="icon">
                 <i class="fas fa-bug"></i>
                 </span>
-                <span>Report bug</span>
+                <span>Report bug?</span>
               </a>
               </div>
 

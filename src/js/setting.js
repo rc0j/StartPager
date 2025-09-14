@@ -5,20 +5,48 @@
 // /____/ \___/ \__/ \__//_//_/ /_/ \__, /(_)__/ //____/  
 //                                 /____/   /___/         
 
-document.getElementById("reset_button").addEventListener("click", resetData);
+document.getElementById("reset_button").addEventListener("click", function () {
+  document.querySelector(".sidebar").classList.remove("open");
+  let modal = document.getElementById("reset-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.className = "modal is-active";
+    modal.id = "reset-modal";
+    modal.innerHTML = `
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <h4 class="title is-4">Reset All Data</h4>
+          <p>Are you sure you want to reset all your data? This action cannot be undone.</p>
+          <br>
+          <div class="buttons is-right">
+            <button class="button is-danger" id="confirm-reset">Yes, this is fine</button>
+            <button class="button" id="cancel-reset">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    `;
+    document.body.appendChild(modal);
 
-function resetData() {
-  const confirmationMessage = "⚠ Are you sure you want to reset all your data? This action cannot be undone.";
-  const isConfirmed = confirm(confirmationMessage);
+    modal.querySelector("#confirm-reset").addEventListener("click", function () {
+      const confirmBtn = modal.querySelector("#confirm-reset");
+      confirmBtn.classList.add("is-loading");
+      confirmBtn.disabled = true;
+      // Keep sidebar open, do not close modal
+      localStorage.clear();
+      setTimeout(() => location.reload(), 3000);
+    });
 
-  if (isConfirmed) {
-    const resetButton = document.getElementById("reset_button");
-    resetButton.classList.add("is-loading");
-    resetButton.disabled = true;
-    localStorage.clear();
-    setTimeout(() => location.reload(), 3000);
+    ["#cancel-reset", ".modal-close", ".modal-background"].forEach(sel => {
+      modal.querySelector(sel).addEventListener("click", function () {
+        modal.classList.remove("is-active");
+      });
+    });
+  } else {
+    modal.classList.add("is-active");
   }
-}
+});
 
 document.getElementById("open_settings").addEventListener("click", function () {
   document.querySelector(".sidebar").classList.toggle("open");
@@ -58,12 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div id="page2" class="modal-page" style="display: none;">
   <h3 class="title is-3">What's new since Saturn?</h3>
-  <p>Coming from the Saturn startpage? You might notice some stuff have changed</p>
+  <p>Coming from the Saturn startpage? You might notice some stuff have change</p>
   <br/>
   <h5 class="title is-5">Why the Change?</h5>
   <h6 class="subtitle is-6">Saturn Startpage was a fork of a already unmaintained startpage built using basic HTML, CSS & JS. This made it increasingly challenging to keep things feeling modern, fast and stable without significant effort.</h6>
-  <h6 class="subtitle is-6">Introducing StartPager! Powered heavily by Bulma.css, a modern CSS framework, this  allows a much more stable and feature first approach.</h6>
-  <h6 class="subtitle is-6">StartPager is a fresh start, quite different coming from Saturn. I truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
+  <h6 class="subtitle is-6">Introducing StartPager! Powered by Bulma.css, a modern CSS framework, this  allows a much more stable and feature first approach without having to worry about how things look and feel</h6>
+  <h6 class="subtitle is-6">StartPager is a fresh start, quite different if you are coming from Saturn. I truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
   <div class="buttons is-centered">
     <button class="button is-link" data-page="page1">Previous</button>
     <button class="button is-link" data-page="page3">Next</button>

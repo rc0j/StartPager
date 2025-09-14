@@ -68,7 +68,7 @@ document.querySelector("#delete_custom_image").addEventListener("click", () => {
     return;
   }
 
-  if (confirm("Are you sure you want to remove the current background image?")) {
+  if (confirm("Are you sure you want to remove the current background image? This action cannot be undone.")) {
     localStorage.removeItem("image_url");
     localStorage.removeItem("imageupload");
     background_body.style.backgroundImage = "";

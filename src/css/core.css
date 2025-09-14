@@ -32,7 +32,13 @@ body {
   align-items: center;
   height: 100vh;
   text-align: center;
-  color: #fff;
+  color: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  .main_section {
+    color: #fff;
+  }
 }
 
 .quote {
