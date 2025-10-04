@@ -19,14 +19,14 @@
   </head>
 
   <body>
-    <!-- =+=+= Good morning/afternoon/night and time text =+=+= -->
-    <div class="main_section">
+   <!-- =+=+= Good morning/afternoon/night and time text =+=+= -->
+  <div class="main_section">
       <p class="time" id="time"></p>
       <p class="line"></p>
       <p class="date" id="date"></p>
       <p class="greetings" id="greetings"></p>
+      <div id="shortcut-icons-bar" class="shortcut-icons-bar is-flex is-flex-wrap-wrap is-justify-content-center mb-4"></div>
     </div>
-
     <main>
       <button id="open_settings" class="the-pill button is-dark is-rounded is-small sidebar-trigger"></button>
       <!-- Sidebar -->
@@ -87,18 +87,6 @@
               </label>
             </div>
 
-            <h4 class="title is-4"><i class="las la-trash-alt"></i> Erase Data</h4>
-            <h6 class="subtitle is-6">
-              Performing this action will reset StartPager to its default settings and 
-              permanently erase all saved data. 
-              <b>This action cannot be undone.</b></h6>
-            <div class="field">
-              <div class="control">
-              <button id="reset_button" class="button is-danger is-fullwidth" aria-label="Erase Data">Erase Data...
-              </button>
-              </div>
-            </div>
-
             <h4 class="title is-4"><i class="las la-trash-alt"></i> Default Shortcut</h4>
             <h6 class="subtitle is-6">Access sites quickly using these default shortcuts.</h6>
             <h6 class="subtitle is-6"><i class="fas fa-exclamation-circle"></i> Please note: Default shortcuts are now deprecated and will be removed in a future update. To ensure uninterrupted access, migrate any shortcuts you use to your custom shortcuts.</h6>
@@ -124,6 +112,10 @@
             </table>
             <h4 class="title is-4"><i class="las la-trash-alt"></i>Custom Shortcut (Beta)</h4>
             <h6 class="subtitle is-6">Set custom shortcuts to access your favorite sites quickly.</h6>
+            <div class="field mb-4">
+              <input id="toggle-shortcut-icons" type="checkbox" class="switch is-info is-small" />
+              <label class="switch-label" for="toggle-shortcut-icons">Show custom shortcuts on homescreen</label>
+            </div>
             <div id="custom-shortcut-list" class="mt-3"></div>
             <br/>
             <button id="open-custom-shortcut-modal" class="button is-info is-fullwidth mb-3">
@@ -131,23 +123,33 @@
                 <span>Add Shortcut</span>
             </button>
 
+            <h4 class="title is-4"><i class="las la-trash-alt"></i> Erase Data</h4>
+            <h6 class="subtitle is-6">
+              Performing this action will reset StartPager to its default settings and 
+              permanently erase all saved data. 
+              <b>This action cannot be undone.</b></h6>
+            <div class="field">
+              <div class="control">
+              <button id="reset_button" class="button is-danger is-fullwidth" aria-label="Erase Data">Erase Data...
+              </button>
+              </div>
+            </div>
+
             <p class="line"></p>
             <h6 class="title is-6">Version</h6>
-            <h6 class="subtitle is-6">7.84.0 | bulma.io v1.0.4</h6>
+            <h6 class="subtitle is-6">Start Pager 7.85.0 | bulma.io v1.0.4</h6>
             <div class="buttons">
               <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
                 <span class="icon">
-                <i class="fab fa-github"></i>
+                  <i class="fab fa-github"></i>
                 </span>
-                <span>Github</span>
               </a>
               <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
-                <span title="report a bug..." class="icon">
-                <i class="fas fa-bug"></i>
+                <span class="icon" title="Report Bug">
+                  <i class="fas fa-bug"></i>
                 </span>
-                <span>Report bug?</span>
               </a>
-              </div>
+            </div>
 
         </div>
       </div>
