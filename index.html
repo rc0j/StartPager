@@ -34,16 +34,17 @@
         <div class="setting-content">
             <button id="close_sidebar" class="delete is-medium is-pulled-right"></button>
           </button>
-            <h4 class="title is-4">Greeting message</h4>
-            <h6 class="subtitle is-6">Type your username, this will be displayed on the homepage. You will see changes in real time</h6>
+            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Greeting message</h4>
+              <h5 class="title is-5 has-text-weight-medium">Username</h4>
+                <h6 class="subtitle is-6">Type your username, this will be displayed on the homepage. You will see changes in real time</h6>
             <div class="field">
               <div class="control">
-              <input class="input" type="text" id="username" placeholder="Username..." />
+              <input class="input" type="text" id="username" placeholder="Username" />
             </div>
             </div>
-
-            <h4 class="title is-4">Background</h4>
-            <h6 class="subtitle is-6">Set a custom background, using URL-based background will require an active internet connection.</h6>
+            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Background</h4>
+            <h5 class="title is-5 has-text-weight-medium">URL</h4>
+              <h6 class="subtitle is-6">Set a custom background, using URL-based background will require an active internet connection.</h6>
             <p class="processing_bg"></p>
             <div class="field">
               <div class="control">
@@ -52,11 +53,6 @@
             </div>
             <div class="field is-grouped">
               <div class="control">
-              <button id="delete_custom_image" class="button is-danger">
-                Delete
-              </button>
-              </div>
-              <div class="control">
               <button id="save-image" class="button is-success">
                 <span class="icon is-small">
                   <i class="fas fa-save"></i>
@@ -64,10 +60,15 @@
                 <span>Apply</span>
               </button>
               </div>
+              <div class="control">
+              <button id="delete_custom_image" class="button is-danger is-outlined">
+                Delete
+              </button>
+              </div>
             </div>
 
-            <h4 class="title is-4">Upload Background</h4>
-            <h6 class="subtitle is-6">
+            <h5 class="title is-5 has-text-weight-medium">Upload Background</h4>
+              <h6 class="subtitle is-6">
               Uploaded images will be converted to <code>base64</code> format and stored locally.
             </h6>
             <div class="file has-name">
@@ -87,14 +88,19 @@
               </label>
             </div>
 
-            <h4 class="title is-4"><i class="las la-trash-alt"></i> Default Shortcut</h4>
+            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Shortcuts</h4>
+            <h5 class="title is-5 has-text-weight-medium">Default Shortcuts</h4> 
             <h6 class="subtitle is-6">Access sites quickly using these default shortcuts.</h6>
-            <h6 class="subtitle is-6"><i class="fas fa-exclamation-circle"></i> Please note: Default shortcuts are now deprecated and will be removed in a future update. To ensure uninterrupted access, migrate any shortcuts you use to your custom shortcuts.</h6>
+<article class="message is-warning">
+  <div class="message-body">
+ Please note: Default shortcuts are now deprecated and will be removed in a future update. To ensure uninterrupted access, migrate any shortcuts you use to your custom shortcuts.
+  </div>
+</article>
             <table class="table is-fullwidth">
               <thead>
                 <tr>
                   <th>Shortcut</th>
-                  <th>URL/Action</th>
+                  <th>URL</th>
                 </tr>
               </thead>
               <tbody>
@@ -110,12 +116,9 @@
                 <tr><td>G</td><td><a href="https://gitlab.com" target="_blank">https://gitlab.com</a></td></tr>
               </tbody>
             </table>
-            <h4 class="title is-4"><i class="las la-trash-alt"></i>Custom Shortcut (Beta)</h4>
+
+            <h5 class="title is-5 has-text-weight-medium">Custom shortcuts (Beta)</h4> 
             <h6 class="subtitle is-6">Set custom shortcuts to access your favorite sites quickly.</h6>
-            <div class="field mb-4">
-              <input id="toggle-shortcut-icons" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-shortcut-icons">Show custom shortcuts on homescreen</label>
-            </div>
             <div id="custom-shortcut-list" class="mt-3"></div>
             <br/>
             <button id="open-custom-shortcut-modal" class="button is-info is-fullwidth mb-3">
@@ -123,21 +126,29 @@
                 <span>Add Shortcut</span>
             </button>
 
-            <h4 class="title is-4"><i class="las la-trash-alt"></i> Erase Data</h4>
+            <div class="field mb-4">
+              <h5 class="title is-5 has-text-weight-medium">Shortcuts icons</h4>
+              <h6 class="subtitle is-6">Display up to 6 shortcuts icon on your homescreen.</h6>
+              <input id="toggle-shortcut-icons" type="checkbox" class="switch is-info is-small" />
+              <label class="switch-label" for="toggle-shortcut-icons">Show icon</label>
+            </div>
+
+            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Erase Data</h4>
+            <h5 class="title is-5 has-text-weight-medium">Reset StartPager</h4>
             <h6 class="subtitle is-6">
               Performing this action will reset StartPager to its default settings and 
               permanently erase all saved data. 
               <b>This action cannot be undone.</b></h6>
             <div class="field">
               <div class="control">
-              <button id="reset_button" class="button is-danger is-fullwidth" aria-label="Erase Data">Erase Data...
+              <button id="reset_button" class="button is-danger is-fullwidth is-outlined" aria-label="Erase Data">Erase Data
               </button>
               </div>
             </div>
 
-            <p class="line"></p>
-            <h6 class="title is-6">Version</h6>
-            <h6 class="subtitle is-6">Start Pager 7.85.0 | bulma.io v1.0.4</h6>
+            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Version</h4>
+            <h5 class="title is-5 has-text-weight-medium">StartPager</h4>
+            <h6 class="subtitle is-6">7.85.0 | bulma.io v1.0.4</h6>
             <div class="buttons">
               <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
                 <span class="icon">

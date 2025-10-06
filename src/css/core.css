@@ -60,7 +60,7 @@ body {
 */
 .sidebar {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   height: 100vh;
   background-color: var(--bulma-scheme-main);
   position: fixed;
@@ -85,7 +85,7 @@ body {
 }
 
 .setting-content {
-  padding: 20px;
+  padding: 15px;
   margin-top: -50px;
 }
 
@@ -129,7 +129,7 @@ body {
 }
 
 .the-pill:hover {
-  border: 1px solid hsl(217, 71%, 53%);
+  border: 1px solid var(--bulma-primary-soft);
 }
 
 /* Add border radius to line
@@ -137,4 +137,50 @@ TODO: Handle this better.
  */
 .line {
   border-radius: 2px;
+}
+
+/* Blur effect for sidebar */
+.sidebar, table {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.795);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: hsla(220, 13%, 9%, 0.885)
+  }
+}
+
+table {
+  border-radius: var(--bulma-radius) !important;
+}
+
+/* Dynamic Bulma-friendly decorated title */
+.is-decorated {
+  display: flex;               /* becomes a flex row so pseudo elements behave like flex items */
+  align-items: center;
+  justify-content: center;     /* keep text centered (works with Bulma's .has-text-centered too) */
+  gap: 1rem;                   /* space between text and lines */
+  width: 100%;
+  white-space: nowrap;         /* prevent wrapped title from mis-sizing the lines */
+}
+
+/* the lines themselves — decorative only */
+.is-decorated::before,
+.is-decorated::after {
+  content: "";
+  flex: 1 1 0;                /* grow to fill available space */
+  height: 2px;                /* thickness of the rule */
+  background: currentColor;   /* matches the text color (Bulma color classes work) */
+  opacity: 0.05;              /* subtle by default */
+  max-width: 45%;             /* prevents absurdly long rules on very wide screens */
+  border-radius: 20px;
+}
+
+/* Make rules shorter on narrow viewports */
+@media (max-width: 768px) {
+  .is-decorated::before,
+  .is-decorated::after {
+    max-width: 30%;
+  }
 }

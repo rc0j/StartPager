@@ -64,25 +64,26 @@ function showNotification(message, type = "is-primary") {
   setTimeout(() => notif.remove(), 1800);
 }
 
-function showCustomShortcutModal({key = '', url = '', idx = null} = {}) {
-  const oldModal = document.getElementById('custom-shortcut-modal');
-  if (oldModal) oldModal.remove();
+  // close modal helper (thanks gemini for the help on this)
+function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
+  const existingModal = document.getElementById('custom-shortcut-modal');
+  if (existingModal) existingModal.remove();
   const modal = document.createElement('div');
-  modal.className = 'modal is-active';
   modal.id = 'custom-shortcut-modal';
+  modal.className = 'modal is-active';
   modal.innerHTML = `
     <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <h4 class="modal-card-title title is-4 mb-0">${idx !== null ? 'Edit Shortcut' : 'Add Shortcut'}</h4>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
+    <div class="modal-content">
+      <div class="box">
+        <h4 class="modal-card-title title is-4 mb-0">
+          ${idx !== null ? 'Edit Shortcut' : 'Add Shortcut'}
+        </h4>
+        <br/>
         <form id="custom-shortcut-form" autocomplete="off">
           <div class="field">
             <label class="label" for="custom-key">Shortcut Key</label>
             <div class="control">
-              <input class="input" id="custom-key" type="text" placeholder="Key" style="width:100px;max-width:100%" required value="${key}" />
+              <input class="input" id="custom-key" type="text" placeholder="Key" style="width:10%" required value="${key}" />
             </div>
           </div>
           <div class="field">
@@ -91,40 +92,45 @@ function showCustomShortcutModal({key = '', url = '', idx = null} = {}) {
               <input class="input" id="custom-url" type="url" placeholder="URL (https://...)" required value="${url}" />
             </div>
           </div>
+          <div class="buttons is-right">
+            <button type="submit" class="button is-success mr-2" id="save-shortcut-btn">
+              ${idx !== null ? 'Save' : 'Add'}
+            </button>
+            <button type="button" class="button is-danger is-outlined" id="cancel-shortcut-btn">Cancel</button>
+          </div>
         </form>
-      </section>
-      <footer class="modal-card-foot is-justify-content-flex-end">
-        <button class="button is-success mr-2" id="save-shortcut-btn">${idx !== null ? 'Save' : 'Add'}</button>
-        <button class="button" id="cancel-shortcut-btn">Cancel</button>
-      </footer>
+      </div>
     </div>
   `;
   document.body.appendChild(modal);
+
   const keyInput = modal.querySelector('#custom-key');
   const urlInput = modal.querySelector('#custom-url');
-  const saveBtn = modal.querySelector('#save-shortcut-btn');
+  const form = modal.querySelector('#custom-shortcut-form');
   const closeModal = () => modal.remove();
-  modal.querySelector('.delete').onclick = closeModal;
-  modal.querySelector('#cancel-shortcut-btn').onclick = closeModal;
-  modal.querySelector('.modal-background').onclick = closeModal;
-  saveBtn.onclick = (e) => {
+  modal.querySelector('.modal-background').addEventListener('click', closeModal);
+  modal.querySelector('#cancel-shortcut-btn').addEventListener('click', closeModal);
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     const keyVal = keyInput.value.trim();
     const urlVal = urlInput.value.trim();
+
     if (!keyVal || !urlVal) {
       showNotification("Please enter both a key and a URL!", "is-danger");
       return;
     }
-  if (!/^https?:\/\//.test(urlVal)) {
+    if (!/^https?:\/\//.test(urlVal)) {
       showNotification("URL must start with http:// or https://", "is-danger");
       return;
     }
+
     const list = getCustomShortcuts();
     const duplicate = list.findIndex((item, i) => item.key === keyVal && i !== idx);
     if (duplicate !== -1) {
       showNotification("Duplicate shortcut key detected!", "is-danger");
       return;
     }
+
     if (idx !== null) {
       list[idx] = { key: keyVal, url: urlVal };
       showNotification("Shortcut updated successfully!", "is-success");
@@ -132,10 +138,11 @@ function showCustomShortcutModal({key = '', url = '', idx = null} = {}) {
       list.push({ key: keyVal, url: urlVal });
       showNotification("Shortcut added successfully!", "is-success");
     }
+    
     saveCustomShortcuts(list);
     renderCustomShortcuts();
     closeModal();
-  };
+  });
 }
 
 document.getElementById('open-custom-shortcut-modal').onclick = showCustomShortcutModal;
@@ -160,7 +167,7 @@ function renderCustomShortcuts() {
   const list = getCustomShortcuts();
   const container = document.getElementById("custom-shortcut-list");
   if (!list.length) {
-    container.innerHTML = `<p class="has-text-grey-light">No custom shortcuts yet.</p>`;
+    container.innerHTML = `<p class="has-text-grey-light has-text-centered">No custom shortcuts yet.</p>`;
     return;
   }
   let table = `<table class="table is-fullwidth is-hoverable">`;
@@ -173,7 +180,7 @@ function renderCustomShortcuts() {
         <td><a href="${item.url}" target="_blank" title="${item.url}">${displayUrl}</a></td>
         <td style="width:1%;white-space:nowrap">
           <button class="button is-small is-warning mr-1 edit-shortcut" data-idx="${idx}" title="Edit"><i class="fas fa-edit"></i></button>
-          <button class="button is-small is-danger remove-shortcut" data-idx="${idx}" title="Remove"><i class="fas fa-trash"></i></button>
+          <button class="button is-small is-danger is-outlined remove-shortcut" data-idx="${idx}" title="Remove"><i class="fas fa-trash"></i></button>
         </td>
       </tr>
     `;

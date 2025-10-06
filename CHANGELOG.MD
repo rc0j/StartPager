@@ -1,6 +1,16 @@
 # Changelog
 
-## [Version 7.84.0] - 2025-X
+## [Version 7.85.0]
+#### Settings
+- Settings was slighly redesigned and was heavily reorganised to make things easier to navigate. 
+- Settings will now open from the right side. 
+- All Delete/cancel buttons now use a red ouline to make easier to distinct between them.
+- Setting sidebar now includes a nice blur effect behind it, this works on both light and dark mode.
+
+#### Custom shortcuts
+- You can now display up to 6 shortcuts on the homescreen, for now you **cannot** rearrange them.
+
+## [Version 7.84.0]
 - Update to Bulma.css 1.0.4
 - Setting sidebar now also includes the current version of Bulma.
 - Several fixes to WelcomeModal
