@@ -32,7 +32,7 @@ function renderShortcutIconsBar() {
       const favicon = getFavicon(item.url);
       const name = getSiteName(item.url);
       return `
-        <button onclick="window.open('${item.url}', '_blank')" class="button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;">
+        <button onclick="window.open('${item.url}', '_blank')" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;">
           <figure class="image is-32x32 mr-2 mb-0">
         <img src="${favicon}" alt="icon" onerror="this.src='https://www.google.com/s2/favicons?domain=${encodeURIComponent(item.url)}&sz=32'" />
           </figure>
@@ -82,21 +82,25 @@ function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
         <form id="custom-shortcut-form" autocomplete="off">
           <div class="field">
             <label class="label" for="custom-key">Shortcut Key</label>
+            <h6 class="subtitle is-6 has-text-grey-light">Key/Character that will trigger this shortcut.</h6>
             <div class="control">
-              <input class="input" id="custom-key" type="text" placeholder="Key" style="width:10%" required value="${key}" />
+              <input class="input" id="custom-key" type="text" placeholder="Key" style="width:9%" required value="${key}" />
             </div>
           </div>
           <div class="field">
             <label class="label" for="custom-url">URL</label>
+            <h6 class="subtitle is-6 has-text-grey-light">Website that you'd like to trigger using this key.</h6>
             <div class="control">
               <input class="input" id="custom-url" type="url" placeholder="URL (https://...)" required value="${url}" />
             </div>
           </div>
-          <div class="buttons is-right">
-            <button type="submit" class="button is-success mr-2" id="save-shortcut-btn">
-              ${idx !== null ? 'Save' : 'Add'}
+          <div class="field is-grouped is-grouped-right mt-4">
+          <div class="buttons">
+            <button type="submit" class="fix_margin_issue button is-success mr-2" id="save-shortcut-btn">
+              ${idx !== null ? '<i class="fa-solid fa-floppy-disk"></i> Save' : '<i class="fa-solid fa-plus"></i> Add'}
             </button>
             <button type="button" class="button is-danger is-outlined" id="cancel-shortcut-btn">Cancel</button>
+          </div>
           </div>
         </form>
       </div>
@@ -116,27 +120,27 @@ function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
     const urlVal = urlInput.value.trim();
 
     if (!keyVal || !urlVal) {
-      showNotification("Please enter both a key and a URL!", "is-danger");
+      showNotification("Please enter both a key and a URL!", "is-danger is-light");
       return;
     }
     if (!/^https?:\/\//.test(urlVal)) {
-      showNotification("URL must start with http:// or https://", "is-danger");
+      showNotification("URL must start with http:// or https://", "is-danger is-lights");
       return;
     }
 
     const list = getCustomShortcuts();
     const duplicate = list.findIndex((item, i) => item.key === keyVal && i !== idx);
     if (duplicate !== -1) {
-      showNotification("Duplicate shortcut key detected!", "is-danger");
+      showNotification("This key is already used.", "is-danger is-light");
       return;
     }
 
     if (idx !== null) {
       list[idx] = { key: keyVal, url: urlVal };
-      showNotification("Shortcut updated successfully!", "is-success");
+      showNotification("Shortcut updated successfully.", "is-success is-light");
     } else {
       list.push({ key: keyVal, url: urlVal });
-      showNotification("Shortcut added successfully!", "is-success");
+      showNotification("Shortcut added sucessfully.", "is-success is-light");
     }
     
     saveCustomShortcuts(list);
@@ -155,7 +159,7 @@ document.getElementById('custom-shortcut-list').addEventListener('click', (e) =>
     list.splice(idx, 1);
     saveCustomShortcuts(list);
     renderCustomShortcuts();
-    showNotification("Shortcut removed...", "is-danger");
+    showNotification("Shortcut removed", "is-danger is-light");
   } else if (editBtn) {
     const idx = +editBtn.dataset.idx;
     const item = getCustomShortcuts()[idx];
@@ -167,11 +171,11 @@ function renderCustomShortcuts() {
   const list = getCustomShortcuts();
   const container = document.getElementById("custom-shortcut-list");
   if (!list.length) {
-    container.innerHTML = `<p class="has-text-grey-light has-text-centered">No custom shortcuts yet.</p>`;
+    container.innerHTML = `<p class="has-text-grey-light has-text-centered">No custom shortcuts yet :(</p>`;
     return;
   }
   let table = `<table class="table is-fullwidth is-hoverable">`;
-  table += `<thead><tr><th>Shortcut</th><th>URL/Action</th><th></th></tr></thead><tbody>`;
+  table += `<thead><tr><th>Shortcut key</th><th>URL</th><th></th></tr></thead><tbody>`;
   table += list.map((item, idx) => {
     const displayUrl = item.url.length > 15 ? item.url.slice(0, 15) + "..." : item.url;
     return `
