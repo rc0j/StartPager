@@ -20,7 +20,7 @@ document.getElementById("reset_button").addEventListener("click", function () {
           <p>Are you sure you want to reset all your data? This action cannot be undone.</p>
           <br>
           <div class="buttons is-right">
-            <button class="button is-danger" id="confirm-reset">Yes, this is fine</button>
+            <button class="button is-danger is-outlined" id="confirm-reset">Yes, I'm sure</button>
             <button class="button" id="cancel-reset">Cancel</button>
           </div>
         </div>
