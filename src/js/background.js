@@ -19,7 +19,7 @@ document.querySelector("#save-image").addEventListener("click", () => {
     return;
   }
   processingBg.className = "notification is-success";
-  processingBg.innerHTML = 'Background saved successfully..';
+  processingBg.innerHTML = 'Background saved, please wait a moment..';
   localStorage.setItem("image_url", imageUrlValue);
   localStorage.removeItem("imageupload");
   background_body.style.backgroundImage = `url(${imageUrlValue})`;
@@ -32,13 +32,13 @@ inputFile.addEventListener("change", (event) => {
   if (image.size / 1024 / 1024 >= 4) {
     processingBg.className = "notification is-danger is-light";
     processingBg.innerHTML =
-      'Error! The selected image exceeds the 4MB size-limit.';
+      'The selected image exceeds the 4MB size-limit, please choose a smaller image.';
     return;
   }
 
   processingBg.className = "notification is-success";
   processingBg.innerHTML =
-    'Image uploaded and set as background successfully..';
+    'Image uploaded, please wait a moment..';
   localStorage.removeItem("image_url");
 
   const reader = new FileReader();
