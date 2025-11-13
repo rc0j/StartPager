@@ -3,6 +3,10 @@
     "{aa7b057d-721f-4ed8-ae73-563f767006ee}": {
       "updates": [
         {
+          "version": "7.85.0",
+          "update_link": "https://github.com/raifcoonjah/StartPager/releases/download/v7.85.0/6a85ba291d39426e8c13-7.85.0.xpi"
+        },
+        {
           "version": "7.84.0",
           "update_link": "https://github.com/rc0j/StartPager/releases/download/untagged-146e42f339c8f7a15834/2919abd0da4645489da0-7.84.0.xpi"
         },
