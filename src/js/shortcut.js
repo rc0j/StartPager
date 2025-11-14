@@ -31,15 +31,39 @@ function renderShortcutIconsBar() {
     bar.innerHTML = limitedShortcuts.map(item => {
       const favicon = getFavicon(item.url);
       const name = getSiteName(item.url);
+      // compute a safe domain string for fallback use (hostname preferred)
+      let domainForFallback = '';
+      try {
+        domainForFallback = encodeURIComponent((new URL(item.url)).hostname);
+      } catch (e) {
+        domainForFallback = encodeURIComponent(item.url);
+      }
+      // store the URL and fallback domain as data attributes and avoid inline handlers, should fix firefox issue.
       return `
-        <button onclick="window.open('${item.url}', '_blank')" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;">
+        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
           <figure class="image is-32x32 mr-2 mb-0">
-        <img src="${favicon}" alt="icon" onerror="this.src='https://www.google.com/s2/favicons?domain=${encodeURIComponent(item.url)}&sz=32'" />
+            <img class="shortcut-favicon" src="${favicon}" alt="icon" data-domain="${domainForFallback}" />
           </figure>
           <span class="has-text-weight-medium">${name}</span>
         </button>
       `;
     }).join('');
+
+    // attach click handlers and image error handlers after elements exist (no inline attributes)
+    bar.querySelectorAll('.shortcut-icon').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        if (url) {
+          window.open(url, '_blank');
+        }
+      });
+    });
+    bar.querySelectorAll('.shortcut-favicon').forEach(img => {
+      img.addEventListener('error', () => {
+        const domain = img.getAttribute('data-domain') || '';
+        img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+      });
+    });
   } else {
     bar.innerHTML = '';
     bar.style.display = 'none';
