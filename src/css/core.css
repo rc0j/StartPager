@@ -130,6 +130,7 @@ body {
 
 .the-pill:hover {
   border: 1px solid var(--bulma-primary-soft);
+  outline: 3px solid var(--bulma-primary-soft);
 }
 
 /* Add border radius to line
