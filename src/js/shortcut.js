@@ -27,7 +27,7 @@ function renderShortcutIconsBar() {
   const shortcuts = getCustomShortcuts();
   if (show && shortcuts.length) {
     bar.style.display = '';
-    const limitedShortcuts = shortcuts.slice(0, 5); // limit to 5 icons for now
+    const limitedShortcuts = shortcuts.slice(0, 6); // limit to 5 icons for now
     bar.innerHTML = limitedShortcuts.map(item => {
       const favicon = getFavicon(item.url);
       const name = getSiteName(item.url);
@@ -61,7 +61,7 @@ function renderShortcutIconsBar() {
     bar.querySelectorAll('.shortcut-favicon').forEach(img => {
       img.addEventListener('error', () => {
         const domain = img.getAttribute('data-domain') || '';
-        img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+        img.src = `https://icons.duckduckgo.com/ip3/${decodeURIComponent(domain)}.ico`;
       });
     });
   } else {
@@ -249,15 +249,7 @@ document.addEventListener("keydown", function (event) {
   const tag = document.activeElement.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA" || document.activeElement.isContentEditable) return;
   const shortcuts = {
-    g: "https://github.com",
-    y: "https://youtube.com",
-    r: "https://reddit.com",
-    p: "https://mail.proton.me",
-    x: "https://x.com",
-    c: "https://chatgpt.com",
-    m: "https://mail.google.com",
-    i: "https://instagram.com",
-    G: "https://gitlab.com",
+    // all default shortcuts removed.
   };
   if (event.shiftKey && event.key === "S") {
     const sidebar = document.querySelector(".sidebar-trigger");
