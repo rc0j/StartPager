@@ -1,5 +1,14 @@
 # Changelog
 
+## [Version 7.86.3]
+- All default shortcuts except Open settings were removed.
+- Change icons providers to duckduckgo, should provide slightly better privacy.
+- Add outline to `.the-pill`
+
+#### Shortcut icons
+- Improve experience when hovering on shortcut icons.
+- Increase the number of shortcut icons to 8 icons.
+
 ## [Version 7.85.0]
 #### Settings
 - Settings was slighly redesigned and was heavily reorganised to make things easier to navigate. 

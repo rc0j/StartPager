@@ -27,7 +27,7 @@ function renderShortcutIconsBar() {
   const shortcuts = getCustomShortcuts();
   if (show && shortcuts.length) {
     bar.style.display = '';
-    const limitedShortcuts = shortcuts.slice(0, 6); // limit to 5 icons for now
+    const limitedShortcuts = shortcuts.slice(0, 8); // limit to 8 icons for now
     bar.innerHTML = limitedShortcuts.map(item => {
       const favicon = getFavicon(item.url);
       const name = getSiteName(item.url);

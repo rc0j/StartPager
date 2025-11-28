@@ -185,3 +185,9 @@ table {
     max-width: 30%;
   }
 }
+
+.shortcut-icon:hover {
+  outline: 3px solid var(--bulma-primary-soft);
+  transform: scale(1.015);
+  transition: transform 0.2s, color 0.2s;
+}
