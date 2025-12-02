@@ -3,6 +3,10 @@
     "{748c022e-c513-4a7d-98e2-841da480ace6}": {
       "updates": [
         {
+          "version": "7.85.4",
+          "update_link": "https://github.com/raifcoonjah/StartPager/releases/download/v7.85.4/6a85ba291d39426e8c13-7.85.4.xpi"
+        },
+        {
           "version": "7.85.2",
           "update_link": "https://github.com/raifcoonjah/StartPager/releases/download/v7.85.2/6a85ba291d39426e8c13-7.85.2.xpi"
         },
