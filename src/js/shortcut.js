@@ -1,13 +1,14 @@
 function getSiteName(url) {
   try {
     const u = new URL(url);
-    let host = u.hostname.replace(/^www\./, "");
+    let name = u.hostname.replace(/^www\./, "");
     if (u.pathname && u.pathname !== "/") {
-      return host + u.pathname;
+      name += u.pathname;
     }
-    return host;
+    return name.length > 8 ? name.slice(0, 8) + "..." : name;
   } catch {
-    return url;
+    const s = String(url || "");
+    return s.length > 8 ? s.slice(0, 8) + "..." : s;
   }
 }
 
@@ -58,10 +59,73 @@ function renderShortcutIconsBar() {
         }
       });
     });
+    // Cache favicons as data URLs in localStorage so they don't need to be refetched on each new tab.
     bar.querySelectorAll('.shortcut-favicon').forEach(img => {
+      const rawDomain = img.getAttribute('data-domain') || '';
+      const domain = decodeURIComponent(rawDomain);
+      const cacheKey = domain || img.getAttribute('src') || img.getAttribute('data-src') || '';
+
+      const loadCache = () => {
+      try {
+        return JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
+      } catch {
+        return {};
+      }
+      };
+      const saveCache = (c) => {
+      try { localStorage.setItem('shortcutIconCache', JSON.stringify(c)); } catch {}
+      };
+
+      const cache = loadCache();
+      if (cache[cacheKey]) {
+      img.src = cache[cacheKey];
+      return;
+      }
+
+      // Try to fetch the current src and convert to data URL to store in cache.
+      const tryFetchAndCache = async (url) => {
+      try {
+        const res = await fetch(url, { mode: 'cors' });
+        if (!res.ok) throw new Error('fetch failed');
+        const blob = await res.blob();
+        const reader = new FileReader();
+        reader.onloadend = () => {
+        try {
+          cache[cacheKey] = reader.result;
+          saveCache(cache);
+          img.src = reader.result;
+        } catch {}
+        };
+        reader.readAsDataURL(blob);
+        return true;
+      } catch {
+        return false;
+      }
+      };
+
+      // Start with the src already set by render (getFavicon). If it fails, fallback to DuckDuckGo.
+      const primary = img.getAttribute('src') || `https://${domain}/favicon.ico`;
+      img.src = primary;
+
+      // background attempt to fetch and cache the primary favicon
+      (async () => {
+      const ok = await tryFetchAndCache(primary);
+      if (!ok) {
+        const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
+        // set temporary fallback and try to cache that
+        img.src = ddg;
+        await tryFetchAndCache(ddg);
+      }
+      })();
+
+      // If the image element errors later, immediately use cached value or duckduckgo url
       img.addEventListener('error', () => {
-        const domain = img.getAttribute('data-domain') || '';
-        img.src = `https://icons.duckduckgo.com/ip3/${decodeURIComponent(domain)}.ico`;
+      const c = loadCache();
+      if (c[cacheKey]) {
+        img.src = c[cacheKey];
+      } else {
+        img.src = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
+      }
       });
     });
   } else {
