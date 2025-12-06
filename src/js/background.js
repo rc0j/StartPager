@@ -79,3 +79,36 @@ document.querySelector("#delete_custom_image").addEventListener("click", () => {
       'Background image has been removed, please reload the page to see this change in effect...';
   }
 });
+
+const randomPicsumBtn = document.querySelector("#random_unsplash_bg");
+
+randomPicsumBtn.addEventListener("click", async () => {
+  const originalBtnText = randomPicsumBtn.textContent;
+  processingBg.className = "notification is-info";
+  randomPicsumBtn.classList.add("is-loading");
+  processingBg.innerHTML = 'Fetching a random background, please wait...';
+
+  // Use the highest available resolution from Picsum (5000x3333) to get much better images
+  const width = 5000;
+  const height = 3333;
+
+  try {
+    const apiUrl = `https://picsum.photos/${width}/${height}`;
+    const response = await fetch(apiUrl);
+    const imageUrl = response.url;
+
+    setTimeout(() => {
+      localStorage.setItem("image_url", imageUrl);
+      localStorage.removeItem("imageupload");
+      background_body.style.backgroundImage = `url(${imageUrl})`;
+      processingBg.className = "notification is-success";
+      processingBg.innerHTML = 'Random background has been applied successfully';
+      randomPicsumBtn.classList.remove("is-loading");
+      randomPicsumBtn.textContent = originalBtnText;
+    }, 1000);
+  } catch (error) {
+    processingBg.className = "notification is-danger is-light";
+    processingBg.innerHTML = 'Failed to fetch a random background. Please try again.';
+    randomPicsumBtn.textContent = originalBtnText;
+  }
+});
