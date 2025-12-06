@@ -1,5 +1,13 @@
 # Changelog
 
+## [Version 7.87.0]
+Final release of the year! To recap: last year I started from scratch with the goal of turning Saturn Startpage into a more modern and ultra-fast startpage, and it’s been super fun. We’re closer than ever to having (somewhat) feature parity with the original Saturn Startpage. I’m excited for next year and expect a new **stable** release around mid-February if everything goes well :)
+
+## New features:
+- Added an appearance option, allowing you to tweak various aspects of Startpager.
+- Added an option to apply white text to all home page labels.
+- Added an option to use a random wallpaper, fetched from picsum.photos. (Beta)
+
 ## [Version 7.86.4]
 - All default shortcuts except Open settings were removed.
 - Change icons providers to duckduckgo, should provide slightly better privacy.
