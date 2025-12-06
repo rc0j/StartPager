@@ -5,10 +5,10 @@ function getSiteName(url) {
     if (u.pathname && u.pathname !== "/") {
       name += u.pathname;
     }
-    return name.length > 8 ? name.slice(0, 8) + "..." : name;
+    return name.length > 10 ? name.slice(0, 10) + "..." : name;
   } catch {
     const s = String(url || "");
-    return s.length > 8 ? s.slice(0, 8) + "..." : s;
+    return s.length > 10 ? s.slice(0, 10) + "..." : s;
   }
 }
 
