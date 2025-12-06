@@ -152,3 +152,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
+// APPEARANCE SETTINGS 
+// TODO: MOVE TO A NEW JS FILE.
+document.getElementById("toggle-white-font").addEventListener("change", function () {
+  const isChecked = this.checked;
+  localStorage.setItem("whiteFontColor", isChecked);
+  applyWhiteFontColor(isChecked);
+});
+function applyWhiteFontColor(isWhite) {
+  const elements = document.querySelectorAll("#time, #date, #greetings");
+  elements.forEach(el => {
+    el.style.color = isWhite ? "white" : "";
+  });
+
+  const line = document.getElementById("line");
+  if (line) {
+    line.style.borderColor = isWhite ? "white" : "";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const isWhite = localStorage.getItem("whiteFontColor") === "true";
+  document.getElementById("toggle-white-font").checked = isWhite;
+  applyWhiteFontColor(isWhite);
+});
