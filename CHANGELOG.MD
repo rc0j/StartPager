@@ -7,6 +7,7 @@ Final release of the year! To recap: last year I started from scratch with the g
 - Added an appearance option, allowing you to tweak various aspects of Startpager.
 - Added an option to apply white text to all home page labels.
 - Added an option to use a random wallpaper, fetched from picsum.photos. (Beta)
+- Added option to change Time font size (up to 350px).
 
 ## [Version 7.86.4]
 - All default shortcuts except Open settings were removed.

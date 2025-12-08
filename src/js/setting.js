@@ -178,3 +178,26 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("toggle-white-font").checked = isWhite;
   applyWhiteFontColor(isWhite);
 });
+
+const timeFontSizeInput = document.getElementById("time-font-size");
+const timeFontSizeValue = document.getElementById("time-font-size-value");
+
+timeFontSizeInput.addEventListener("input", function () {
+  const fontSize = this.value + "px";
+  timeFontSizeValue.textContent = fontSize;
+  localStorage.setItem("timeFontSize", fontSize);
+  applyTimeFontSize(fontSize);
+});
+
+function applyTimeFontSize(size) {
+  const timeElement = document.getElementById("time");
+  if (timeElement) {
+    timeElement.style.fontSize = size;
+  }
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const savedSize = localStorage.getItem("timeFontSize") || "96px";
+  timeFontSizeInput.value = parseInt(savedSize, 10);
+  timeFontSizeValue.textContent = savedSize;
+  applyTimeFontSize(savedSize);
+}); 
