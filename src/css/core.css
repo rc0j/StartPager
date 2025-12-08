@@ -192,3 +192,8 @@ table {
   transform: scale(1.015);
   transition: transform 0.2s, color 0.2s;
 }
+
+/* bulma css decrease size of text inside notification */
+.notification {
+  font-size: 0.9rem;
+}

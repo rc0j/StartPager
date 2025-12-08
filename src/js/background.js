@@ -86,7 +86,7 @@ randomPicsumBtn.addEventListener("click", async () => {
   const originalBtnText = randomPicsumBtn.textContent;
   processingBg.className = "notification is-info";
   randomPicsumBtn.classList.add("is-loading");
-  processingBg.innerHTML = 'Fetching a random background, please wait...';
+  processingBg.innerHTML = 'Fetching a random background from Picsum Photos...';
 
   // Use the highest available resolution from Picsum (5000x3333) to get much better images
   const width = 5000;
@@ -102,13 +102,13 @@ randomPicsumBtn.addEventListener("click", async () => {
       localStorage.removeItem("imageupload");
       background_body.style.backgroundImage = `url(${imageUrl})`;
       processingBg.className = "notification is-success";
-      processingBg.innerHTML = 'Random background has been applied successfully';
+      processingBg.innerHTML = 'Random background has been applied successfully. It may take a few seconds to appear.';
       randomPicsumBtn.classList.remove("is-loading");
       randomPicsumBtn.textContent = originalBtnText;
     }, 1000);
   } catch (error) {
     processingBg.className = "notification is-danger is-light";
-    processingBg.innerHTML = 'Failed to fetch a random background. Please try again.';
+    processingBg.innerHTML = 'Failed to fetch a random background. Please reload the page and try again.';
     randomPicsumBtn.textContent = originalBtnText;
   }
 });
