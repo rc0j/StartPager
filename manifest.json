@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Start Pager",
   "short_name": "startpager",
-  "version": "7.85.4",
+  "version": "7.87.0",
   "description": "Free, open-source new tab focused on being zen and ultra fast.",
   "author": "Raif Coonjah (raifcoonjah)",
   "icons": {
@@ -18,7 +18,7 @@
   "applications": {
     "gecko": {
       "id": "{748c022e-c513-4a7d-98e2-841da480ace6}",
-      "update_url": "https://raw.githubusercontent.com/rc0j/Saturn-startpage/master/updates_v8.json"
+      "update_url": "https://raw.githubusercontent.com/raifcoonjah/StartPager/refs/heads/saturn8/updates_v8.json"
     }
   },
   "permissions": ["storage"]
