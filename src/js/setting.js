@@ -48,24 +48,30 @@ document.getElementById("reset_button").addEventListener("click", function () {
   }
 });
 
-document.getElementById("open_settings").addEventListener("click", function () {
-  document.querySelector(".sidebar").classList.toggle("open");
+
+const openBtn = document.getElementById("open_settings");
+const sidebar = document.querySelector(".sidebar");
+
+openBtn.addEventListener("click", function () {
+  sidebar.classList.toggle("open");
+  openBtn.classList.toggle("is-hidden");
 });
 
 document.getElementById("close_sidebar").addEventListener("click", function () {
-  document.querySelector(".sidebar").classList.remove("open");
+  sidebar.classList.remove("open");
+  openBtn.classList.remove("is-hidden");
 });
 
 document.addEventListener("click", function (event) {
-  const sidebar = document.querySelector(".sidebar");
-  const trigger = document.getElementById("open_settings");
-
-  if (!sidebar.contains(event.target) && event.target !== trigger) {
+  if (
+    !sidebar.contains(event.target) &&
+    !openBtn.contains(event.target)
+  ) {
     sidebar.classList.remove("open");
+    openBtn.classList.remove("is-hidden");
   }
 });
 
-//
 document.addEventListener("DOMContentLoaded", function () {
   if (!localStorage.getItem("welcomeShown")) {
     const modal = document.createElement("div");

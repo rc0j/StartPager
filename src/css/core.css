@@ -126,6 +126,7 @@ body {
 .the-pill {
   opacity: 0.7;
   border: 1px solid transparent;
+  background-color: var(--bulma-scheme-main);
 }
 
 .the-pill:hover {
@@ -133,6 +134,11 @@ body {
   outline: 3px solid var(--bulma-primary-soft);
 }
 
+.open-settings-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
 /* Add border radius to line
 TODO: Handle this better.
  */
@@ -196,4 +202,10 @@ table {
 /* bulma css decrease size of text inside notification */
 .notification {
   font-size: 0.9rem;
+}
+
+.open-settings-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
 }
