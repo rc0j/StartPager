@@ -1,5 +1,13 @@
 # Changelog
 
+## [Version 7.87.1]
+- Added a new settings button, it should now be easier to see and click.
+
+
+## Bug fixes
+- Various light theme fixes and improvements.
+
+
 ## [Version 7.87.0]
 Final release of the year! To recap: last year I started from scratch with the goal of turning Saturn Startpage into a more modern and ultra-fast startpage, and it’s been super fun. We’re closer than ever to having (somewhat) feature parity with the original Saturn Startpage. I’m excited for next year and expect a new **stable** release around mid-February if everything goes well :)
 

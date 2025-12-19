@@ -147,6 +147,12 @@ TODO: Handle this better.
 }
 
 /* Blur effect for sidebar */
+.open-settings-btn {
+  backdrop-filter: blur(10px);
+  background-color: rgba(208, 208, 208, 0.881);
+  color: #000;
+}
+
 .sidebar, table {
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.795);
@@ -155,6 +161,10 @@ TODO: Handle this better.
 @media (prefers-color-scheme: dark) {
   .sidebar {
     background-color: hsla(220, 13%, 9%, 0.885)
+  }
+  .open-settings-btn {
+    background-color: rgba(48, 48, 48, 0.903);
+    color: #fff;
   }
 }
 
