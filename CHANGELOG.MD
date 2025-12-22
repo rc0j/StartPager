@@ -2,10 +2,16 @@
 
 ## [Version 7.87.1]
 - Added a new settings button, it should now be easier to see and click.
-
-
-## Bug fixes
+- Added an option to switch Time font to something a bit more vintage.
+- Fixed a very important bug that causes slow downs when opening a new tab as it needs to connect to duckduckgo and fetch the favicon everytime for all shortcuts. Sadly some icons still need to fetched everytime but this fix should decrease the amount of time it takes. (hopefully in the future i'm able to find another solution for this!)
 - Various light theme fixes and improvements.
+- Reduce font-size of Notifications, this should make them look less out of place. 
+- Reorganized core.css and did some clean up.
+
+#### Animations 
+##### This release includes several animation fixes
+- Improved shortcut icon hover animation. 
+- Improved opening and closing settings-sidebar animation.
 
 
 ## [Version 7.87.0]

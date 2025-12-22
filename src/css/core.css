@@ -5,15 +5,16 @@
 \___/ \____//_/    \___/(_)\___//____//____/  
                                                */
 
-/* 
-========
- + Import +
-========
-*/
+/* ==========================================
+   IMPORTS
+   ========================================== */
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css";
 @import url("./bulma.min.css");
 
+/* ==========================================
+   BASE STYLES
+   ========================================== */
 html,
 body {
   font-family: "Inter", sans-serif;
@@ -25,6 +26,9 @@ body {
   overflow: hidden;
 }
 
+/* ==========================================
+   MAIN SECTION
+   ========================================== */
 .main_section {
   display: flex;
   flex-direction: column;
@@ -41,60 +45,9 @@ body {
   }
 }
 
-.quote {
-  font-style: italic;
-}
-
-.line {
-  border-top: 2px solid #d7d7d7e7;
-  width: 12%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/* 
-========
-+ Saturn core components +
-+ Settings sidebar +
-========
-*/
-.sidebar {
-  width: 100%;
-  max-width: 450px;
-  height: 100vh;
-  background-color: var(--bulma-scheme-main);
-  position: fixed;
-  right: -100%;
-  top: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-  z-index: 999;
-  overflow-y: auto;
-  padding-top: 50px;
-  transition: right 0.2s ease-in-out;
-}
-
-.sidebar.open {
-  right: 0;
-}
-
-.sidebar-trigger {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #00d1b2; /* Bulma primary color */
-}
-
-.setting-content {
-  padding: 15px;
-  margin-top: -50px;
-}
-
-/* 
-========
-+ Header good morning text and time +
-========
-*/
-
+/* ==========================================
+   HEADER - TIME & GREETINGS
+   ========================================== */
 .greetings {
   font-weight: 500;
   text-align: center;
@@ -122,80 +75,42 @@ body {
   }
 }
 
-/* [The Pill] Button */
-.the-pill {
-  opacity: 0.7;
-  border: 1px solid transparent;
-  background-color: var(--bulma-scheme-main);
+/* ==========================================
+   DECORATIVE ELEMENTS
+   ========================================== */
+.quote {
+  font-style: italic;
 }
 
-.the-pill:hover {
-  border: 1px solid var(--bulma-primary-soft);
-  outline: 3px solid var(--bulma-primary-soft);
-}
-
-.open-settings-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-}
-/* Add border radius to line
-TODO: Handle this better.
- */
 .line {
+  border-top: 2px solid #d7d7d7e7;
   border-radius: 2px;
+  width: 12%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-/* Blur effect for sidebar */
-.open-settings-btn {
-  backdrop-filter: blur(10px);
-  background-color: rgba(208, 208, 208, 0.881);
-  color: #000;
-}
-
-.sidebar, table {
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.795);
-}
-
-@media (prefers-color-scheme: dark) {
-  .sidebar {
-    background-color: hsla(220, 13%, 9%, 0.885)
-  }
-  .open-settings-btn {
-    background-color: rgba(48, 48, 48, 0.903);
-    color: #fff;
-  }
-}
-
-
-table {
-  border-radius: var(--bulma-radius) !important;
-}
-
-/* Dynamic Bulma-friendly decorated title */
+/* Decorated Title */
 .is-decorated {
-  display: flex;               /* becomes a flex row so pseudo elements behave like flex items */
+  display: flex;
   align-items: center;
-  justify-content: center;     /* keep text centered (works with Bulma's .has-text-centered too) */
-  gap: 1rem;                   /* space between text and lines */
+  justify-content: center;
+  gap: 1rem;
   width: 100%;
-  white-space: nowrap;         /* prevent wrapped title from mis-sizing the lines */
+  white-space: nowrap;
 }
 
-/* the lines themselves — decorative only */
 .is-decorated::before,
 .is-decorated::after {
   content: "";
-  flex: 1 1 0;                /* grow to fill available space */
-  height: 2px;                /* thickness of the rule */
-  background: currentColor;   /* matches the text color (Bulma color classes work) */
-  opacity: 0.05;              /* subtle by default */
-  max-width: 45%;             /* prevents absurdly long rules on very wide screens */
+  flex: 1 1 0;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.05;
+  max-width: 45%;
   border-radius: 20px;
 }
 
-/* Make rules shorter on narrow viewports */
 @media (max-width: 768px) {
   .is-decorated::before,
   .is-decorated::after {
@@ -203,19 +118,92 @@ table {
   }
 }
 
-.shortcut-icon:hover {
-  outline: 3px solid var(--bulma-primary-soft);
-  transform: scale(1.015);
-  transition: transform 0.2s, color 0.2s;
-}
+/* ==========================================
+   BUTTONS
+   ========================================== */
 
-/* bulma css decrease size of text inside notification */
-.notification {
-  font-size: 0.9rem;
+.open-settings-btn:hover {
+  outline: 3px solid var(--bulma-primary-soft);
 }
 
 .open-settings-btn {
   position: fixed;
   top: 1rem;
   right: 1rem;
+  backdrop-filter: blur(10px);
+  background-color: rgba(208, 208, 208, 0.881);
+  color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .open-settings-btn {
+    background-color: rgba(48, 48, 48, 0.903);
+    color: #fff;
+  }
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  padding-top: 50px;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.795);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-trigger {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #00d1b2;
+}
+
+.setting-content {
+  padding: 15px;
+  margin-top: -50px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: hsla(220, 13%, 9%, 0.885);
+  }
+}
+
+/* ==========================================
+   COMPONENTS
+   ========================================== */
+.shortcut-icon {
+  transition: transform 0.2s ease-out, outline 0.15s ease-out;
+}
+
+.shortcut-icon:hover {
+  outline: 3px solid var(--bulma-primary-soft);
+  transform: scale(1.035);
+  transition: transform 0.2s ease-out, outline 0.15s ease-out;
+}
+
+.notification {
+  font-size: 0.9rem;
+}
+
+table {
+  border-radius: var(--bulma-radius) !important;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.795);
 }

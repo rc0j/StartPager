@@ -207,3 +207,22 @@ document.addEventListener("DOMContentLoaded", function () {
   timeFontSizeValue.textContent = savedSize;
   applyTimeFontSize(savedSize);
 }); 
+
+document.getElementById("toggle-time-font-style").addEventListener("change", function () {
+  const isChecked = this.checked;
+  localStorage.setItem("timeFontStyleItalicVintage", isChecked);
+  applyTimeFontStyle(isChecked);
+});
+function applyTimeFontStyle(isItalicVintage) {
+  const timeElement = document.getElementById("time");
+  if (timeElement) {
+    if (isItalicVintage) {
+      timeElement.style.fontFamily = "'Playfair Display', 'Baskerville', 'Garamond', serif";
+      timeElement.style.fontWeight = "900";
+    } else {
+      timeElement.style.fontStyle = "";
+      timeElement.style.fontFamily = "";
+      timeElement.style.fontWeight = "";
+    }
+  }
+}

@@ -28,18 +28,16 @@ function renderShortcutIconsBar() {
   const shortcuts = getCustomShortcuts();
   if (show && shortcuts.length) {
     bar.style.display = '';
-    const limitedShortcuts = shortcuts.slice(0, 8); // limit to 8 icons for now
+    const limitedShortcuts = shortcuts.slice(0, 8);
     bar.innerHTML = limitedShortcuts.map(item => {
       const favicon = getFavicon(item.url);
       const name = getSiteName(item.url);
-      // compute a safe domain string for fallback use (hostname preferred)
       let domainForFallback = '';
       try {
         domainForFallback = encodeURIComponent((new URL(item.url)).hostname);
       } catch (e) {
         domainForFallback = encodeURIComponent(item.url);
       }
-      // store the URL and fallback domain as data attributes and avoid inline handlers, should fix firefox issue.
       return `
         <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
           <figure class="image is-32x32 mr-2 mb-0">
@@ -50,7 +48,6 @@ function renderShortcutIconsBar() {
       `;
     }).join('');
 
-    // attach click handlers and image error handlers after elements exist (no inline attributes)
     bar.querySelectorAll('.shortcut-icon').forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
@@ -59,73 +56,74 @@ function renderShortcutIconsBar() {
         }
       });
     });
-    // Cache favicons as data URLs in localStorage so they don't need to be refetched on each new tab.
+
+    // Instead of storing data URLs, store the WORKING favicon URL
     bar.querySelectorAll('.shortcut-favicon').forEach(img => {
       const rawDomain = img.getAttribute('data-domain') || '';
       const domain = decodeURIComponent(rawDomain);
-      const cacheKey = domain || img.getAttribute('src') || img.getAttribute('data-src') || '';
+      const cacheKey = `favicon:${domain}`;
 
       const loadCache = () => {
-      try {
-        return JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
-      } catch {
-        return {};
-      }
+        try {
+          return JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
+        } catch {
+          return {};
+        }
       };
       const saveCache = (c) => {
-      try { localStorage.setItem('shortcutIconCache', JSON.stringify(c)); } catch {}
+        try { localStorage.setItem('shortcutIconCache', JSON.stringify(c)); } catch {}
       };
 
       const cache = loadCache();
+      
+      // Check cache first - if we have a working URL, use it immediately
       if (cache[cacheKey]) {
-      img.src = cache[cacheKey];
-      return;
+        img.src = cache[cacheKey];
+        return; // Skip all the fetching logic
       }
 
-      // Try to fetch the current src and convert to data URL to store in cache.
-      const tryFetchAndCache = async (url) => {
-      try {
-        const res = await fetch(url, { mode: 'cors' });
-        if (!res.ok) throw new Error('fetch failed');
-        const blob = await res.blob();
-        const reader = new FileReader();
-        reader.onloadend = () => {
+      // Test if a URL works by checking the response
+      const testUrl = async (url) => {
         try {
-          cache[cacheKey] = reader.result;
-          saveCache(cache);
-          img.src = reader.result;
-        } catch {}
-        };
-        reader.readAsDataURL(blob);
-        return true;
-      } catch {
-        return false;
-      }
+          const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+          return true; // no-cors always returns opaque response, so just assume it worked
+        } catch {
+          return false;
+        }
       };
 
-      // Start with the src already set by render (getFavicon). If it fails, fallback to DuckDuckGo.
       const primary = img.getAttribute('src') || `https://${domain}/favicon.ico`;
       img.src = primary;
 
-      // background attempt to fetch and cache the primary favicon
+      // Background test: try primary, then fallback to DuckDuckGo
       (async () => {
-      const ok = await tryFetchAndCache(primary);
-      if (!ok) {
-        const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
-        // set temporary fallback and try to cache that
-        img.src = ddg;
-        await tryFetchAndCache(ddg);
-      }
+        // Try loading the primary URL
+        const primaryImg = new Image();
+        primaryImg.onload = () => {
+          cache[cacheKey] = primary;
+          saveCache(cache);
+        };
+        primaryImg.onerror = () => {
+          // Primary failed, use DuckDuckGo
+          const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
+          img.src = ddg;
+          cache[cacheKey] = ddg;
+          saveCache(cache);
+        };
+        primaryImg.src = primary;
       })();
 
-      // If the image element errors later, immediately use cached value or duckduckgo url
+      // If the visible image errors, check cache or use DuckDuckGo
       img.addEventListener('error', () => {
-      const c = loadCache();
-      if (c[cacheKey]) {
-        img.src = c[cacheKey];
-      } else {
-        img.src = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
-      }
+        const c = loadCache();
+        if (c[cacheKey] && c[cacheKey] !== img.src) {
+          img.src = c[cacheKey];
+        } else {
+          const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
+          img.src = ddg;
+          c[cacheKey] = ddg;
+          saveCache(c);
+        }
       });
     });
   } else {
