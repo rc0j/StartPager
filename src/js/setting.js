@@ -213,6 +213,7 @@ document.getElementById("toggle-time-font-style").addEventListener("change", fun
   localStorage.setItem("timeFontStyleItalicVintage", isChecked);
   applyTimeFontStyle(isChecked);
 });
+
 function applyTimeFontStyle(isItalicVintage) {
   const timeElement = document.getElementById("time");
   if (timeElement) {
@@ -226,3 +227,9 @@ function applyTimeFontStyle(isItalicVintage) {
     }
   }
 }
+// save to localstorage 
+document.addEventListener("DOMContentLoaded", function () {
+  const isItalicVintage = localStorage.getItem("timeFontStyleItalicVintage") === "true";
+  document.getElementById("toggle-time-font-style").checked = isItalicVintage;
+  applyTimeFontStyle(isItalicVintage);
+});

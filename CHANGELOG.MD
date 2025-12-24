@@ -1,5 +1,8 @@
 # Changelog
 
+## [Version 7.87.1.1]
+- Fix vintage font not saving after a reload.
+
 ## [Version 7.87.1]
 - Added a new settings button, it should now be easier to see and click.
 - Added an option to switch Time font to something a bit more vintage.
