@@ -188,13 +188,17 @@ body {
    COMPONENTS
    ========================================== */
 .shortcut-icon {
-  transition: transform 0.2s ease-out, outline 0.15s ease-out;
+  transition: transform 0.15s ease-out, outline 0.15s ease-out;
+  border: 1px solid transparent !important;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
 }
 
 .shortcut-icon:hover {
-  outline: 3px solid var(--bulma-primary-soft);
-  transform: scale(1.035);
-  transition: transform 0.2s ease-out, outline 0.15s ease-out;
+/* Use box-shadow instead of outline for perfect rounded corners */
+  box-shadow: 0 0 0 4px var(--bulma-primary-soft);
+  transform: scale(1.025);
+  /* Remove any browser default outline */
+  outline: none;
 }
 
 .notification {

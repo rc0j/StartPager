@@ -1,5 +1,15 @@
 # Changelog
 
+## [Version 7.87.2]
+- Improve transparency of new settings button, it should now look a bit better.
+- Improved stability of caching icons and added a notification to inform users of delay.
+
+## Bug fixes:
+- Fix bug that causes a "white flash" when hovering on shortcut-icons.
+- Fixes to animation and how the border is applied to shortcut-icons, things should be more stable now.
+
+
+
 ## [Version 7.87.1.1]
 - Fix vintage font not saving after a reload.
 

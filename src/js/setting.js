@@ -233,3 +233,42 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("toggle-time-font-style").checked = isItalicVintage;
   applyTimeFontStyle(isItalicVintage);
 });
+
+
+const nightDarkenToggle = document.getElementById("toggle-darken-bg-night");
+
+/**
+ * Applies a darkening overlay using background-blend-mode.
+ * We use a CSS variable to handle the "On/Off" state cleanly.
+ */
+function applyManualDarken() {
+  const isEnabled = localStorage.getItem("darkenBgAtNight") === "true";
+  const body = document.body;
+
+  if (isEnabled) {
+    body.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // 50% darkness
+    body.style.backgroundBlendMode = "darken";
+  } else {
+    body.style.backgroundColor = "transparent";
+    body.style.backgroundBlendMode = "normal";
+  }
+}
+
+// 1. Toggle Listener
+if (nightDarkenToggle) {
+  nightDarkenToggle.addEventListener("change", function () {
+    localStorage.setItem("darkenBgAtNight", this.checked);
+    applyManualDarken();
+  });
+}
+
+// 2. Initialization on Load
+document.addEventListener("DOMContentLoaded", function () {
+  const savedState = localStorage.getItem("darkenBgAtNight") === "true";
+  
+  if (nightDarkenToggle) {
+    nightDarkenToggle.checked = savedState;
+  }
+  
+  applyManualDarken();
+});
