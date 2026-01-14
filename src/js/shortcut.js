@@ -24,112 +24,73 @@ function getFavicon(url) {
 function renderShortcutIconsBar() {
   const bar = document.getElementById('shortcut-icons-bar');
   if (!bar) return;
+
   const show = localStorage.getItem('showShortcutIcons') === 'true';
   const shortcuts = getCustomShortcuts();
-  if (show && shortcuts.length) {
-    bar.style.display = '';
-    const limitedShortcuts = shortcuts.slice(0, 8);
-    bar.innerHTML = limitedShortcuts.map(item => {
-      const favicon = getFavicon(item.url);
-      const name = getSiteName(item.url);
-      let domainForFallback = '';
-      try {
-        domainForFallback = encodeURIComponent((new URL(item.url)).hostname);
-      } catch (e) {
-        domainForFallback = encodeURIComponent(item.url);
-      }
-      return `
-        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
-          <figure class="image is-32x32 mr-2 mb-0">
-            <img class="shortcut-favicon" src="${favicon}" alt="icon" data-domain="${domainForFallback}" />
-          </figure>
-          <span class="has-text-weight-medium">${name}</span>
-        </button>
-      `;
-    }).join('');
 
-    bar.querySelectorAll('.shortcut-icon').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-url');
-        if (url) {
-          window.open(url, '_blank');
-        }
-      });
-    });
-
-    // Instead of storing data URLs, store the WORKING favicon URL
-    bar.querySelectorAll('.shortcut-favicon').forEach(img => {
-      const rawDomain = img.getAttribute('data-domain') || '';
-      const domain = decodeURIComponent(rawDomain);
-      const cacheKey = `favicon:${domain}`;
-
-      const loadCache = () => {
-        try {
-          return JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
-        } catch {
-          return {};
-        }
-      };
-      const saveCache = (c) => {
-        try { localStorage.setItem('shortcutIconCache', JSON.stringify(c)); } catch {}
-      };
-
-      const cache = loadCache();
-      
-      // Check cache first - if we have a working URL, use it immediately
-      if (cache[cacheKey]) {
-        img.src = cache[cacheKey];
-        return; // Skip all the fetching logic
-      }
-
-      // Test if a URL works by checking the response
-      const testUrl = async (url) => {
-        try {
-          const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
-          return true; // no-cors always returns opaque response, so just assume it worked
-        } catch {
-          return false;
-        }
-      };
-
-      const primary = img.getAttribute('src') || `https://${domain}/favicon.ico`;
-      img.src = primary;
-
-      // Background test: try primary, then fallback to DuckDuckGo
-      (async () => {
-        // Try loading the primary URL
-        const primaryImg = new Image();
-        primaryImg.onload = () => {
-          cache[cacheKey] = primary;
-          saveCache(cache);
-        };
-        primaryImg.onerror = () => {
-          // Primary failed, use DuckDuckGo
-          const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
-          img.src = ddg;
-          cache[cacheKey] = ddg;
-          saveCache(cache);
-        };
-        primaryImg.src = primary;
-      })();
-
-      // If the visible image errors, check cache or use DuckDuckGo
-      img.addEventListener('error', () => {
-        const c = loadCache();
-        if (c[cacheKey] && c[cacheKey] !== img.src) {
-          img.src = c[cacheKey];
-        } else {
-          const ddg = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
-          img.src = ddg;
-          c[cacheKey] = ddg;
-          saveCache(c);
-        }
-      });
-    });
-  } else {
+  if (!show || !shortcuts.length) {
     bar.innerHTML = '';
     bar.style.display = 'none';
+    return;
   }
+
+  // 1. Efficiency: Load cache once
+  let cache = {};
+  try {
+    cache = JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
+  } catch (e) { cache = {}; }
+
+  bar.style.display = 'flex';
+  const limitedShortcuts = shortcuts.slice(0, 8);
+
+  // 2. Build HTML: Using Google S2 as the engine
+  // sz=32 fetches a 32x32 icon, which matches your 'is-32x32' figure
+  bar.innerHTML = limitedShortcuts.map(item => {
+    const name = getSiteName(item.url);
+    let domain = '';
+    try { 
+      domain = new URL(item.url).hostname; 
+    } catch (e) { 
+      domain = item.url; 
+    }
+
+    const cacheKey = `favicon:${domain}`;
+    const iconSrc = cache[cacheKey] || `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+
+    return `
+      <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
+        <figure class="image is-32x32 mr-2 mb-0">
+          <img class="shortcut-favicon" 
+               src="${iconSrc}" 
+               alt="" 
+               data-domain="${domain}"
+               onerror="this.src='https://icons.duckduckgo.com/ip3/${domain}.ico';">
+        </figure>
+        <span class="has-text-weight-medium">${name}</span>
+      </button>
+    `;
+  }).join('');
+
+  // 3. Optimized Event Listener: Event Delegation
+  bar.onclick = (e) => {
+    const btn = e.target.closest('.shortcut-icon');
+    if (btn) {
+      const url = btn.getAttribute('data-url');
+      if (url) window.open(url, '_blank');
+    }
+  };
+
+  // 4. Silent Cache: Save the URL only after it successfully loads
+  bar.querySelectorAll('.shortcut-favicon').forEach(img => {
+    img.onload = () => {
+      const domain = img.getAttribute('data-domain');
+      if (domain && !cache[`favicon:${domain}`]) {
+        cache[`favicon:${domain}`] = img.src;
+        // Optimization: Use a small delay or check to avoid spamming localStorage
+        localStorage.setItem('shortcutIconCache', JSON.stringify(cache));
+      }
+    };
+  });
 }
 
 function showNotification(message, type = "is-primary") {
