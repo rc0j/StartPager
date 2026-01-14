@@ -130,14 +130,13 @@ body {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  backdrop-filter: blur(10px);
-  background-color: rgba(208, 208, 208, 0.881);
+  background-color: rgba(208, 208, 208, 0.38);
   color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   .open-settings-btn {
-    background-color: rgba(48, 48, 48, 0.903);
+    background-color: rgba(48, 48, 48, 0.576);
     color: #fff;
   }
 }
