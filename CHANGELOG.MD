@@ -3,6 +3,7 @@
 ## [Version 7.87.2]
 - Improve transparency of new settings button, it should now look a bit better.
 - Improved stability of caching icons and added a notification to inform users of delay.
+- Added a new "Darken background" to help with visibility at night.
 
 ## Bug fixes:
 - Fix bug that causes a "white flash" when hovering on shortcut-icons.
