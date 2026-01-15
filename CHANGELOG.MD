@@ -9,8 +9,6 @@
 - Fix bug that causes a "white flash" when hovering on shortcut-icons.
 - Fixes to animation and how the border is applied to shortcut-icons, things should be more stable now.
 
-
-
 ## [Version 7.87.1.1]
 - Fix vintage font not saving after a reload.
 
