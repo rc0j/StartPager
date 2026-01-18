@@ -74,91 +74,120 @@ document.addEventListener("click", function (event) {
 
 document.addEventListener("DOMContentLoaded", function () {
   if (!localStorage.getItem("welcomeShown")) {
+    // 1. Add Custom CSS for Animations
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95) translateY(10px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      @keyframes backdropBlur {
+        from { backdrop-filter: blur(0px); background: rgba(0,0,0,0); }
+        to { backdrop-filter: blur(4px); background: rgba(10, 10, 10, 0.86); }
+      }
+      .modal-content { animation: fadeInScale 0.4s ease-out; }
+      .modal-background { animation: backdropBlur 0.5s forwards; }
+      .modal-page { animation: fadeInScale 0.3s ease-out; }
+      .box { border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+      code { background-color: #f5f5f5; color: #d63384; padding: 0.2rem 0.4rem; border-radius: 4px; }
+    `;
+    document.head.appendChild(style);
+
+    // 2. Create Modal Structure
     const modal = document.createElement("div");
     modal.className = "modal is-active";
     modal.innerHTML = `
       <div class="modal-background"></div>
       <div class="modal-content">
-      <div class="box">
-        <h6 class="title is-6">Start Pager - Welcome</h6>
-        <div id="modal-pages">
-        <div id="page1" class="modal-page">
-          <h3 class="title is-3">Hey there! 👋</h3>
-          <p>Start Pager or previously known as Saturn Startpage is a free and open-source startpage, designed to be minimal and fast, with a focus on keyboard navigation.</p>
-          <br/>
-          <div class="buttons is-centered">
-          <button class="button is-link" data-page="page2">Let's roll...</button>
+        <div class="box">
+          <div class="is-flex is-justify-content-space-between is-align-items-center mb-4">
+            <h6 class="title is-6 has-text-grey-light">Start Pager // Welcome</h6>
+            <span class="tag is-info is-light">v2.0</span>
+          </div>
+          <div id="modal-pages">
+            <div id="page1" class="modal-page">
+              <h3 class="title is-3">Hey there! 👋</h3>
+              <p>StartPager is a free and open-source startpage, designed to be <strong>minimal and super fast</strong>, with a focus on keyboard navigation.</p>
+              <br/>
+              <div class="buttons is-right">
+                <button class="button is-link is-rounded" data-page="page2" style="background: linear-gradient(90deg, hsla(358, 85%, 68%, 1) 0%, hsla(41, 98%, 49%, 1) 100%); font-weight:800;">Let's roll &rarr;</button>
+              </div>
+            </div>
+            <div id="page2" class="modal-page" style="display: none;">
+              <h3 class="title is-3">What's new?</h3>
+              <p>StartPager is a fresh start, quite different if you are coming from Saturn. I truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</p>
+              <br/>
+              <p class="mb-4">Transitioning from Saturn? Here is why I rebuilt it:</p>
+              <div class="content is-small">
+                <ul>
+                  <li><strong>Modern Core:</strong> Now powered by Bulma.css for better stability and much more modern look.</li>
+                  <li><strong>Feature First:</strong> Easier to add new widgets and shortcuts.</li>
+                  <li><strong>Performance:</strong> Faster load times and cleaner code. 100% free of jquery ;)</li>
+                </ul>
+              </div>
+              <div class="buttons is-centered">
+                <button class="button is-text" data-page="page1">Back</button>
+                <button class="button is-link is-rounded" data-page="page3">Next</button>
+              </div>
+            </div>
+            <div id="page3" class="modal-page" style="display: none;">
+              <h3 class="title is-3">Shortcuts</h3>
+              <p>StartPager is built for <strong>keyboard-first</strong> workflows.</p>
+              <hr/>
+              <div class="notification">
+                <p>To open Settings: <code>Shift</code> + <code>S</code></p>
+              </div>
+              <p class="is-size-7 has-text-centered">More shortcuts are available in the settings sidebar.</p>
+              <br/>
+              <div class="buttons is-centered">
+                <button class="button is-text" data-page="page2">Back</button>
+                <button class="button is-link is-rounded" data-page="page4">Almost there...</button>
+              </div>
+            </div>
+            <div id="page4" class="modal-page" style="display: none;">
+              <h3 class="title is-3">Ready!</h3>
+              <p>Thank you for choosing Start Pager. Enjoy your new workspace.</p>
+              <br/>
+              <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                  <button class="button is-primary" id="close_welcome_modal">Get Started!</button>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div id="page2" class="modal-page" style="display: none;">
-  <h3 class="title is-3">What's new since Saturn?</h3>
-  <p>Coming from the Saturn startpage? You might notice some stuff have change</p>
-  <br/>
-  <h5 class="title is-5">Why the Change?</h5>
-  <h6 class="subtitle is-6">Saturn Startpage was a fork of a already unmaintained startpage built using basic HTML, CSS & JS. This made it increasingly challenging to keep things feeling modern, fast and stable without significant effort.</h6>
-  <h6 class="subtitle is-6">Introducing StartPager! Powered by Bulma.css, a modern CSS framework, this  allows a much more stable and feature first approach without having to worry about how things look and feel</h6>
-  <h6 class="subtitle is-6">StartPager is a fresh start, quite different if you are coming from Saturn. I truly hope you'll give it a try and experience the improvements firsthand before considering the older, unmaintained version.</h6>
-  <div class="buttons is-centered">
-    <button class="button is-link" data-page="page1">Previous</button>
-    <button class="button is-link" data-page="page3">Next</button>
-  </div>
-</div>
-        <div id="page3" class="modal-page" style="display: none;">
-          <h3 class="title is-3">Shortcuts</h3>
-          <p>StartPager is heavily focus on a keyboard-first workflow, let's learn the basics before we continue.</p>
-          <br/>
-          <h5 class="title is-5">Setting page</h5>
-          <h6 class="subtitle is-6">To open Settings sidebar: <code>Shift</code> + <code>S</code> (Give it a try, its free!)</h6>
-          <h6 class="subtitle is-6">More shortcuts can be found under the shortcuts section in the settings sidebar.</h6>
-          <div class="buttons is-centered">
-          <button class="button is-link" data-page="page2">Previous</button>
-          <button class="button is-link" data-page="page4">Next</button>
-          </div>
-        </div>
-        <div id="page4" class="modal-page" style="display: none;">
-          <h6 class="subtitle is-6">Thank you for using Start Pager <3</h6>
-          <div class="buttons is-centered">
-          <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
-            <span class="icon">
-            <i class="fab fa-github"></i>
-            </span>
-            <span>GitHub</span>
-          </a>
-          </div>
-          <div class="buttons is-centered">
-          <button class="button is-link" data-page="page3">Previous</button>
-          <button class="button is-primary" id="close_welcome_modal">Close, goodbye!</button>
-          </div>
-        </div>
-        </div>
-      </div>
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     `;
     document.body.appendChild(modal);
 
+    // 3. Logic for Animated Page Switching
     document.querySelectorAll("[data-page]").forEach(button => {
       button.addEventListener("click", function () {
-        const targetPage = this.getAttribute("data-page");
-        document.querySelectorAll(".modal-page").forEach(page => {
+        const targetPageId = this.getAttribute("data-page");
+        const allPages = document.querySelectorAll(".modal-page");
+        const targetPage = document.getElementById(targetPageId);
+
+        allPages.forEach(page => {
           page.style.display = "none";
         });
-        document.getElementById(targetPage).style.display = "block";
+
+        targetPage.style.display = "block";
       });
     });
 
-    document.getElementById("close_welcome_modal").addEventListener("click", function () {
+    // 4. Close Handlers
+    const closeModal = () => {
       modal.classList.remove("is-active");
       localStorage.setItem("welcomeShown", "true");
-    });
+      // Optional: remove from DOM after fade out
+      setTimeout(() => modal.remove(), 500);
+    };
 
-    document.querySelector(".modal-close").addEventListener("click", function () {
-      modal.classList.remove("is-active");
-      localStorage.setItem("welcomeShown", "true");
-    });
+    document.getElementById("close_welcome_modal").addEventListener("click", closeModal);
+    document.querySelector(".modal-close").addEventListener("click", closeModal);
   }
 });
-
 
 // APPEARANCE SETTINGS 
 // TODO: MOVE TO A NEW JS FILE.
@@ -341,7 +370,7 @@ function restoreLocalStorage(file) {
         localStorage.setItem(key, value);
       }
       
-      showNotification("Welcome back! Data restored successfully! Refreshing page...", "is-success is-light");
+      showNotification("Welcome back! Data restored successfully! Refreshing page..", "is-success is-light");
       
       // Refresh page after 2 seconds to reflect changes
       setTimeout(() => {
