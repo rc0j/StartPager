@@ -201,6 +201,12 @@ body {
   outline: none;
 }
 
+.shortcut-icon i {
+  font-size: 28px;
+  margin-left: 10px;
+  padding: 5px;
+}
+
 .notification {
   font-size: 0.9rem;
 }

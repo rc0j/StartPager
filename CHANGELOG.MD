@@ -1,5 +1,16 @@
 # Changelog
 
+## [Version 7.87.3]
+- Added a new toggle to use a generic globe icon instead of website logo. 
+- Various fixes made to shortcut.js source code.
+- If you add a subreddit link, for example reddit.com/r/homelab, shortcuts will display the subreddit name instead of the full url.
+- Add a backup and restore feature (Still very much a beta)
+
+
+# Bug fixes:
+- Fix bug with new darken toggle.
+
+
 ## [Version 7.87.2]
 - Improve transparency of new settings button, it should now look a bit better.
 - Improved stability of caching icons and added a notification to inform users of delay.

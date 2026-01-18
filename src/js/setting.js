@@ -272,3 +272,127 @@ document.addEventListener("DOMContentLoaded", function () {
   
   applyManualDarken();
 });
+
+//   ____             _                   _____ _             _                               
+//  |  _ \           | |                 / ____| |           | |                              
+//  | |_) | __ _  ___| | ___   _ _ __   | (___ | |_ __ _ _ __| |_ _ __   __ _  __ _  ___ _ __ 
+//  |  _ < / _` |/ __| |/ / | | | '_ \   \___ \| __/ _` | '__| __| '_ \ / _` |/ _` |/ _ \ '__|
+//  | |_) | (_| | (__|   <| |_| | |_) |  ____) | || (_| | |  | |_| |_) | (_| | (_| |  __/ |   
+//  |____/ \__,_|\___|_|\_\\__,_| .__/  |_____/ \__\__,_|_|   \__| .__/ \__,_|\__, |\___|_|   
+//                              | |                              | |           __/ |          
+//                              |_|                              |_|          |___/           
+function showNotification(message, type = "is-primary") {
+  document.querySelectorAll('.custom-notification').forEach(n => n.remove());
+  const notif = Object.assign(document.createElement("div"), {
+    className: `notification custom-notification ${type}`,
+    innerText: message
+  });
+  Object.assign(notif.style, {
+    position: "fixed",  
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: "1000",
+    minWidth: "200px"
+  });
+  document.body.appendChild(notif);
+  setTimeout(() => notif.remove(), 1800);
+}
+
+// Backup all localStorage to JSON file
+function backupLocalStorage() {
+  try {
+    const backup = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      backup[key] = localStorage.getItem(key);
+    }
+    
+    const dataStr = JSON.stringify(backup, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showNotification("Backup created successfully!", "is-success is-light");
+  } catch (error) {
+    console.error('Backup failed:', error);
+    showNotification("Backup failed. Please try again.", "is-danger is-light");
+  }
+}
+
+// Restore localStorage from JSON file
+function restoreLocalStorage(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      
+      // Clear existing localStorage
+      localStorage.clear();
+      
+      // Restore all values
+      for (const [key, value] of Object.entries(backup)) {
+        localStorage.setItem(key, value);
+      }
+      
+      showNotification("Welcome back! Data restored successfully! Refreshing page...", "is-success is-light");
+      
+      // Refresh page after 2 seconds to reflect changes
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.error('Restore failed:', error);
+      showNotification("Invalid backup file. Please select a valid JSON backup.", "is-danger is-light");
+    }
+  };
+  reader.onerror = function() {
+    showNotification("Failed to read file. Please try again.", "is-danger is-light");
+  };
+  reader.readAsText(file);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Backup button
+  const backupBtn = document.getElementById('backup_button');
+  if (backupBtn) {
+    backupBtn.addEventListener('click', backupLocalStorage);
+  }
+  
+  // Restore file input - update file name display
+  const restoreFileInput = document.getElementById('restore_file_input');
+  const restoreFileName = document.getElementById('restore-file-name');
+  if (restoreFileInput && restoreFileName) {
+    restoreFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        restoreFileName.textContent = file.name;
+      } else {
+        restoreFileName.textContent = 'No file selected!';
+      }
+    });
+  }
+  
+  // Restore button
+  const restoreBtn = document.getElementById('restore_button');
+  if (restoreBtn && restoreFileInput) {
+    restoreBtn.addEventListener('click', function() {
+      const file = restoreFileInput.files[0];
+      if (!file) {
+        showNotification("Please select a backup file first!", "is-warning is-light");
+        return;
+      }
+      if (!file.name.endsWith('.json')) {
+        showNotification("Please select a valid JSON backup file!", "is-danger is-light");
+        return;
+      }
+      restoreLocalStorage(file);
+    });
+  }
+});

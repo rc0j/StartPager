@@ -1,9 +1,21 @@
 function getSiteName(url) {
   try {
     const u = new URL(url);
-    let name = u.hostname.replace(/^www\./, "");
-    if (u.pathname && u.pathname !== "/") {
-      name += u.pathname;
+    const hostname = u.hostname.replace(/^www\./, "");
+    const pathname = u.pathname;
+    
+    // Special handling for Reddit subreddits
+    if (hostname.includes('reddit.com') && pathname) {
+      const subredditMatch = pathname.match(/^\/r\/([^\/]+)/);
+      if (subredditMatch) {
+        return `r/${subredditMatch[1]}`;
+      }
+    }
+    
+    // Default behavior
+    let name = hostname;
+    if (pathname && pathname !== "/") {
+      name += pathname;
     }
     return name.length > 10 ? name.slice(0, 10) + "..." : name;
   } catch {
@@ -26,6 +38,7 @@ function renderShortcutIconsBar() {
   if (!bar) return;
 
   const show = localStorage.getItem('showShortcutIcons') === 'true';
+  const useGeneric = localStorage.getItem('useGenericIcons') === 'true';
   const shortcuts = getCustomShortcuts();
 
   if (!show || !shortcuts.length) {
@@ -34,44 +47,68 @@ function renderShortcutIconsBar() {
     return;
   }
 
-  // 1. Efficiency: Load cache once
-  let cache = {};
-  try {
-    cache = JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
-  } catch (e) { cache = {}; }
-
   bar.style.display = 'flex';
   const limitedShortcuts = shortcuts.slice(0, 8);
 
-  // 2. Build HTML: Using Google S2 as the engine
-  // sz=32 fetches a 32x32 icon, which matches your 'is-32x32' figure
-  bar.innerHTML = limitedShortcuts.map(item => {
-    const name = getSiteName(item.url);
-    let domain = '';
-    try { 
-      domain = new URL(item.url).hostname; 
-    } catch (e) { 
-      domain = item.url; 
-    }
+  if (useGeneric) {
+    // Use generic link icon for all shortcuts
+    bar.innerHTML = limitedShortcuts.map(item => {
+      const name = getSiteName(item.url);
+      return `
+        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
+          <span class="icon is-medium mr-2">
+            <i class="fa-solid fa-link"></i>
+          </span>
+          <span class="has-text-weight-medium">${name}</span>
+        </button>
+      `;
+    }).join('');
+  } else {
+    // Use website favicons (original behavior)
+    let cache = {};
+    try {
+      cache = JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
+    } catch (e) { cache = {}; }
 
-    const cacheKey = `favicon:${domain}`;
-    const iconSrc = cache[cacheKey] || `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    bar.innerHTML = limitedShortcuts.map(item => {
+      const name = getSiteName(item.url);
+      let domain = '';
+      try { 
+        domain = new URL(item.url).hostname; 
+      } catch (e) { 
+        domain = item.url; 
+      }
 
-    return `
-      <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
-        <figure class="image is-32x32 mr-2 mb-0">
-          <img class="shortcut-favicon" 
-               src="${iconSrc}" 
-               alt="" 
-               data-domain="${domain}"
-               onerror="this.src='https://icons.duckduckgo.com/ip3/${domain}.ico';">
-        </figure>
-        <span class="has-text-weight-medium">${name}</span>
-      </button>
-    `;
-  }).join('');
+      const cacheKey = `favicon:${domain}`;
+      const iconSrc = cache[cacheKey] || `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
 
-  // 3. Optimized Event Listener: Event Delegation
+      return `
+        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
+          <figure class="image is-32x32 mr-2 mb-0">
+            <img class="shortcut-favicon" 
+                 src="${iconSrc}" 
+                 alt="" 
+                 data-domain="${domain}"
+                 onerror="this.src='https://icons.duckduckgo.com/ip3/${domain}.ico';">
+          </figure>
+          <span class="has-text-weight-medium">${name}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Silent Cache: Save the URL only after it successfully loads
+    bar.querySelectorAll('.shortcut-favicon').forEach(img => {
+      img.onload = () => {
+        const domain = img.getAttribute('data-domain');
+        if (domain && !cache[`favicon:${domain}`]) {
+          cache[`favicon:${domain}`] = img.src;
+          localStorage.setItem('shortcutIconCache', JSON.stringify(cache));
+        }
+      };
+    });
+  }
+
+  // Optimized Event Listener: Event Delegation
   bar.onclick = (e) => {
     const btn = e.target.closest('.shortcut-icon');
     if (btn) {
@@ -79,18 +116,6 @@ function renderShortcutIconsBar() {
       if (url) window.open(url, '_blank');
     }
   };
-
-  // 4. Silent Cache: Save the URL only after it successfully loads
-  bar.querySelectorAll('.shortcut-favicon').forEach(img => {
-    img.onload = () => {
-      const domain = img.getAttribute('data-domain');
-      if (domain && !cache[`favicon:${domain}`]) {
-        cache[`favicon:${domain}`] = img.src;
-        // Optimization: Use a small delay or check to avoid spamming localStorage
-        localStorage.setItem('shortcutIconCache', JSON.stringify(cache));
-      }
-    };
-  });
 }
 
 function showNotification(message, type = "is-primary") {
@@ -111,7 +136,6 @@ function showNotification(message, type = "is-primary") {
   setTimeout(() => notif.remove(), 1800);
 }
 
-  // close modal helper (thanks gemini for the help on this)
 function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
   const existingModal = document.getElementById('custom-shortcut-modal');
   if (existingModal) existingModal.remove();
@@ -142,12 +166,14 @@ function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
             </div>
           </div>
           <div class="field is-grouped is-grouped-right mt-4">
-          <div class="buttons">
-            <button type="submit" class="fix_margin_issue button is-success mr-2" id="save-shortcut-btn">
-              ${idx !== null ? '<i class="fa-solid fa-floppy-disk"></i> Save' : '<i class="fa-solid fa-plus"></i> Add'}
-            </button>
-            <button type="button" class="button is-danger is-outlined" id="cancel-shortcut-btn">Cancel</button>
-          </div>
+            <div class="control">
+              <button type="submit" class="button is-success" id="save-shortcut-btn">
+                ${idx !== null ? '<i class="fa-solid fa-floppy-disk"></i> Save' : '<i class="fa-solid fa-plus"></i> Add'}
+              </button>
+            </div>
+            <div class="control">
+              <button type="button" class="button is-danger is-outlined" id="cancel-shortcut-btn">Cancel</button>
+            </div>
           </div>
         </form>
       </div>
@@ -257,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Toggle for shortcut icons bar
   const toggle = document.getElementById('toggle-shortcut-icons');
   if (toggle) {
-    // Set toggle state from localStorage, default to false
     const enabled = localStorage.getItem('showShortcutIcons') === 'true';
     toggle.checked = enabled;
     toggle.addEventListener('change', function() {
@@ -265,7 +290,19 @@ document.addEventListener("DOMContentLoaded", function() {
       renderShortcutIconsBar();
     });
   }
-  renderCustomShortcuts(); // This will also call renderShortcutIconsBar
+  
+  // Toggle for generic icons
+  const genericToggle = document.getElementById('toggle-generic-shortcut-icons');
+  if (genericToggle) {
+    const useGeneric = localStorage.getItem('useGenericIcons') === 'true';
+    genericToggle.checked = useGeneric;
+    genericToggle.addEventListener('change', function() {
+      localStorage.setItem('useGenericIcons', this.checked);
+      renderShortcutIconsBar();
+    });
+  }
+  
+  renderCustomShortcuts();
 });
 
 document.addEventListener("keydown", function (event) {
