@@ -3,15 +3,15 @@ function getSiteName(url) {
     const u = new URL(url);
     const hostname = u.hostname.replace(/^www\./, "");
     const pathname = u.pathname;
-    
+
     // Special handling for Reddit subreddits
-    if (hostname.includes('reddit.com') && pathname) {
+    if (hostname.includes("reddit.com") && pathname) {
       const subredditMatch = pathname.match(/^\/r\/([^\/]+)/);
       if (subredditMatch) {
         return `r/${subredditMatch[1]}`;
       }
     }
-    
+
     // Default behavior
     let name = hostname;
     if (pathname && pathname !== "/") {
@@ -29,32 +29,33 @@ function getFavicon(url) {
     const u = new URL(url);
     return `${u.protocol}//${u.hostname}/favicon.ico`;
   } catch {
-    return '';
+    return "";
   }
 }
 
 function renderShortcutIconsBar() {
-  const bar = document.getElementById('shortcut-icons-bar');
+  const bar = document.getElementById("shortcut-icons-bar");
   if (!bar) return;
 
-  const show = localStorage.getItem('showShortcutIcons') === 'true';
-  const useGeneric = localStorage.getItem('useGenericIcons') === 'true';
+  const show = localStorage.getItem("showShortcutIcons") === "true";
+  const useGeneric = localStorage.getItem("useGenericIcons") === "true";
   const shortcuts = getCustomShortcuts();
 
   if (!show || !shortcuts.length) {
-    bar.innerHTML = '';
-    bar.style.display = 'none';
+    bar.innerHTML = "";
+    bar.style.display = "none";
     return;
   }
 
-  bar.style.display = 'flex';
+  bar.style.display = "flex";
   const limitedShortcuts = shortcuts.slice(0, 8);
 
   if (useGeneric) {
     // Use generic link icon for all shortcuts
-    bar.innerHTML = limitedShortcuts.map(item => {
-      const name = getSiteName(item.url);
-      return `
+    bar.innerHTML = limitedShortcuts
+      .map((item) => {
+        const name = getSiteName(item.url);
+        return `
         <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
           <span class="icon is-medium mr-2">
             <i class="fa-solid fa-link"></i>
@@ -62,27 +63,33 @@ function renderShortcutIconsBar() {
           <span class="has-text-weight-medium">${name}</span>
         </button>
       `;
-    }).join('');
+      })
+      .join("");
   } else {
     // Use website favicons (original behavior)
     let cache = {};
     try {
-      cache = JSON.parse(localStorage.getItem('shortcutIconCache') || '{}');
-    } catch (e) { cache = {}; }
+      cache = JSON.parse(localStorage.getItem("shortcutIconCache") || "{}");
+    } catch (e) {
+      cache = {};
+    }
 
-    bar.innerHTML = limitedShortcuts.map(item => {
-      const name = getSiteName(item.url);
-      let domain = '';
-      try { 
-        domain = new URL(item.url).hostname; 
-      } catch (e) { 
-        domain = item.url; 
-      }
+    bar.innerHTML = limitedShortcuts
+      .map((item) => {
+        const name = getSiteName(item.url);
+        let domain = "";
+        try {
+          domain = new URL(item.url).hostname;
+        } catch (e) {
+          domain = item.url;
+        }
 
-      const cacheKey = `favicon:${domain}`;
-      const iconSrc = cache[cacheKey] || `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+        const cacheKey = `favicon:${domain}`;
+        const iconSrc =
+          cache[cacheKey] ||
+          `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
 
-      return `
+        return `
         <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${item.url}">
           <figure class="image is-32x32 mr-2 mb-0">
             <img class="shortcut-favicon" 
@@ -94,15 +101,16 @@ function renderShortcutIconsBar() {
           <span class="has-text-weight-medium">${name}</span>
         </button>
       `;
-    }).join('');
+      })
+      .join("");
 
     // Silent Cache: Save the URL only after it successfully loads
-    bar.querySelectorAll('.shortcut-favicon').forEach(img => {
+    bar.querySelectorAll(".shortcut-favicon").forEach((img) => {
       img.onload = () => {
-        const domain = img.getAttribute('data-domain');
+        const domain = img.getAttribute("data-domain");
         if (domain && !cache[`favicon:${domain}`]) {
           cache[`favicon:${domain}`] = img.src;
-          localStorage.setItem('shortcutIconCache', JSON.stringify(cache));
+          localStorage.setItem("shortcutIconCache", JSON.stringify(cache));
         }
       };
     });
@@ -110,44 +118,44 @@ function renderShortcutIconsBar() {
 
   // Optimized Event Listener: Event Delegation
   bar.onclick = (e) => {
-    const btn = e.target.closest('.shortcut-icon');
+    const btn = e.target.closest(".shortcut-icon");
     if (btn) {
-      const url = btn.getAttribute('data-url');
-      if (url) window.open(url, '_blank');
+      const url = btn.getAttribute("data-url");
+      if (url) window.open(url, "_blank");
     }
   };
 }
 
 function showNotification(message, type = "is-primary") {
-  document.querySelectorAll('.custom-notification').forEach(n => n.remove());
+  document.querySelectorAll(".custom-notification").forEach((n) => n.remove());
   const notif = Object.assign(document.createElement("div"), {
     className: `notification custom-notification ${type}`,
-    innerText: message
+    innerText: message,
   });
   Object.assign(notif.style, {
-    position: "fixed",  
+    position: "fixed",
     bottom: "20px",
     left: "50%",
     transform: "translateX(-50%)",
     zIndex: "1000",
-    minWidth: "200px"
+    minWidth: "200px",
   });
   document.body.appendChild(notif);
   setTimeout(() => notif.remove(), 1800);
 }
 
-function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
-  const existingModal = document.getElementById('custom-shortcut-modal');
+function showCustomShortcutModal({ key = "", url = "", idx = null } = {}) {
+  const existingModal = document.getElementById("custom-shortcut-modal");
   if (existingModal) existingModal.remove();
-  const modal = document.createElement('div');
-  modal.id = 'custom-shortcut-modal';
-  modal.className = 'modal is-active';
+  const modal = document.createElement("div");
+  modal.id = "custom-shortcut-modal";
+  modal.className = "modal is-active";
   modal.innerHTML = `
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="box">
         <h4 class="modal-card-title title is-4 mb-0">
-          ${idx !== null ? 'Edit Shortcut' : 'Add Shortcut'}
+          ${idx !== null ? "Edit Shortcut" : "Add Shortcut"}
         </h4>
         <br/>
         <form id="custom-shortcut-form" autocomplete="off">
@@ -181,28 +189,40 @@ function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
   `;
   document.body.appendChild(modal);
 
-  const keyInput = modal.querySelector('#custom-key');
-  const urlInput = modal.querySelector('#custom-url');
-  const form = modal.querySelector('#custom-shortcut-form');
+  const keyInput = modal.querySelector("#custom-key");
+  const urlInput = modal.querySelector("#custom-url");
+  const form = modal.querySelector("#custom-shortcut-form");
   const closeModal = () => modal.remove();
-  modal.querySelector('.modal-background').addEventListener('click', closeModal);
-  modal.querySelector('#cancel-shortcut-btn').addEventListener('click', closeModal);
-  form.addEventListener('submit', (e) => {
+  modal
+    .querySelector(".modal-background")
+    .addEventListener("click", closeModal);
+  modal
+    .querySelector("#cancel-shortcut-btn")
+    .addEventListener("click", closeModal);
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const keyVal = keyInput.value.trim();
     const urlVal = urlInput.value.trim();
 
     if (!keyVal || !urlVal) {
-      showNotification("Please enter both a key and a URL!", "is-danger is-light");
+      showNotification(
+        "Please enter both a key and a URL!",
+        "is-danger is-light",
+      );
       return;
     }
     if (!/^https?:\/\//.test(urlVal)) {
-      showNotification("URL must start with http:// or https://", "is-danger is-lights");
+      showNotification(
+        "URL must start with http:// or https://",
+        "is-danger is-lights",
+      );
       return;
     }
 
     const list = getCustomShortcuts();
-    const duplicate = list.findIndex((item, i) => item.key === keyVal && i !== idx);
+    const duplicate = list.findIndex(
+      (item, i) => item.key === keyVal && i !== idx,
+    );
     if (duplicate !== -1) {
       showNotification("This key is already used.", "is-danger is-light");
       return;
@@ -215,30 +235,33 @@ function showCustomShortcutModal({ key = '', url = '', idx = null } = {}) {
       list.push({ key: keyVal, url: urlVal });
       showNotification("Shortcut added sucessfully.", "is-success is-light");
     }
-    
+
     saveCustomShortcuts(list);
     renderCustomShortcuts();
     closeModal();
   });
 }
 
-document.getElementById('open-custom-shortcut-modal').onclick = showCustomShortcutModal;
-document.getElementById('custom-shortcut-list').addEventListener('click', (e) => {
-  const removeBtn = e.target.closest('.remove-shortcut');
-  const editBtn = e.target.closest('.edit-shortcut');
-  if (removeBtn) {
-    const idx = +removeBtn.dataset.idx;
-    const list = getCustomShortcuts();
-    list.splice(idx, 1);
-    saveCustomShortcuts(list);
-    renderCustomShortcuts();
-    showNotification("Shortcut removed", "is-danger is-light");
-  } else if (editBtn) {
-    const idx = +editBtn.dataset.idx;
-    const item = getCustomShortcuts()[idx];
-    showCustomShortcutModal({ key: item.key, url: item.url, idx });
-  }
-});
+document.getElementById("open-custom-shortcut-modal").onclick =
+  showCustomShortcutModal;
+document
+  .getElementById("custom-shortcut-list")
+  .addEventListener("click", (e) => {
+    const removeBtn = e.target.closest(".remove-shortcut");
+    const editBtn = e.target.closest(".edit-shortcut");
+    if (removeBtn) {
+      const idx = +removeBtn.dataset.idx;
+      const list = getCustomShortcuts();
+      list.splice(idx, 1);
+      saveCustomShortcuts(list);
+      renderCustomShortcuts();
+      showNotification("Shortcut removed", "is-danger is-light");
+    } else if (editBtn) {
+      const idx = +editBtn.dataset.idx;
+      const item = getCustomShortcuts()[idx];
+      showCustomShortcutModal({ key: item.key, url: item.url, idx });
+    }
+  });
 
 function renderCustomShortcuts() {
   const list = getCustomShortcuts();
@@ -249,9 +272,11 @@ function renderCustomShortcuts() {
   }
   let table = `<table class="table is-fullwidth is-hoverable">`;
   table += `<thead><tr><th>Shortcut key</th><th>URL</th><th></th></tr></thead><tbody>`;
-  table += list.map((item, idx) => {
-    const displayUrl = item.url.length > 15 ? item.url.slice(0, 15) + "..." : item.url;
-    return `
+  table += list
+    .map((item, idx) => {
+      const displayUrl =
+        item.url.length > 15 ? item.url.slice(0, 15) + "..." : item.url;
+      return `
       <tr>
         <td><b>${item.key}</b></td>
         <td><a href="${item.url}" target="_blank" title="${item.url}">${displayUrl}</a></td>
@@ -261,7 +286,8 @@ function renderCustomShortcuts() {
         </td>
       </tr>
     `;
-  }).join("");
+    })
+    .join("");
   table += `</tbody></table>`;
   container.innerHTML = table;
   renderShortcutIconsBar();
@@ -279,35 +305,42 @@ function saveCustomShortcuts(list) {
   renderShortcutIconsBar();
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Toggle for shortcut icons bar
-  const toggle = document.getElementById('toggle-shortcut-icons');
+  const toggle = document.getElementById("toggle-shortcut-icons");
   if (toggle) {
-    const enabled = localStorage.getItem('showShortcutIcons') === 'true';
+    const enabled = localStorage.getItem("showShortcutIcons") === "true";
     toggle.checked = enabled;
-    toggle.addEventListener('change', function() {
-      localStorage.setItem('showShortcutIcons', this.checked);
+    toggle.addEventListener("change", function () {
+      localStorage.setItem("showShortcutIcons", this.checked);
       renderShortcutIconsBar();
     });
   }
-  
+
   // Toggle for generic icons
-  const genericToggle = document.getElementById('toggle-generic-shortcut-icons');
+  const genericToggle = document.getElementById(
+    "toggle-generic-shortcut-icons",
+  );
   if (genericToggle) {
-    const useGeneric = localStorage.getItem('useGenericIcons') === 'true';
+    const useGeneric = localStorage.getItem("useGenericIcons") === "true";
     genericToggle.checked = useGeneric;
-    genericToggle.addEventListener('change', function() {
-      localStorage.setItem('useGenericIcons', this.checked);
+    genericToggle.addEventListener("change", function () {
+      localStorage.setItem("useGenericIcons", this.checked);
       renderShortcutIconsBar();
     });
   }
-  
+
   renderCustomShortcuts();
 });
 
 document.addEventListener("keydown", function (event) {
   const tag = document.activeElement.tagName;
-  if (tag === "INPUT" || tag === "TEXTAREA" || document.activeElement.isContentEditable) return;
+  if (
+    tag === "INPUT" ||
+    tag === "TEXTAREA" ||
+    document.activeElement.isContentEditable
+  )
+    return;
   const shortcuts = {
     // all default shortcuts removed.
   };
@@ -322,7 +355,7 @@ document.addEventListener("keydown", function (event) {
     window.location.href = url;
     return;
   }
-  const custom = getCustomShortcuts().find(item => item.key === event.key);
+  const custom = getCustomShortcuts().find((item) => item.key === event.key);
   if (custom) {
     showNotification(`Opening ${custom.url}...`, "is-info");
     window.location.href = custom.url;
