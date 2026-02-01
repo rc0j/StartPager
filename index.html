@@ -7,7 +7,7 @@
                                        /____/                                                            
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,234 +16,463 @@
     <title>New Tab</title>
     <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/css/core.css" />
+    <link rel="stylesheet" href="./src/css/settings.css" />
   </head>
 
   <body>
-   <!-- =+=+= Good morning/afternoon/night and time text =+=+= -->
-  <div class="main_section">
+    <!-- =+=+= Good morning/afternoon/night and time text =+=+= -->
+    <div class="main_section">
       <p class="time" id="time"></p>
       <p class="line" id="line"></p>
       <p class="date" id="date"></p>
       <p class="greetings" id="greetings"></p>
-      <div id="shortcut-icons-bar" class="shortcut-icons-bar is-flex is-flex-wrap-wrap is-justify-content-center mb-4"></div>
+      <div
+        id="shortcut-icons-bar"
+        class="shortcut-icons-bar is-flex is-flex-wrap-wrap is-justify-content-center mb-4"
+      ></div>
     </div>
     <main>
-      <button id="open_settings" class="the-pill button is-dark is-rounded open-settings-btn">
-       <span class="icon">
-        <i class="fas fa-cog"></i>
-      </span>
+      <button
+        id="open_settings"
+        class="the-pill button is-dark is-rounded open-settings-btn"
+      >
+        <span class="icon">
+          <i class="fas fa-cog"></i>
+        </span>
       </button>
       <!-- Sidebar -->
       <div class="sidebar">
         <div class="setting-content">
-            <button id="close_sidebar" class="delete is-medium is-pulled-right"></button>
-          </button>
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Greeting message</h4>
-              <h5 class="title is-5 has-text-weight-medium">Username</h4>
-                <h6 class="subtitle is-6">Type your username, this will be displayed on the homepage. You will see changes in real time</h6>
-            <div class="field">
-              <div class="control">
-              <input class="input" type="text" id="username" placeholder="Username" />
-            </div>
-            </div>
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Background</h4>
-            <h5 class="title is-5 has-text-weight-medium">URL</h4>
-              <h6 class="subtitle is-6">Set a custom background, using URL-based background will require an active internet connection.</h6>
-            <p class="processing_bg"></p>
-            <div class="field">
-              <div class="control">
-              <input type="text" class="input" id="image_url" placeholder="Enter or paste a URL" />
-              </div>
-            </div>
-            <div class="field is-grouped">
-              <div class="control">
-              <button id="save-image" class="button is-success">
-                <span class="icon is-small">
-                  <i class="fas fa-save"></i>
-                </span>
-                <span>Apply</span>
-              </button>
-              </div>
-              <div class="control">
-              <button id="delete_custom_image" class="button is-danger is-outlined">
-                Delete
-              </button>
-              </div>
+          <button
+            id="close_sidebar"
+            class="delete is-medium is-pulled-right close-sidebar-btn"
+          ></button>
 
-              <div class="random_unsplash is-right">
-                <button id="random_unsplash_bg" class="button is-small is-rounded" style="left: 145px;">
-                  <span>Random</span>
+          <!-- Greeting Message Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Greeting message</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Username</h5>
+                  <h6 class="settings-item-subtitle">
+                    Type your username, you will see changes in real time.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <input
+                  class="input"
+                  type="text"
+                  id="username"
+                  placeholder="Username"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Background Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Background</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">URL</h5>
+                  <h6 class="settings-item-subtitle">
+                    Set a custom background, using URL-based background will
+                    require an active internet connection.
+                  </h6>
+                </div>
+              </div>
+              <p class="processing_bg"></p>
+              <div class="settings-item">
+                <input
+                  type="text"
+                  class="input"
+                  id="image_url"
+                  placeholder="Enter or paste a URL"
+                />
+              </div>
+              <div class="settings-item">
+                <div class="field is-grouped is-grouped-multiline mb-0">
+                  <div class="control">
+                    <button id="save-image" class="button is-success">
+                      <span class="icon is-small">
+                        <i class="fas fa-save"></i>
+                      </span>
+                      <span>Apply</span>
+                    </button>
+                  </div>
+                  <button
+                    id="delete_custom_image"
+                    class="button is-danger is-outlined"
+                  >
+                    Delete
+                  </button>
+                  <div class="control">
+                    <button
+                      id="random_unsplash_bg"
+                      class="button is-small"
+                      style="border-radius: 30px; margin-left: 130px"
+                    >
+                      <span>Random</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Darken Background</h5>
+                  <h6 class="settings-item-subtitle">
+                    Reduces eye strain and improves visibility at night.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-darken-bg-night" type="checkbox" />
+                  <label for="toggle-darken-bg-night"></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Upload Background</h5>
+                  <h6 class="settings-item-subtitle">
+                    Uploaded images will be converted to
+                    <code>base64</code> format and stored locally. Processing
+                    may take a few seconds.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="file has-name mb-0">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      id="imageupload"
+                      accept="image/*,image/gif"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Choose an image... </span>
+                    </span>
+                    <span class="file-name"> No file uploaded! </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shortcuts Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Shortcuts</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Default Shortcuts</h5>
+                  <h6 class="settings-item-subtitle">
+                    Access sites quickly using these default shortcuts.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <article class="message is-warning is-small mb-0">
+                  <div class="message-body">
+                    Please note: All default shortcuts have been removed in this
+                    version. You can add your own custom shortcuts using the
+                    "Add Shortcut" button below.
+                  </div>
+                </article>
+              </div>
+              <div class="settings-item">
+                <table class="table is-fullwidth mb-0">
+                  <thead>
+                    <tr>
+                      <th>Shortcut</th>
+                      <th>URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Shift + S</td>
+                      <td>Open Settings</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Custom shortcuts (Beta)</h5>
+                  <h6 class="settings-item-subtitle">
+                    Set custom shortcuts to access your favorite sites quickly.
+                  </h6>
+                </div>
+              </div>
+              <div id="custom-shortcut-list"></div>
+              <div class="settings-item">
+                <button
+                  id="open-custom-shortcut-modal"
+                  class="button is-info is-fullwidth mb-0"
+                >
+                  <span class="icon"><i class="fas fa-plus"></i></span>
+                  <span>Add Shortcut</span>
                 </button>
               </div>
             </div>
-            <a class="is-size-7" href="https://picsum.photos" target="_blank">Powered by picsum.photos</a>
-            <br/>
-            <br/>
-            <!-- darken background image at night -->
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">Darken Background</h4>
-              <h6 class="subtitle is-6">Reduces eye strain and improves visibility at night.</h6>
-              <input id="toggle-darken-bg-night" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-darken-bg-night">Toggle Darken Effect</label>
-            </div>
-            <br/>
-            <h5 class="title is-5 has-text-weight-medium">Upload Background</h4>
-              <h6 class="subtitle is-6">
-              Uploaded images will be converted to <code>base64</code> format and stored locally.
-            </h6>
-            <div class="file has-name">
-              <label class="file-label">
-              <input class="file-input" type="file" id="imageupload" accept="image,gif/*" />
-              <span class="file-cta">
-                <span class="file-icon">
-                <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                Choose an image...
-                </span>
-              </span>
-              <span class="file-name">
-                No file uploaded!
-              </span>
-              </label>
-            </div>
 
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Shortcuts</h4>
-            <h5 class="title is-5 has-text-weight-medium">Default Shortcuts</h4> 
-            <h6 class="subtitle is-6">Access sites quickly using these default shortcuts.</h6>
-            <article class="message is-warning">
-              <div class="message-body">
-                Please note: All default shortcuts have been removed in this version. You can add your own custom shortcuts using the "Add Shortcut" button below.
+            <br />
+
+            <div class="settings-group">
+              <h4 class="settings-group-title">Shortcut Appearance</h4>
+              <div class="settings-card mt-3">
+                <div class="settings-item">
+                  <div class="settings-item-content">
+                    <h5 class="settings-item-title">Shortcuts icons</h5>
+                    <h6 class="settings-item-subtitle">
+                      Display up to 8 shortcuts icon on your homescreen.
+                    </h6>
+                    <p class="is-size-7 has-text-grey mt-1">
+                      Using this feature may add a slight delay when loading.
+                    </p>
+                  </div>
+                  <div class="settings-item-action">
+                    <input id="toggle-shortcut-icons" type="checkbox" />
+                    <label for="toggle-shortcut-icons"></label>
+                  </div>
+                </div>
               </div>
-            </article>
-            <table class="table is-fullwidth">
-              <thead>
-                <tr>
-                  <th>Shortcut</th>
-                  <th>URL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>Shift + S</td><td>Open Settings</td></tr>
-              </tbody>
-            </table>
 
-            <h5 class="title is-5 has-text-weight-medium">Custom shortcuts (Beta)</h4> 
-            <h6 class="subtitle is-6">Set custom shortcuts to access your favorite sites quickly.</h6>
-            <div id="custom-shortcut-list" class="mt-3"></div>
-            <br/>
-            <button id="open-custom-shortcut-modal" class="button is-info is-fullwidth mb-3">
-              <span class="icon"><i class="fas fa-plus"></i></span>
-                <span>Add Shortcut</span>
-            </button>
-
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">Shortcuts icons</h4>
-              <h6 class="subtitle is-6">Display up to 8 shortcuts icon on your homescreen.</h6>
-              <input id="toggle-shortcut-icons" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-shortcut-icons">Display shortcut icon</label>
-              <h6 class="is-size-7 ">Using this feature may add a slight delay when loading.</h6>
-            </div>
-
-            <!-- Show generic fontawesome icons instead of website favirons when using shortcuts icon -->
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">Use generic icons</h4>
-              <h6 class="subtitle is-6">Use generic fontawesome icons instead of website favicons for shortcut icons.</h6>
-              <input id="toggle-generic-shortcut-icons" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-generic-shortcut-icons">Enable generic icons</label>
-              <h6 class="is-size-7 ">Improve performance by using a icon instead of website logo.</h6>
-            </div>
-
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Appearance</h4>
-            <h5 class="title is-5 has-text-weight-medium">Homescreen tweaks</h4> 
-            <h6 class="subtitle is-6">Apply custom tweaks to homescreen</h6>
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">White font color</h4>
-              <h6 class="subtitle is-6">Apply white color to home text to improve visibility.</h6>
-              <input id="toggle-white-font" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-white-font">Enable white text</label>
-            </div>
-
-            <!-- for .time font tweaks -->
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">Time font size</h4>
-              <h6 class="subtitle is-6">Adjust the font size of the time display.</h6>
-              <input id="time-font-size" type="range" min="96" max="350" value="96" />
-              <span id="time-font-size-value" class="is-pulled-right">96px</span>
-            </div>
-
-            <!-- change .time font to italic and vintage -->
-            <div class="field mb-4">
-              <h5 class="title is-5 has-text-weight-medium">Time font style</h4>
-              <h6 class="subtitle is-6">Make time look vintage.</h6>
-              <input id="toggle-time-font-style" type="checkbox" class="switch is-info is-small" />
-              <label class="switch-label" for="toggle-time-font-style">Enable vintage font</label>
-            </div>
-
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Backup/Restore (Beta)</h4>
-            <h5 class="title is-5 has-text-weight-medium">Backup Data</h4>
-            <h6 class="subtitle is-6">Create a backup of your current settings and data.</h6>
-            <div class="field">
-              <div class="control">
-              <button id="backup_button" class="button is-primary is-fullwidth" aria-label="Backup Data">Backup Data
-              </button>
+              <div class="settings-card mt-3">
+                <div class="settings-item">
+                  <div class="settings-item-content">
+                    <h5 class="settings-item-title">Use generic icons</h5>
+                    <h6 class="settings-item-subtitle">
+                      Use generic fontawesome icons instead of website favicons
+                      for shortcut icons.
+                    </h6>
+                    <p class="is-size-7 has-text-grey mt-1">
+                      Improve performance by using a icon instead of website
+                      logo.
+                    </p>
+                  </div>
+                  <div class="settings-item-action">
+                    <input id="toggle-generic-shortcut-icons" type="checkbox" />
+                    <label for="toggle-generic-shortcut-icons"></label>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- restore from backup -->
-            <h5 class="title is-5 has-text-weight-medium">Restore Data</h4>
-            <h6 class="subtitle is-6">Restore your settings and data from a backup file.</h6>
-            <div class="file has-name mb-3">
-              <label class="file-label">
-              <input class="file-input  " type="file" id="restore_file_input" accept=".json" />
-              <span class="file-cta">
-                <span class="file-icon">
-                <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                Choose a backup file...
-                </span>
-              </span>
-              <span class="file-name" id="restore-file-name">
-                No file selected!
-              </span>
-              </label>
-            </div>
-            <div class="field">
-              <div class="control">
-              <button id="restore_button" class="button is-primary is-fullwidth" aria-label="Restore Data">Restore Data
-              </button>
+          </div>
+
+          <!-- Appearance Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Appearance</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">White font color</h5>
+                  <h6 class="settings-item-subtitle">
+                    Apply white color to home text to improve visibility when
+                    using dark backgrounds.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-white-font" type="checkbox" />
+                  <label for="toggle-white-font"></label>
+                </div>
               </div>
             </div>
 
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Erase Data</h4>
-            <h5 class="title is-5 has-text-weight-medium">Reset Start Pager</h4>
-            <h6 class="subtitle is-6">
-              Performing this action will reset StartPager to its default settings and 
-              permanently erase all saved data. 
-              <b>This action cannot be undone.</b></h6>
-            <div class="field">
-              <div class="control">
-              <button id="reset_button" class="button is-danger is-fullwidth is-outlined" aria-label="Erase Data">Erase Data
-              </button>
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font size</h5>
+                  <h6 class="settings-item-subtitle">
+                    Adjust the font size of time displayed.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="range-container">
+                  <input
+                    id="time-font-size"
+                    type="range"
+                    min="96"
+                    max="350"
+                    value="96"
+                  />
+                  <span id="time-font-size-value" class="range-value"
+                    >96px</span
+                  >
+                </div>
               </div>
             </div>
 
-            <h4 class="title is-4 is-slighly-right has-text-weight-bold has-text-centered is-decorated">Version</h4>
-            <h5 class="title is-5 has-text-weight-medium">Start Pager</h4>
-            <h6 class="subtitle is-6">7.87.3 | bulma.io v1.0.4</h6>
-            <div class="buttons">
-              <a class="button is-dark" href="https://github.com/rc0j/startpager" target="_blank">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-              </a>
-              <a class="button is-danger" href="https://github.com/rc0j/StartPager/issues/new" target="_blank">
-                <span class="icon" title="Report Bug">
-                  <i class="fas fa-bug"></i>
-                </span>
-              </a>
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font style</h5>
+                  <h6 class="settings-item-subtitle">
+                    Make time look vintage.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-time-font-style" type="checkbox" />
+                  <label for="toggle-time-font-style"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backup/Restore Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Backup/Restore (Beta)</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Backup Data</h5>
+                  <h6 class="settings-item-subtitle">
+                    Create a backup of your current settings and data.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="backup_button"
+                  class="button is-primary is-fullwidth mb-0"
+                  aria-label="Backup Data"
+                >
+                  Backup Data
+                </button>
+              </div>
             </div>
 
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Restore Data</h5>
+                  <h6 class="settings-item-subtitle">
+                    Restore your settings and data from a backup file.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="file has-name mb-0">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      id="restore_file_input"
+                      accept=".json"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Choose a backup file... </span>
+                    </span>
+                    <span class="file-name" id="restore-file-name">
+                      No file selected!
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="restore_button"
+                  class="button is-primary is-fullwidth mb-0"
+                  aria-label="Restore Data"
+                >
+                  Restore Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Erase Data Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Erase Data</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Reset Start Pager</h5>
+                  <h6 class="settings-item-subtitle">
+                    Performing this action will reset StartPager to its default
+                    settings and permanently erase all saved data.
+                    <b>This action cannot be undone.</b>
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="reset_button"
+                  class="button is-danger is-fullwidth is-outlined mb-0"
+                  aria-label="Erase Data"
+                >
+                  Erase Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Version Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Version & Change log</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Start Pager</h5>
+                  <h6 class="settings-item-subtitle">
+                    7.88.0 | bulma.io v1.0.4
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="buttons mb-0">
+                  <a
+                    class="button is-dark"
+                    href="https://github.com/rc0j/startpager"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View on GitHub"
+                  >
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                  </a>
+                  <a
+                    class="button is-danger"
+                    href="https://github.com/rc0j/StartPager/issues/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Report Bug"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-bug"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-item">
+              <div class="settings-item-content"></div>
+              <a href="https://picsum.photos/" target="_blank" class="is-size-7"
+                >Random background by picsum.photos</a
+              >
+            </div>
+          </div>
         </div>
       </div>
       <!-- All the javascript needed to make Pager's core features work  -->
