@@ -267,7 +267,7 @@ function renderCustomShortcuts() {
   const list = getCustomShortcuts();
   const container = document.getElementById("custom-shortcut-list");
   if (!list.length) {
-    container.innerHTML = `<p class="has-text-grey-light has-text-centered">No custom shortcuts yet :(</p>`;
+    container.innerHTML = `<p class="has-text-grey-light has-text-centered is-size-6" style="padding:10px;">No custom shortcuts yet :(</p>`;
     return;
   }
   let table = `<table class="table is-fullwidth is-hoverable">`;
@@ -361,3 +361,4 @@ document.addEventListener("keydown", function (event) {
     window.location.href = custom.url;
   }
 });
+

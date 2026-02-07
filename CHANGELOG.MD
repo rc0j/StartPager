@@ -1,5 +1,13 @@
 # Changelog
 
+## [Version 7.88.1]
+
+### Bug fixes:
+
+- Fix changelog button and slightly redesigned "Version & Change Log".
+- Fix text if no shortcut is stored.
+- Fixed and temporarily remove the css used to align Random wallpaper button.
+
 ## [Version 7.88.0]
 
 - WelcomeModal has been redesigned again, this time it should look much better with much better improved animations.
