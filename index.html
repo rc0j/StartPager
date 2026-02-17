@@ -216,30 +216,29 @@
           <i class="las la-cog"></i>
         </button>
 
+        <p class="settings-background-warning" style="font-weight: 500">
+          This version of Saturn is no longer maintained and will not receive
+          future updates. Switch to <strong>StartPager</strong> (formerly
+          Saturn8), which has been completely rewritten from scratch and offers
+          a more stable and feature-rich experience.
+          <a href="https://github.com/rc0j/StartPager/releases"
+            >https://github.com/rc0j/StartPager/releases</a
+          >
+          or fork it!
+        </p>
+
         <!-- Sidebar Tab Menu -->
         <ul class="tab-menu">
-          <li
-            class="settings-tab-item active"
-            data-tab="tab1"
-          >
+          <li class="settings-tab-item active" data-tab="tab1">
             <i class="las la-cog"></i> General
           </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab2"
-          >
+          <li class="settings-tab-item" data-tab="tab2">
             <i class="las la-brush"></i> Style
           </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab3"
-          >
+          <li class="settings-tab-item" data-tab="tab3">
             <i class="las la-palette"></i> Themes
           </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab5"
-          >
+          <li class="settings-tab-item" data-tab="tab5">
             <i class="las la-info-circle"></i> About
           </li>
         </ul>
@@ -250,7 +249,7 @@
             <div class="settings-background">
               <h3><i class="las la-user-edit"></i> Username</h3>
               <p class="description">
-               Replace the default "null" username with your own.
+                Replace the default "null" username with your own.
               </p>
               <div class="username-section">
                 <input
@@ -267,8 +266,8 @@
             <div class="settings-background">
               <h3><i class="las la-keyboard"></i> Kpress (Beta)</h3>
               <p class="description">
-                Display a pop-up on the bottom right of the screen, when two or more keys are pressed
-                simultaneously.
+                Display a pop-up on the bottom right of the screen, when two or
+                more keys are pressed simultaneously.
               </p>
               <label class="switch">
                 <input type="checkbox" id="kpresstoggle" />
@@ -279,13 +278,14 @@
             <div class="settings-background">
               <h3><i class="las la-search"></i> Saturn Search</h3>
               <p class="description">
-                Tip: Click the search icon to effortlessly toggle between various search providers.
+                Tip: Click the search icon to effortlessly toggle between
+                various search providers.
               </p>
 
               <h3>Search provider</h3>
               <p class="description">
-                Select your preferred search provider. 
-                Your choice will be saved and applied across all future searches.
+                Select your preferred search provider. Your choice will be saved
+                and applied across all future searches.
               </p>
               <div class="search-engine-select">
                 <select id="searchEngine">
@@ -299,10 +299,11 @@
             </div>
 
             <div class="settings-background">
-              <h3><i class="las la-compress-arrows-alt"></i> Minimalistic Interface</h3>
+              <h3><i class="las la-hand-peace"></i> Zen mode</h3>
               <p class="description">
-                Toggle to simplify the interface by hiding non-essential elements. In this mode, 
-                you'll rely on keyboard shortcuts for quick navigation to different websites.
+                Toggle to simplify the interface by hiding non-essential
+                elements. In this mode, you'll rely on keyboard shortcuts for
+                quick navigation to different websites.
               </p>
               <label class="switch">
                 <input type="checkbox" id="toggle_minimalistic_mode" />
@@ -313,9 +314,9 @@
             <div class="settings-background danger-zone">
               <h3><i class="las la-trash-alt"></i> Reset Data</h3>
               <p class="description">
-                Performing this action will reset Saturn to its default settings and 
-                permanently erase all saved data. 
-                This action cannot be undone.
+                Performing this action will reset Saturn to its default settings
+                and permanently erase all saved data. This action cannot be
+                undone.
               </p>
               <button
                 id="reset_button"
@@ -332,8 +333,9 @@
             <div class="settings-background">
               <h3><i class="las la-image"></i> Background</h3>
               <p class="description">
-                You can set a custom image as your background. Please note that 
-                using a URL-based background requires an active internet connection to load the image.
+                You can set a custom image as your background. Please note that
+                using a URL-based background requires an active internet
+                connection to load the image.
               </p>
 
               <input
@@ -368,7 +370,8 @@
               <div class="settings-separator">
                 <h3>Upload Background</h3>
                 <p class="description">
-                  Uploaded images will be converted to <code>base64</code> format and stored locally.
+                  Uploaded images will be converted to
+                  <code>base64</code> format and stored locally.
                 </p>
               </div>
               <input type="file" id="imageupload" accept="image/*" />
@@ -376,9 +379,7 @@
 
             <div class="settings-background">
               <h3>Fonts</h3>
-              <p class="description">
-                Apply different fonts options.
-              </p>
+              <p class="description">Apply different fonts options.</p>
               <label>
                 <input type="checkbox" id="bold_text" />
                 <span>Bold Text</span>
@@ -393,8 +394,8 @@
             <div class="settings-background">
               <h3>Hide Search Bar</h3>
               <p class="description">
-                Hide the search bar to help prevent UI clutter. Please note that, Saturn search
-                does not work when its hidden.
+                Hide the search bar to help prevent UI clutter. Please note
+                that, Saturn search does not work when its hidden.
               </p>
               <label class="switch">
                 <input type="checkbox" class="hide-search" />
