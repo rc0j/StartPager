@@ -1,9 +1,9 @@
-//                 __   __   _                     _
-//    _____ ___   / /_ / /_ (_)____   ____ _      (_)_____
-//   / ___// _ \ / __// __// // __ \ / __ `/     / // ___/
-//  (__  )/  __// /_ / /_ / // / / // /_/ /_    / /(__  )
-// /____/ \___/ \__/ \__//_//_/ /_/ \__, /(_)__/ //____/
-//                                 /____/   /___/
+//    _____      __  __  _                      _
+//   / ___/___  / /_/ /_(_)___  ____ ______    (_)____
+//   \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/   / / ___/
+//  ___/ /  __/ /_/ /_/ / / / / /_/ (__  )   / (__  )
+// /____/\___/\__/\__/_/_/ /_/\__, /____(_)_/ /____/
+//                           /____/      /___/
 
 document.getElementById("reset_button").addEventListener("click", function () {
   document.querySelector(".sidebar").classList.remove("open");
@@ -201,14 +201,16 @@ document
     applyWhiteFontColor(isChecked);
   });
 function applyWhiteFontColor(isWhite) {
-  const elements = document.querySelectorAll("#time, #date, #greetings");
+  const elements = document.querySelectorAll(
+    "#time, #date, #greetings, .shortcut-icon span, .shortcut-icon i, .the-pill span, .the-pill i",
+  );
   elements.forEach((el) => {
-    el.style.color = isWhite ? "white" : "";
+    el.style.color = isWhite ? "#fff" : "";
   });
 
   const line = document.getElementById("line");
   if (line) {
-    line.style.borderColor = isWhite ? "white" : "";
+    line.style.borderColor = isWhite ? "#fff" : "";
   }
 }
 

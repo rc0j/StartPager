@@ -1,3 +1,10 @@
+//    _____ __               __             __      _
+//   / ___// /_  ____  _____/ /________  __/ /_    (_)____
+//   \__ \/ __ \/ __ \/ ___/ __/ ___/ / / / __/   / / ___/
+//  ___/ / / / / /_/ / /  / /_/ /__/ /_/ / /__   / (__  )
+// /____/_/ /_/\____/_/   \__/\___/\__,_/\__(_)_/ /____/
+//                                           /___/
+
 function getSiteName(url) {
   try {
     const u = new URL(url);
@@ -361,4 +368,3 @@ document.addEventListener("keydown", function (event) {
     window.location.href = custom.url;
   }
 });
-

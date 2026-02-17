@@ -2,11 +2,19 @@
 
 ## [Version 7.88.1]
 
+This is minor release however it also includes some stuff that I was working on in the background.
+
+- Random wallpaper notification now includes a link to picsum photos directly in the notification.
+- Random button has been redesigned with a simpler design.
+- Shortcut icons were redesigned using the new blur effect design (Beta)
+- 'White font color" toggle now applies the white color effect to Settings button and shortcut icon.
+
 ### Bug fixes:
 
 - Fix changelog button and slightly redesigned "Version & Change Log".
 - Fix text if no shortcut is stored.
 - Fixed and temporarily remove the css used to align Random wallpaper button.
+- Added border around shortcut button to improve visibility when using a light background.
 
 ## [Version 7.88.0]
 
