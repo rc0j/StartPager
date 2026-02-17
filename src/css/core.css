@@ -1,664 +1,162 @@
-/* 
-=/=/=/SATURN STARTPAGE=/=/=/=
-+ core.css +
-+ This file contains all the core css need to make Saturn work properly. 
-+ Version: v31.12.2021 +
-=/=/=/=/=/=/=
-*/
+/*                                               
+  _____ ____   _____ ___     _____ _____ _____
+ / ___// __ \ / ___// _ \   / ___// ___// ___/
+/ /__ / /_/ // /   /  __/_ / /__ (__  )(__  ) 
+\___/ \____//_/    \___/(_)\___//____//____/  
+                                               */
 
-/* 
-========
-+ Fonts +
-+ Fonts are loaded from google servers to prevent issues"
-+ Last updated: 08.03.2024 +
-========
-*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* ==========================================
+   IMPORTS
+   ========================================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css";
+@import url("./bulma.min.css");
 
-/* 
-========
-+ Core.css previously known as var.css +
-+ GNU General Public License v3.0 +
-+ github.com/mraif13/saturn-startpage +
-+ v4.0.0 CSS Core +
-========
-*/
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-address,
-area,
-article,
-aside,
-audio,
-blockquote,
-datalist,
-details,
-dl,
-fieldset,
-figure,
-form,
-input,
-iframe,
-img,
-meter,
-nav,
-ol,
-optgroup,
-option,
-output,
-p,
-pre,
-progress,
-ruby,
-section,
-table,
-textarea,
-ul,
-video {
-  /* Margins for most elements */
-  margin-bottom: 1rem;
-}
-
+/* ==========================================
+   BASE STYLES
+   ========================================== */
 html,
-input,
-select,
-button {
-  /* Set body font family and some finicky elements */
-  font-family: var(--default-font);
-}
-
 body {
-  margin: 0 auto;
-  max-width: 880px;
-  border-radius: var(--sat-border-radius);
-  overflow-x: hidden;
-  display: block;
-  background: var(--sat-bg);
-  background-repeat: no-repeat;
+  font-family: "Inter", sans-serif;
+  height: 100%;
+  margin: 0;
+  background-size: cover;
   background-attachment: fixed;
-  background-size: 100% 100%;
-  color: var(--sat-ids);
-  font-size: 1.03rem;
-  line-height: 1.5;
-  font-family: var(--default-font);
+  background-position: 50% 50%;
+  overflow: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1;
-  color: var(--sat-heading);
-  padding-top: 0.875rem;
+/* ==========================================
+   MAIN SECTION
+   ========================================== */
+.main_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: #222;
 }
 
-/* == Shows a small line 
-instead of text == */
+@media (prefers-color-scheme: dark) {
+  .main_section {
+    color: #fff;
+  }
+}
+
+/* ==========================================
+   HEADER - TIME & GREETINGS
+   ========================================== */
+.greetings {
+  font-weight: 500;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.time {
+  font-weight: 700;
+  font-size: 6rem;
+}
+
+.time span {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   DECORATIVE ELEMENTS
+   ========================================== */
+.quote {
+  font-style: italic;
+}
 
 .line {
-  padding-bottom: 2px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--lighter-color);
+  border-top: 2px solid #d7d7d7e7;
+  border-radius: 2px;
+  width: 12%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-h1 {
-  font-size: 2em;
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+.open-settings-btn:hover {
+  outline: 3px solid var(--bulma-primary-soft);
 }
 
-h2 {
-  font-size: 1.5em;
+.open-settings-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(208, 208, 208, 0.38);
+  color: #000;
 }
 
-h3 {
-  font-size: 1.17em;
-}
-h4 {
-  font-size: 1em;
-}
-
-h5 {
-  font-size: 0.83em;
+@media (prefers-color-scheme: dark) {
+  .open-settings-btn {
+    background-color: rgba(48, 48, 48, 0.576);
+    color: #fff;
+  }
 }
 
-h6 {
-  font-size: 0.75em;
+/* ==========================================
+   COMPONENTS
+   ========================================== */
+.shortcut-icon {
+  transition:
+    transform 0.15s ease-out,
+    outline 0.15s ease-out;
+  border: 1px solid transparent !important;
+  transition:
+    transform 0.15s ease-out,
+    box-shadow 0.15s ease-out;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(220, 220, 225, 0.546) !important;
+  padding: 11.5px !important;
 }
 
-a {
-  text-decoration: none;
-  color: var(--sat-links);
+@media (prefers-color-scheme: dark) {
+  .shortcut-icon {
+    background-color: hsla(220, 13%, 9%, 0.622);
+    border: 1px solid rgba(255, 255, 255, 0.31) !important;
+  }
 }
 
-a:hover {
-  color: var(--sat-accent-color1);
-  text-decoration: underline;
-  transition: var(--transition-speed-fast);
-}
-
-/* 
-========
-+ Set a '?' cursor while hovering an abbreviation +
-========
-*/
-
-abbr:hover {
-  cursor: help;
-}
-
-blockquote *:last-child {
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-/* 
-========
-+ This will probably never get used as Saturn doesn't
-have any headers. +
-========
-*/
-header {
-  background: var(--sat-search-shortcuts);
-  padding: 2rem 1.5rem;
-  margin: -2rem calc(0px - (50vw - 50%)) 2rem;
-  padding-left: calc(50vw - 50%);
-  padding-right: calc(50vw - 50%);
-}
-
-header h1,
-header h2,
-header h3 {
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-
-header > *:last-child {
-  margin-bottom: 0;
-}
-
-button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
-  font-size: 1rem;
-  display: inline-block;
+.shortcut-icon:hover {
+  /* Use box-shadow instead of outline for perfect rounded corners */
+  box-shadow: 0 0 0 4px var(--bulma-primary-soft);
+  transform: scale(1.025);
+  /* Remove any browser default outline */
   outline: none;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  color: var(--sat-ids);
-  background-color: var(--sat-search-shortcuts);
-  border: 1px solid transparent;
-  border-radius: var(--sat-border-radius);
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: background-color 0.1s ease-in-out;
 }
 
-button:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover {
-  background-color: var(--lighter-color);
+.shortcut-icon i {
+  font-size: 25px;
+  margin-left: 10px;
+  padding: 5px;
 }
 
-a button[disabled],
-button[disabled],
-input[type="submit"][disabled],
-input[type="reset"][disabled],
-input[type="button"][disabled] {
-  cursor: default;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-samp,
-kbd,
-pre {
-  background: var(--sat-search-bar-focus);
-  padding: 10px 8px;
+.notification {
   font-size: 0.9rem;
-  border-radius: 8px;
-  box-shadow: var(--drop-shadow-color);
-}
-
-code {
-  background: var(--sat-search-bar-focus);
-  color: var(--for-white);
-  padding: 3px 5px;
-  font-size: 0.9rem;
-  border-radius: 7px;
-}
-
-/* 
-========
-+ Custom kdb styles +
-========
-*/
-
-kbd {
-  font-weight: 600;
-  font-family: var(--default-font);
-  background: var(--lighter-color);
-  color: var(--sat-ids);
-  padding: 1px 5px;
-  margin: -1px;
-  text-align: center;
-  font-size: 1rem;
-  border-radius: 7px;
-}
-
-pre {
-  padding: 1rem 1.4rem;
-  max-width: 100%;
-  overflow: auto;
-}
-
-pre code {
-  background: inherit;
-  font-size: inherit;
-  color: inherit;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-code pre {
-  display: inline;
-  background: inherit;
-  font-size: inherit;
-  color: inherit;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-details {
-  display: block;
-  padding: 0.6rem 0.9rem;
-  background-color: var(--lighter-color);
-  border-radius: var(--sat-border-radius);
-}
-
-details img {
-  border-radius: var(--sat-border-radius);
-}
-
-summary {
-  display: list-item;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-summary:hover {
-  color: var(--sat-accent-color1);
-  transition: var(--transition-speed-fast);
-}
-
-details[open] {
-  padding-bottom: 0.75rem;
-}
-
-details[open] summary {
-  margin-bottom: 3px;
-}
-
-details[open] > *:last-child {
-  margin-bottom: 0;
-}
-
-dt {
-  font-weight: bold;
-}
-
-dd::before {
-  content: " →";
-}
-
-hr {
-  border: 0;
-  margin: 1rem auto;
-}
-
-fieldset {
-  margin-top: 1rem;
-  padding: 2rem;
-  border-radius: 4px;
-}
-
-legend {
-  padding: auto 0.5rem;
 }
 
 table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  text-align: left;
-  padding: 0.5rem;
-}
-
-th {
-  background: var(--sat-search-shortcuts);
-}
-
-tr:nth-child(even) {
-  background: var(--sat-search-shortcuts);
-}
-
-table caption {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-textarea {
-  max-width: 100%;
-}
-
-ol,
-ul {
-  padding-left: 2rem;
-}
-
-li {
-  margin-top: 0.4rem;
-}
-
-ul ul,
-ol ul,
-ul ol,
-ol ol {
-  margin-bottom: 0;
-}
-
-mark {
-  padding: 3px 6px;
-  background: var(--sat-txt-selector-clr);
-  color: var(--sat-txt-selector-clr-after);
-}
-
-textarea,
-select,
-input {
-  padding: 14px 14px;
-  margin-bottom: 0.5rem;
-  background: var(--sat-search-shortcuts);
-  color: var(--sat-ids);
-  border: 2px solid transparent;
-  border-radius: var(--sat-border-radius);
-  box-shadow: none;
-  box-sizing: border-box;
-  outline: 3px solid transparent;
-}
-
-.username-section input:hover,
-textarea:hover,
-select:hover,
-input:hover {
-  transition: var(--transition-speed-default);
-  border: 2px solid var(--sat-accent-color1);
-}
-
-textarea:focus,
-select:focus,
-input:focus {
-  border: 2px solid var(--sat-accent-color1);
-  outline: 4px solid var(--settings-button-outline) !important;
-}
-
-img {
-  max-width: 100%;
-  border-style: none;
-}
-
-/* 
-========
-+ Saturn Startpage Main Core v4.0.0 +
-========
-*/
-
-/* == Favorites background stuff == */
-
-#content {
-  background: var(--sat-search-shortcuts);
-}
-
-.search-bar:hover {
-  background: var(--sat-input-hover);
-}
-
-.search-bar:focus {
-  background: var(--sat-search-bar-focus);
-}
-
-/* == Settings background color == */
-
-.favorites_modal_content {
-  background: var(--sat-setting-bg-color);
-}
-
-.setting-button,
-.cuteapps,
-.removebtn {
-  background: var(--sat-search-shortcuts);
-}
-
-/* 
-========
-+ Everything that makes use of a similar
-transition speed. +
-========
-*/
-#fav-link a:hover,
-.snip-wid button,
-.overlay,
-.setting-button:hover,
-.btn-hide2:hover,
-.app:hover,
-.slider:before,
-.search-bar:hover,
-.search-bar:focus .app:hover {
-  transition: var(--transition-speed-default);
-}
-
-/* == Force the use of while 
-color to fix some issues == */
-
-.close-wallpaper:hover,
-.save-button:hover,
-.cancel-fav-btn:hover,
-.removebtn:hover,
-.setting-button:hover,
-.app:hover {
-  color: var(--for-white);
-}
-
-.closebtn:hover {
-  border-color: var(--moreapps-hovering-clr);
-}
-
-#fav-link a:hover {
-  background-color: var(--favorites-hover);
-  transition: var(--transition-speed-default);
-}
-
-
-/* == Make everything use the 
-current color var == */
-
-.setting-button,
-.app,
-.cuteapps,
-.removebtn,
-.setting-button i,
-#fav-link a:hover,
-.container {
-  color: var(--sat-ids);
-}
-
-/* == Some stuff that require the cursor 
-to become a pointer == */
-.slider,
-ul.tabs li,
-.app,
-#favorite-links:hover,
-.close-button,
-.close-sounds,
-.close-wallpaper,
-.new-close-fav {
-  cursor: pointer;
-}
-
-/* == Setting up everything to 
-use the correct border radius == */
-.search-bar,
-.app,
-.tooltiptext,
-#content,
-#fav-link li,
-#fav-link a,
-#add-link-form,
-#add-link-form input,
-#new-link-button button,
-#add-link-form button,
-.settings-background,
-.settings-background-warning {
-  border-radius: var(--sat-border-radius);
-}
-
-.mobile-warning {
-  background-color: var(--delete-warning-bg);
-  border-radius: 5px;
-  visibility: hidden;
-  font-weight: 700;
-}
-/* Align button-container to the left to follow standard UI guidelines */
-
-.button-container {
-  text-align: right;
-  padding: 10px;
-}
-
-/* 
-========
-+ Saturn core components +
-+ Settings sidebar +
-========
-*/
-
-.sidebar {
-  width: 100%;
-  max-width: 570px;
-  height: 100vh;
-  background-color: var(--sat-blurry-background);
-  position: fixed;
-  right: -100%;
-  top: 0;
-  box-shadow: 0 2px 10px rgba(17, 17, 17, 0.822);
-  transition: right 0.5s ease-in-out;
-  z-index: 999;
-  overflow-y: auto;
-}
-
-.sidebar.open {
-  right: 0;
-  backdrop-filter: blur(10px); /* Apply blur when open */
-}
-
-.sidebar-trigger {
-  background: none;
-  color: var(--sat-ids);
-  font-size: 1.7rem;
-  cursor: pointer;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  border-radius: 17px;
-}
-
-.settings-tab-item {
-  list-style: none;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--sat-setting-bg-effect);
-  cursor: pointer;
-  font-size: 15px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.settings-tab-item.active {
-  background-color: var(--bg-accent-color-lr);
-  border: 1px solid var(--sat-accent-color1);
-  box-shadow: 0 0 8px var(--bg-accent-color-lr-hover);
-}
-
-.settings-tab-item:hover {
-  background-color: var(--bg-accent-color-lr-hover);
-}
-
-.setting-content {
-  padding: 20px;
-}
-
-.tab-pane {
-  display: none;
-}
-
-.tab-pane.active {
-  display: block;
-}
-
-/* ========= 
-Optimize sidebar for mobile (Beta)
-this code is a hack to get things to work
-========*/
-
-/* Media queries for mobile optimization */
-@media screen and (max-width: 768px) {
-  .sidebar {
-    max-width: 100%;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    font-size: 13px;
-  }
-  
-  .sidebar-trigger {
-    right: 10px;
-  }
-  
-  .settings-tab-item {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-
-  .settings-tab-item i {
-    font-size: 0px;
-  }
-  
-  .setting-content {
-    padding: 10px;
-  }
-  .app {
-    padding: 10px 20px !important; 
-    margin-bottom: -10px !important;
-  }
-
-  .app i {
-    font-size: 2rem !important;
-    right: -0px !important;
-  }
-  .app span {
-    visibility: hidden !important;
-  }
+  border-radius: var(--bulma-radius) !important;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.795);
 }

@@ -1,29 +1,25 @@
 {
   "manifest_version": 2,
-  "name": "Saturn Startpage",
-  "short_name": "saturnstartpage",
-  "version": "7.2.2",
-  "description": "Saturn Startpage: Free, open-source new tab replacement designed for speed and UX.",
-  "author": "raifcoonjah",
-
+  "name": "Start Pager",
+  "short_name": "startpager",
+  "version": "7.88.1",
+  "description": "Free, open-source new tab focused on being zen and ultra fast.",
+  "author": "Raif Coonjah (raifcoonjah)",
   "icons": {
-    "64": "/assets/img/icon64.png"
+    "48": "/assets/img/icon48.png",
+    "96": "/assets/img/icon96.png"
   },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-
   "chrome_settings_overrides": {
     "homepage": "index.html"
   },
-
-  "browser_specific_settings": {
+  "applications": {
     "gecko": {
-      "id": "{aa7b057d-721f-4ed8-ae73-563f767006ee}",
-      "update_url": "https://raw.githubusercontent.com/mraif13/Saturn-startpage/master/updates.json"
+      "id": "{748c022e-c513-4a7d-98e2-841da480ace6}",
+      "update_url": "https://raw.githubusercontent.com/raifcoonjah/StartPager/refs/heads/saturn8/updates_v8.json"
     }
   },
-
-  "permissions": ["storage"],
-  "content_security_policy": "script-src; object-src 'self';"
+  "permissions": ["storage"]
 }

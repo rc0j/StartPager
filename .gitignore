@@ -1,17 +1,3 @@
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
-*web-ext-artifacts
-*.web-extension-id
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.vscode/settings.json
-node_modules
-new_features
-package-lock.json
-package.json
+web-ext-artifacts
+.amo*
+.DS_Store

@@ -1,31 +1,40 @@
-![Saturn-startpage](https://i.imgur.com/JkdwZMW.png)
+```shell
+   _____ __             __     ____                       
+  / ___// /_____ ______/ /_   / __ \____ _____ ____  _____
+  \__ \/ __/ __ `/ ___/ __/  / /_/ / __ `/ __ `/ _ \/ ___/
+ ___/ / /_/ /_/ / /  / /_   / ____/ /_/ / /_/ /  __/ /    
+/____/\__/\__,_/_/   \__/  /_/    \__,_/\__, /\___/_/     
+                                       /____/
+```
 
-## What's Saturn Startpage?
-Saturn Startpage is a fully open source, community build new-tab replacement. **Build with speed and user experience in mind**. Saturn was original build for myself but later on I decided to open source it.
+## What is StartPager (.previously Saturn Startpage)?
+StartPager is an open-source, community-driven new tab replacement designed for **speed** and **simplicity**. Originally built for personal use, I decided to open-source it to share the experience with others.
 
 ## Features:
 
-### Simple by design, but powerful when needed. 
-- Everything is straight forward and gets you where you need to go quickly.
+### Simple Yet Powerful
+- A clean, intuitive interface that gets you where you need to go—fast.
 
-### Fast & lightweight
-- Saturn was made with speed in mind, no useless animations or bulky code. Everything loads in a matter of seconds.
+### Blazing Fast & Lightweight
+- Optimized for speed, with no unnecessary animations or bloat. Pages load in seconds.
 
-### Data? What's that
-- Saturn Startpage **DOES NOT** collect any data about you.
+### Privacy First
+- **No data collection**. Saturn Startpage respects your privacy.
 
-## Installation on Firefox
-- Installation is super easy on **firefox**, just head over to the [release page](https://github.com/mraif13/Saturn-startpage/releases)
-- Download the latest version ending with a .xpi extention, it should be under assets. (ex: saturn_startpage-2.6.1.1-an+fx.xpi)
-- Updates are automatically applied over the air. 
+## Installation
 
-<sub>Side note: Saturn Startpage isn't dependant on Mozilla's addons store for distribution and updates making the installations process harder, this **will** change in the future.</sub>
+### Firefox
+1. Visit the [release page](https://github.com/mraif13/Saturn-startpage/releases).
+2. Download the `.xpi` file (e.g., `saturn_startpage-2.6.1.1-an+fx.xpi`) from the assets section.
+3. Updates will be applied automatically.
 
-## Installation on Chromium base browsers (currently not natively supported)
-- Please head over to: [Chromium installation](https://github.com/mraif13/Saturn-startpage/blob/Chromium/info.md)
+<sub>Note: Saturn Startpage doesn't rely on Mozilla’s add-on store for distribution or updates, but this will change in the future.</sub>
 
-### Tech used
-- HTML, CSS & Javascript. [Plans to move to react are on **hold** atm]
+### Chrome
+1. Visit the [release page](https://github.com/mraif13/Saturn-startpage/releases).
+2. Download the `.zip` file named startpager-chrome.zip
+3. Unzip, access chrome's extention page > Enable developer mode > Load unpack > Select extracted directory of the extention > Voila!
+
 ------
 ###### Demo Status
 [![Netlify Status](https://api.netlify.com/api/v1/badges/90679166-d81f-4831-b8f8-82ada4af6e1f/deploy-status)](https://app.netlify.com/sites/demo-saturnstartpage/deploys)

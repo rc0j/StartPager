@@ -1,458 +1,488 @@
 <!--
-  _____       _                          _             _                          
-/  ___|     | |                        | |           | |                         
-\ `--.  __ _| |_ _   _ _ __ _ __    ___| |_ __ _ _ __| |_ _ __   __ _  __ _  ___ 
- `--. \/ _` | __| | | | '__| '_ \  / __| __/ _` | '__| __| '_ \ / _` |/ _` |/ _ \
-/\__/ / (_| | |_| |_| | |  | | | | \__ \ || (_| | |  | |_| |_) | (_| | (_| |  __/
-\____/ \__,_|\__|\__,_|_|  |_| |_| |___/\__\__,_|_|   \__| .__/ \__,_|\__, |\___|
-                                                         | |           __/ |     
-                                                         |_|          |___/                                                    
+   _____ __             __     ____                       
+  / ___// /_____ ______/ /_   / __ \____ _____ ____  _____
+  \__ \/ __/ __ `/ ___/ __/  / /_/ / __ `/ __ `/ _ \/ ___/
+ ___/ / /_/ /_/ / /  / /_   / ____/ /_/ / /_/ /  __/ /    
+/____/\__/\__,_/_/   \__/  /_/    \__,_/\__, /\___/_/     
+                                       /____/                                                            
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>New Tab</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
-
-    <!-- =+=+= All the CSS needed to make Saturn Work =+=+= -->
+    <title>New Tab</title>
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/css/core.css" />
-    <link rel="stylesheet" href="./src/css/styles.css" />
-    <link rel="stylesheet" href="./src/css/anim.css" />
-    <link rel="stylesheet" href="./src/css/custom.css" />
-    <link rel="stylesheet" href="./src/css/themes.css" />
-    <link rel="stylesheet" href="assets/icons/css/line-awesome.min.css" />
-    <link rel="stylesheet" href="./src/css/tootik.min.css" />
-
-    <!-- =+=+= jQuery [v3.7.0] =+=+= -->
-    <script src="./src/js/jquery.js"></script>
+    <link rel="stylesheet" href="./src/css/settings.css" />
   </head>
 
   <body>
     <!-- =+=+= Good morning/afternoon/night and time text =+=+= -->
-    <div class="sat-header">
-      <p class="date" id="date"></p>
+    <div class="main_section">
       <p class="time" id="time"></p>
-      <p class="good_morning" id="good_morning"></p>
-      <div class="quote">
-        <p class="quote quotes_bg" id="quotation"></p>
-      </div>
+      <p class="line" id="line"></p>
+      <p class="date" id="date"></p>
+      <p class="greetings" id="greetings"></p>
+      <div
+        id="shortcut-icons-bar"
+        class="shortcut-icons-bar is-flex is-flex-wrap-wrap is-justify-content-center mb-4"
+      ></div>
     </div>
-
     <main>
-      <!-- =+=+= Saturn Search =+=+= -->
-
-      <div class="full">
-        <div class="search_block">
-          <form
-            id="search_eng_form"
-            method="get"
-            action="https://www.google.com/search"
-          >
-            <a
-              href="javascript:void(0)"
-              class="search-engine-logo"
-              id="se_button"
-            >
-              <img
-                id="se_icon"
-                src="/assets/icons/search.svg"
-                alt="Search engine logo"
-                class="se_icon"
-                title="Change search engine.. (Ctrl + Arrow Up)"
-              />
-            </a>
-
-            <input
-              class="search-bar"
-              type="search"
-              id="search"
-              placeholder="Search with Google.."
-              autocomplete="off"
-              name="q"
-              title="Click to search (Ctrl + /)"
-            />
-          </form>
-        </div>
-      </div>
-      <div class="minimalistic-ui">
-        <div class="dropdown" style="float: right">
-          <button class="dropbtn"><i class="las la-ellipsis-h"></i></button>
-          <div class="dropdown-content">
-            <a href="#" target="_blank">
-              <i class="las la-plus-square"></i>
-              New window</a
-            >
-            <a
-              class="dropdown_redaccent"
-              href="https://github.com/mraif13/Saturn-startpage/issues/new"
-              target="_blank"
-              ><i class="las la-bug"></i>
-              Report bug...
-            </a>
-          </div>
-        </div>
-
-        <!-- =+=+= App lists + App category =+=+= -->
-        <div class="apps_list">
-          <ul class="apps-category">
-            <li class="tab-link current" data-tab="app-1">
-              <i class="lar la-grin-hearts"></i> <span>Most used</span>
-            </li>
-            <li class="tab-link" data-tab="app-2">
-              <i class="las la-graduation-cap"></i> <span>Education</span>
-            </li>
-            <li class="tab-link" data-tab="app-3">
-              <i class="las la-share-alt"></i> <span>Social media</span>
-            </li>
-            <li class="tab-link" data-tab="app-4">
-              <i class="las la-play-circle"></i> <span>Multimedia</span>
-            </li>
-          </ul>
-
-          <div id="apps_list"></div>
-          <!-- =+=+= All apps are loaded inside [render.js] =+=+= -->
-          <!-- End of app list -->
-
-          <div class="tab-link fix-favorites-header">
-            <!-- =+=+= Favorite v3.2 =+=+= -->
-            <div id="fav-container" class="fav-container">
-              <div id="content">
-                <div class="favorites-search">
-                  <input
-                    type="text"
-                    placeholder="Find favorites.."
-                    id="searchfavorites"
-                  />
-                  <button
-                    class="favorite-button"
-                    title="Add favorites (Shift + Z)"
-                  >
-                    <i class="las la-plus"></i> Add
-                  </button>
-                </div>
-                <p
-                  style="display: none"
-                  id="search-results"
-                  class="search-results"
-                >
-                  <span id="search-results-text"></span>
-                </p>
-                <ul id="fav-link"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- =+=+= Favorites Modal =+=+= -->
-      <div id="fav_modal" class="fav_modal">
-        <div class="favorites_modal_content">
-          <p class="settings-item-title" style="margin-top: 5px">Favorites</p>
-          <p class="settings-item-under-title description">
-            Add your favorite websites & more.
-            <a
-              href="https://github.com/mraif13/Saturn-startpage/wiki/Favorites-feature"
-              target="_blank"
-              style="color: var(--sat-accent-color1)"
-              >Learn more...
-            </a>
-          </p>
-
-          <!-- =+=+= Input ++ Favorite title =+=+=-->
-          <label class="fav_title"> Link title</label>
-          <input
-            id="title"
-            placeholder="Enter a title"
-            autocomplete="off"
-            spellcheck="false"
-            class="favorite-input"
-            type="text"
-          />
-          <p
-            class="small_text"
-            style="
-              color: var(--sat-lighter-ids);
-              margin-bottom: -20px;
-              font-size: 13px;
-            "
-          >
-            <i class="las la-exclamation-circle"></i> Icons may take a few
-            seconds to appear.
-          </p>
-          <br />
-          <!-- =+=+= Input ++ Favorite URL =+=+= -->
-          <label class="fav_title">URL</label>
-          <input
-            id="url"
-            placeholder="Enter or paste a URL"
-            autocomplete="off"
-            spellcheck="false"
-            class="favorite-input"
-          />
-          <div class="button-container">
-            <button id="cancel-fav-btn" class="cancel-fav-btn danger_red">
-              <i class="las la-times"></i> Cancel
-            </button>
-            <button id="add" class="save-button">
-              <i class="lar la-save"></i> Save
-            </button>
-          </div>
-        </div>
-
-        <!-- =+=+= Save message =+=+= -->
-        <div id="saveMsgBar">Favorites added</div>
-      </div>
-
+      <button
+        id="open_settings"
+        class="the-pill button is-dark is-rounded open-settings-btn"
+      >
+        <span class="icon">
+          <i class="fas fa-cog"></i>
+        </span>
+      </button>
       <!-- Sidebar -->
       <div class="sidebar">
-        <div class="settings-header">
-          <h3 class="settings-title">Settings</h3>
-        </div>
-        <button id="open_settings" class="sidebar-trigger">
-          <i class="las la-cog"></i>
-        </button>
-
-        <!-- Sidebar Tab Menu -->
-        <ul class="tab-menu">
-          <li
-            class="settings-tab-item active"
-            data-tab="tab1"
-          >
-            <i class="las la-cog"></i> General
-          </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab2"
-          >
-            <i class="las la-brush"></i> Style
-          </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab3"
-          >
-            <i class="las la-palette"></i> Themes
-          </li>
-          <li
-            class="settings-tab-item"
-            data-tab="tab5"
-          >
-            <i class="las la-info-circle"></i> About
-          </li>
-        </ul>
-
         <div class="setting-content">
-          <!-- Tab 1: General Settings -->
-          <div id="tab1" class="tab-pane active fade-in">
-            <div class="settings-background">
-              <h3><i class="las la-user-edit"></i> Username</h3>
-              <p class="description">
-               Replace the default "null" username with your own.
-              </p>
-              <div class="username-section">
+          <button
+            id="close_sidebar"
+            class="delete is-medium is-pulled-right close-sidebar-btn"
+          ></button>
+
+          <!-- Greeting Message Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Greeting message</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Username</h5>
+                  <h6 class="settings-item-subtitle">
+                    Type your username, you will see changes in real time.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <input
+                  class="input"
+                  type="text"
+                  id="username"
+                  placeholder="Username"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Background Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Background</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">URL</h5>
+                  <h6 class="settings-item-subtitle">
+                    Set a custom background, using URL-based background will
+                    require an active internet connection.
+                  </h6>
+                </div>
+              </div>
+              <p class="processing_bg"></p>
+              <div class="settings-item">
                 <input
                   type="text"
-                  id="username_input"
-                  placeholder="Username..."
+                  class="input"
+                  id="image_url"
+                  placeholder="Enter or paste a URL"
                 />
-                <button id="save" class="save-button">
-                  <i class="las la-save"></i> Apply
-                </button>
+                <div class="control">
+                  <button
+                    id="random_unsplash_bg"
+                    class="button is-ghost is-small"
+                    aria-label="Random Unsplash Background"
+                  >
+                    <span class="is-small">Random</span>
+                  </button>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="field is-grouped is-grouped-multiline mb-0">
+                  <div class="control">
+                    <button id="save-image" class="button is-success">
+                      <span class="icon is-small">
+                        <i class="fas fa-save"></i>
+                      </span>
+                      <span>Apply</span>
+                    </button>
+                  </div>
+                  <button
+                    id="delete_custom_image"
+                    class="button is-danger is-outlined"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div class="settings-background">
-              <h3><i class="las la-keyboard"></i> Kpress (Beta)</h3>
-              <p class="description">
-                Display a pop-up on the bottom right of the screen, when two or more keys are pressed
-                simultaneously.
-              </p>
-              <label class="switch">
-                <input type="checkbox" id="kpresstoggle" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-
-            <div class="settings-background">
-              <h3><i class="las la-search"></i> Saturn Search</h3>
-              <p class="description">
-                Tip: Click the search icon to effortlessly toggle between various search providers.
-              </p>
-
-              <h3>Search provider</h3>
-              <p class="description">
-                Select your preferred search provider. 
-                Your choice will be saved and applied across all future searches.
-              </p>
-              <div class="search-engine-select">
-                <select id="searchEngine">
-                  <option value="0">Google (Default)</option>
-                  <option value="1">DuckDuckGo</option>
-                  <option value="2">Reddit</option>
-                  <option value="3">YouTube</option>
-                  <option value="4">ProtonDB</option>
-                </select>
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Darken Background</h5>
+                  <h6 class="settings-item-subtitle">
+                    Reduces eye strain and improves visibility at night.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-darken-bg-night" type="checkbox" />
+                  <label for="toggle-darken-bg-night"></label>
+                </div>
               </div>
             </div>
 
-            <div class="settings-background">
-              <h3><i class="las la-compress-arrows-alt"></i> Minimalistic Interface</h3>
-              <p class="description">
-                Toggle to simplify the interface by hiding non-essential elements. In this mode, 
-                you'll rely on keyboard shortcuts for quick navigation to different websites.
-              </p>
-              <label class="switch">
-                <input type="checkbox" id="toggle_minimalistic_mode" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-
-            <div class="settings-background danger-zone">
-              <h3><i class="las la-trash-alt"></i> Reset Data</h3>
-              <p class="description">
-                Performing this action will reset Saturn to its default settings and 
-                permanently erase all saved data. 
-                This action cannot be undone.
-              </p>
-              <button
-                id="reset_button"
-                class="danger_red"
-                aria-label="Erase everything"
-              >
-                <i class="las la-trash-alt"></i> Erase everything
-              </button>
-            </div>
-          </div>
-
-          <!-- Tab 2: Style Settings -->
-          <div id="tab2" class="tab-pane fade-in">
-            <div class="settings-background">
-              <h3><i class="las la-image"></i> Background</h3>
-              <p class="description">
-                You can set a custom image as your background. Please note that 
-                using a URL-based background requires an active internet connection to load the image.
-              </p>
-
-              <input
-                type="text"
-                id="image_url"
-                placeholder="Enter or paste a URL"
-              />
-              <button
-                id="copy-backgroundurl"
-                class="copy-url-button"
-                aria-label="Copy URL to clipboard"
-              >
-                <i class="las la-clipboard"></i>
-              </button>
-
-              <p class="processing_bg"></p>
-
-              <label>
-                <input type="checkbox" id="force_white_color_header" />
-                <span>White font</span>
-              </label>
-
-              <div class="button-container">
-                <button id="delete_custom_image" class="danger_red">
-                  <i class="las la-times"></i> Delete
-                </button>
-                <button id="save-image" class="save-button">
-                  <i class="lar la-save"></i> Apply
-                </button>
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Upload Background</h5>
+                  <h6 class="settings-item-subtitle">
+                    Uploaded images will be converted to
+                    <code>base64</code> format and stored locally. Processing
+                    may take a few seconds.
+                  </h6>
+                </div>
               </div>
-
-              <div class="settings-separator">
-                <h3>Upload Background</h3>
-                <p class="description">
-                  Uploaded images will be converted to <code>base64</code> format and stored locally.
-                </p>
-              </div>
-              <input type="file" id="imageupload" accept="image/*" />
-            </div>
-
-            <div class="settings-background">
-              <h3>Fonts</h3>
-              <p class="description">
-                Apply different fonts options.
-              </p>
-              <label>
-                <input type="checkbox" id="bold_text" />
-                <span>Bold Text</span>
-              </label>
-              <br />
-              <label>
-                <input type="checkbox" id="browser_font" />
-                <span>Use Sans Serif font</span>
-              </label>
-            </div>
-
-            <div class="settings-background">
-              <h3>Hide Search Bar</h3>
-              <p class="description">
-                Hide the search bar to help prevent UI clutter. Please note that, Saturn search
-                does not work when its hidden.
-              </p>
-              <label class="switch">
-                <input type="checkbox" class="hide-search" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Tab 3: Themes -->
-          <div id="tab3" class="tab-pane fade-in">
-            <div class="settings-background">
-              <h3><i class="las la-palette"></i> Themes</h3>
-              <p class="description">
-                Choose a theme to match your mood and style.
-              </p>
-              <div id="themes-container">
-                <!-- Themes will be dynamically generated here -->
+              <div class="settings-item">
+                <div class="file has-name mb-0">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      id="imageupload"
+                      accept="image/*,image/gif"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Choose an image... </span>
+                    </span>
+                    <span class="file-name"> No file uploaded! </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Tab 5: About Section -->
-          <div id="tab5" class="tab-pane fade-in">
-            <div id="setting_about"></div>
-            <div id="k_shortcuts"></div>
+          <!-- Shortcuts Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Shortcuts</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Default Shortcuts</h5>
+                  <h6 class="settings-item-subtitle">
+                    Access sites quickly using these default shortcuts.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <article class="message is-warning is-small mb-0">
+                  <div class="message-body">
+                    Please note: All default shortcuts have been removed in this
+                    version. You can add your own custom shortcuts using the
+                    "Add Shortcut" button below.
+                  </div>
+                </article>
+              </div>
+              <div class="settings-item">
+                <table class="table is-fullwidth mb-0">
+                  <thead>
+                    <tr>
+                      <th>Shortcut</th>
+                      <th>URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Shift + S</td>
+                      <td>Open Settings</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Custom shortcuts (Beta)</h5>
+                  <h6 class="settings-item-subtitle">
+                    Set custom shortcuts to access your favorite sites quickly.
+                  </h6>
+                </div>
+              </div>
+              <div id="custom-shortcut-list"></div>
+              <div class="settings-item">
+                <button
+                  id="open-custom-shortcut-modal"
+                  class="button is-info is-fullwidth mb-0"
+                >
+                  <span class="icon"><i class="fas fa-plus"></i></span>
+                  <span>Add Shortcut</span>
+                </button>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="settings-group">
+              <h4 class="settings-group-title">Shortcut Appearance</h4>
+              <div class="settings-card mt-3">
+                <div class="settings-item">
+                  <div class="settings-item-content">
+                    <h5 class="settings-item-title">Shortcuts icons</h5>
+                    <h6 class="settings-item-subtitle">
+                      Display up to 8 shortcuts icon on your homescreen.
+                    </h6>
+                    <p class="is-size-7 has-text-grey mt-1">
+                      Using this feature may add a slight delay when loading.
+                    </p>
+                  </div>
+                  <div class="settings-item-action">
+                    <input id="toggle-shortcut-icons" type="checkbox" />
+                    <label for="toggle-shortcut-icons"></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-card mt-3">
+                <div class="settings-item">
+                  <div class="settings-item-content">
+                    <h5 class="settings-item-title">Use generic icons</h5>
+                    <h6 class="settings-item-subtitle">
+                      Use generic fontawesome icons instead of website favicons
+                      for shortcut icons.
+                    </h6>
+                    <p class="is-size-7 has-text-grey mt-1">
+                      Improve performance by using a icon instead of website
+                      logo.
+                    </p>
+                  </div>
+                  <div class="settings-item-action">
+                    <input id="toggle-generic-shortcut-icons" type="checkbox" />
+                    <label for="toggle-generic-shortcut-icons"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appearance Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Appearance</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">White font color</h5>
+                  <h6 class="settings-item-subtitle">
+                    Apply white color to home text to improve visibility when
+                    using dark backgrounds.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-white-font" type="checkbox" />
+                  <label for="toggle-white-font"></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font size</h5>
+                  <h6 class="settings-item-subtitle">
+                    Adjust the font size of time displayed.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="range-container">
+                  <input
+                    id="time-font-size"
+                    type="range"
+                    min="96"
+                    max="350"
+                    value="96"
+                  />
+                  <span id="time-font-size-value" class="range-value"
+                    >96px</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font style</h5>
+                  <h6 class="settings-item-subtitle">
+                    Make time look vintage.
+                  </h6>
+                </div>
+                <div class="settings-item-action">
+                  <input id="toggle-time-font-style" type="checkbox" />
+                  <label for="toggle-time-font-style"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backup/Restore Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Backup/Restore (Beta)</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Backup Data</h5>
+                  <h6 class="settings-item-subtitle">
+                    Create a backup of your current settings and data.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="backup_button"
+                  class="button is-primary is-fullwidth mb-0"
+                  aria-label="Backup Data"
+                >
+                  Backup Data
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Restore Data</h5>
+                  <h6 class="settings-item-subtitle">
+                    Restore your settings and data from a backup file.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="file has-name mb-0">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      id="restore_file_input"
+                      accept=".json"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Choose a backup file... </span>
+                    </span>
+                    <span class="file-name" id="restore-file-name">
+                      No file selected!
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="restore_button"
+                  class="button is-primary is-fullwidth mb-0"
+                  aria-label="Restore Data"
+                >
+                  Restore Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Erase Data Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Erase Data</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Reset Start Pager</h5>
+                  <h6 class="settings-item-subtitle">
+                    Performing this action will reset StartPager to its default
+                    settings and permanently erase all saved data.
+                    <b>This action cannot be undone.</b>
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <button
+                  id="reset_button"
+                  class="button is-danger is-fullwidth is-outlined mb-0"
+                  aria-label="Erase Data"
+                >
+                  Erase Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Version Section -->
+          <div class="settings-group">
+            <h4 class="settings-group-title">Version & Change log</h4>
+            <div class="settings-card">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Start Pager</h5>
+                  <h6 class="settings-item-subtitle">
+                    7.88.1 | bulma.io v1.0.4
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="buttons mb-0">
+                  <a
+                    class="button"
+                    href="https://github.com/rc0j/startpager"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View on GitHub"
+                  >
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                  </a>
+                  <a
+                    class="button"
+                    href="https://github.com/rc0j/StartPager/blob/saturn8/CHANGELOG.MD"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Read Change Log"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-scroll"></i>
+                    </span>
+                  </a>
+                  <a
+                    class="button"
+                    href="https://github.com/rc0j/StartPager/issues/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Report Bug"
+                  >
+                    <span class="icon" style="color: #ff6685">
+                      <i class="fas fa-bug"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <p class="line"></p>
-        <p
-          class="description"
-          style="text-align: center; font-weight: 500; font-size: 13px"
-        >
-          <a
-            href="https://github.com/mraif13/Saturn-startpage/issues/new"
-            target="_blank"
-            ><i class="las la-bug"></i>
-            Report a bug
-          </a>
-        </p>
       </div>
-
-      <div id="kpress_popup" class="hidden"></div>
-      <!-- All the javascript needed to make saturn's core features work  -->
-      <script type="text/javascript" src="./src/js/index.js"></script>
-      <!-- Main JS - File -->
-      <script type="text/javascript" src="./src/js/search.js"></script>
-      <!-- Search JS - File -->
-      <script type="text/javascript" src="./src/js/favorites.js"></script>
-      <!-- Favorites JS - File -->
-      <script type="text/javascript" src="./src/js/render.js"></script>
-      <!-- QUOTE JS - File -->
-      <script type="text/javascript" src="./src/js/quote.js"></script>
-      <!-- THEMES JS - File -->
-      <script type="text/javascript" src="./src/js/themes.js"></script>
-      <!-- FOCUS JS - File -->
-      <script type="text/javascript" src="./src/js/keyboard.js"></script>
-      <script type="text/javascript" src="./src/js/applist.js"></script>
+      <!-- All the javascript needed to make Pager's core features work  -->
+      <script type="module" src="./src/js/background.js"></script>
+      <script type="module" src="./src/js/shortcut.js"></script>
+      <script type="module" src="./src/js/time.js"></script>
+      <script type="module" src="./src/js/setting.js"></script>
     </main>
   </body>
 </html>
