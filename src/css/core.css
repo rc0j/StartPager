@@ -61,8 +61,68 @@ body {
 }
 
 .time {
-  font-weight: 700;
+  font-weight: var(--time-font-weight, 700);
   font-size: 6rem;
+  opacity: var(--time-opacity, 1);
+  /* keeps the text readable when it's faded */
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Optional: frosted-glass look for the slider itself */
+.glass-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+.glass-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.glass-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.time.glass {
+  /* keep the real text color (Dynamic color still works), hide only the fill */
+  -webkit-text-fill-color: transparent;
+
+  /* top is brighter, bottom fades out, like light catching glass */
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, currentColor 70%, transparent) 0%,
+    color-mix(in srgb, currentColor 25%, transparent) 60%,
+    color-mix(in srgb, currentColor 12%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* thin bright edge */
+  -webkit-text-stroke: 1px color-mix(in srgb, currentColor 50%, transparent);
+
+  /* text-shadow can show through the clear fill, so use drop-shadow instead */
+  text-shadow: none;
+  filter:
+    drop-shadow(0 6px 20px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.35));
 }
 
 .time span {

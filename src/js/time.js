@@ -155,3 +155,85 @@ if (dynamicColorToggle) {
     }
   });
 }
+
+function updateTimeFontWeight(value) {
+  document.documentElement.style.setProperty("--time-font-weight", value);
+}
+
+const timeFontWeightInput = document.getElementById("time-font-weight");
+const timeFontWeightValue = document.getElementById("time-font-weight-value");
+
+if (timeFontWeightInput && timeFontWeightValue) {
+  let saved = null;
+  try {
+    saved = localStorage.getItem("time-font-weight");
+  } catch (e) {}
+
+  // Use the saved value, otherwise match the CSS default so the slider isn't out of sync
+  const initial = saved || "700";
+  timeFontWeightInput.value = initial;
+  timeFontWeightValue.textContent = initial;
+  updateTimeFontWeight(initial);
+
+  timeFontWeightInput.addEventListener("input", () => {
+    const value = timeFontWeightInput.value;
+    timeFontWeightValue.textContent = value;
+    updateTimeFontWeight(value);
+    try {
+      localStorage.setItem("time-font-weight", value);
+    } catch (e) {}
+  });
+}
+
+function updateTimeOpacity(percent) {
+  document.documentElement.style.setProperty("--time-opacity", percent / 100);
+}
+
+const timeOpacityInput = document.getElementById("time-opacity");
+const timeOpacityValue = document.getElementById("time-opacity-value");
+
+if (timeOpacityInput && timeOpacityValue) {
+  let saved = null;
+  try {
+    saved = localStorage.getItem("time-opacity");
+  } catch (e) {}
+
+  const initial = saved || "100";
+  timeOpacityInput.value = initial;
+  timeOpacityValue.textContent = initial + "%";
+  updateTimeOpacity(initial);
+
+  timeOpacityInput.addEventListener("input", () => {
+    const value = timeOpacityInput.value;
+    timeOpacityValue.textContent = value + "%";
+    updateTimeOpacity(value);
+    try {
+      localStorage.setItem("time-opacity", value);
+    } catch (e) {}
+  });
+}
+
+function updateTimeGlass(enabled) {
+  document.querySelectorAll(".time").forEach((el) => {
+    el.classList.toggle("glass", enabled);
+  });
+}
+
+const timeGlassToggle = document.getElementById("toggle-time-glass");
+
+if (timeGlassToggle) {
+  let saved = null;
+  try {
+    saved = localStorage.getItem("time-glass");
+  } catch (e) {}
+
+  timeGlassToggle.checked = saved === "true";
+  updateTimeGlass(timeGlassToggle.checked);
+
+  timeGlassToggle.addEventListener("change", () => {
+    updateTimeGlass(timeGlassToggle.checked);
+    try {
+      localStorage.setItem("time-glass", timeGlassToggle.checked);
+    } catch (e) {}
+  });
+}

@@ -177,7 +177,7 @@
                       </span>
                       <span class="file-label"> Choose an image... </span>
                     </span>
-                    <span class="file-name"> No file uploaded! </span>
+                    <span class="file-name"> No file uploaded</span>
                   </label>
                 </div>
               </div>
@@ -280,6 +280,74 @@
                   >
                 </div>
               </div>
+                          <!-- Change .time font-weight using slider -->
+             <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font weight</h5>
+                  <h6 class="settings-item-subtitle">
+                    Adjust the font weight of time displayed.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="range-container">
+                  <input
+                    id="time-font-weight"
+                    type="range"
+                    min="100"
+                    max="900"
+                    step="100"
+                    value="700"
+                  />
+                  <span id="time-font-weight-value" class="range-value"
+                    >700</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Time opacity -->
+<div class="settings-card mt-3">
+  <div class="settings-item">
+    <div class="settings-item-content">
+      <h5 class="settings-item-title">Time transparency</h5>
+      <h6 class="settings-item-subtitle">
+        Make the time more see-through. It never fades out completely.
+      </h6>
+    </div>
+  </div>
+  <div class="settings-item">
+    <div class="range-container">
+      <input
+        id="time-opacity"
+        class="glass-range"
+        type="range"
+        min="20"
+        max="100"
+        step="5"
+        value="100"
+      />
+      <span id="time-opacity-value" class="range-value">100%</span>
+    </div>
+  </div>
+</div>
+
+<!-- Glass time -->
+<div class="settings-card mt-3">
+  <div class="settings-item">
+    <div class="settings-item-content">
+      <h5 class="settings-item-title">Glassy time</h5>
+      <h6 class="settings-item-subtitle">
+        Give the time a translucent, frosted-glass look.
+      </h6>
+    </div>
+    <div class="settings-item-action">
+      <input id="toggle-time-glass" type="checkbox" />
+      <label for="toggle-time-glass"></label>
+    </div>
+  </div>
+</div>
             </div>
 
             <div class="settings-card mt-3">

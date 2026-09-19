@@ -1,5 +1,10 @@
 # Changelog
 
+## [Version 7.88.12]
+- Added adjustable font weight for time display.
+- Added opacity controls for time display and implemented frosted-glass effect toggle.
+
+
 ## [Version 7.88.11]
 - Redesigned toggle switches (shortcut icons, darken background, etc.) as an iOS-style slider instead of the default browser checkbox
 - Toggle now uses the accent color derived from your background image when Dynamic time color is enabled, with a static green fallback otherwise. This is a beta feature.
