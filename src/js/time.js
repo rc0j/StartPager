@@ -185,55 +185,100 @@ if (timeFontWeightInput && timeFontWeightValue) {
   });
 }
 
-function updateTimeOpacity(percent) {
-  document.documentElement.style.setProperty("--time-opacity", percent / 100);
+const TIME_FONTS = [
+  { name: "Default", family: null },
+  { name: "Lato", family: "Lato:wght@100;300;400;700;900", fallback: "sans-serif" },
+  { name: "Roboto", family: "Roboto:wght@100;300;400;500;700;900", fallback: "sans-serif" },
+  { name: "Inter", family: "Inter:wght@100..900", fallback: "sans-serif" },
+  { name: "Poppins", family: "Poppins:wght@100;200;300;400;500;600;700;800;900", fallback: "sans-serif" },
+  { name: "Raleway", family: "Raleway:wght@100..900", fallback: "sans-serif" },
+  { name: "Open Sans", family: "Open+Sans:wght@300..800", fallback: "sans-serif" },
+  { name: "Oswald", family: "Oswald:wght@200..700", fallback: "sans-serif" },
+  { name: "Space Grotesk", family: "Space+Grotesk:wght@300..700", fallback: "sans-serif" },
+  { name: "Playfair Display", family: "Playfair+Display:wght@400..900", fallback: "serif" },
+  { name: "Orbitron", family: "Orbitron:wght@400..900", fallback: "monospace" },
+];
+
+const fontSelect = document.getElementById("time-font-family");
+const randomFontBtn = document.getElementById("random-time-font");
+
+function loadGoogleFont(font) {
+  if (!font.family) return;
+  const id = "gfont-" + font.name.replace(/\s+/g, "-").toLowerCase();
+  if (document.getElementById(id)) return; // already loaded
+
+  const link = document.createElement("link");
+  link.id = id;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${font.family}&display=swap`;
+  document.head.appendChild(link);
 }
 
-const timeOpacityInput = document.getElementById("time-opacity");
-const timeOpacityValue = document.getElementById("time-opacity-value");
+function applyTimeFont(name) {
+  const font = TIME_FONTS.find((f) => f.name === name) || TIME_FONTS[0];
+  if (font.family) {
+    loadGoogleFont(font);
+    document.documentElement.style.setProperty(
+      "--time-font-family",
+      `"${font.name}", ${font.fallback}`
+    );
+  } else {
+    document.documentElement.style.removeProperty("--time-font-family");
+  }
+  fontSelect.value = font.name;
+  try {
+    localStorage.setItem("time-font-family", font.name);
+  } catch (e) {}
+}
 
-if (timeOpacityInput && timeOpacityValue) {
+if (fontSelect && randomFontBtn) {
+  // Build the dropdown
+  TIME_FONTS.forEach((f) => {
+    const opt = document.createElement("option");
+    opt.value = f.name;
+    opt.textContent = f.name;
+    fontSelect.appendChild(opt);
+  });
+
+  // Restore saved font
   let saved = null;
   try {
-    saved = localStorage.getItem("time-opacity");
+    saved = localStorage.getItem("time-font-family");
   } catch (e) {}
+  applyTimeFont(saved || "Default");
 
-  const initial = saved || "100";
-  timeOpacityInput.value = initial;
-  timeOpacityValue.textContent = initial + "%";
-  updateTimeOpacity(initial);
+  fontSelect.addEventListener("change", () => applyTimeFont(fontSelect.value));
 
-  timeOpacityInput.addEventListener("input", () => {
-    const value = timeOpacityInput.value;
-    timeOpacityValue.textContent = value + "%";
-    updateTimeOpacity(value);
-    try {
-      localStorage.setItem("time-opacity", value);
-    } catch (e) {}
+  randomFontBtn.addEventListener("click", () => {
+    const choices = TIME_FONTS.filter(
+      (f) => f.family && f.name !== fontSelect.value
+    );
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    applyTimeFont(pick.name);
   });
 }
 
-function updateTimeGlass(enabled) {
-  document.querySelectorAll(".time").forEach((el) => {
-    el.classList.toggle("glass", enabled);
-  });
-}
+(() => {
+  const KEY = "time-glass";
+  const toggle = document.getElementById("toggle-time-glass");
+  const timeEls = document.querySelectorAll(".time");
+  if (!toggle || !timeEls.length) return;
 
-const timeGlassToggle = document.getElementById("toggle-time-glass");
+  const setGlass = (on) =>
+    timeEls.forEach((el) => el.classList.toggle("glass", on));
 
-if (timeGlassToggle) {
-  let saved = null;
+  let on = false;
   try {
-    saved = localStorage.getItem("time-glass");
+    on = localStorage.getItem(KEY) === "true";
   } catch (e) {}
 
-  timeGlassToggle.checked = saved === "true";
-  updateTimeGlass(timeGlassToggle.checked);
+  toggle.checked = on;
+  setGlass(on);
 
-  timeGlassToggle.addEventListener("change", () => {
-    updateTimeGlass(timeGlassToggle.checked);
+  toggle.addEventListener("change", () => {
+    setGlass(toggle.checked);
     try {
-      localStorage.setItem("time-glass", timeGlassToggle.checked);
+      localStorage.setItem(KEY, toggle.checked);
     } catch (e) {}
   });
-}
+})();

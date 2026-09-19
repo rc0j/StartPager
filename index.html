@@ -323,7 +323,7 @@
         id="time-opacity"
         class="glass-range"
         type="range"
-        min="20"
+        min="50"
         max="100"
         step="5"
         value="100"
@@ -346,6 +346,33 @@
       <input id="toggle-time-glass" type="checkbox" />
       <label for="toggle-time-glass"></label>
     </div>
+  </div>
+</div>
+<!-- Time font -->
+<div class="settings-card mt-3">
+  <div class="settings-item">
+    <div class="settings-item-content">
+      <h5 class="settings-item-title">Time font</h5>
+      <h6 class="settings-item-subtitle">
+        Pick a font for the time, or let fate decide.
+      </h6>
+    </div>
+  </div>
+  <div class="settings-item">
+    <div class="select is-fullwidth mb-0">
+      <select id="time-font-family" aria-label="Time font"></select>
+    </div>
+  </div>
+  <div class="settings-item">
+<button
+  id="random-time-font"
+  class="button is-info is-fullwidth mb-0 random-font-btn"
+  aria-label="Random font"
+>
+  <span class="icon"><i class="fas fa-dice"></i></span>
+  <span>Random font</span>
+</button>
+    </button>
   </div>
 </div>
             </div>

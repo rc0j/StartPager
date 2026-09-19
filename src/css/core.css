@@ -61,83 +61,102 @@ body {
 }
 
 .time {
+  font-family: var(--time-font-family, inherit);
   font-weight: var(--time-font-weight, 700);
   font-size: 6rem;
   opacity: var(--time-opacity, 1);
-  /* keeps the text readable when it's faded */
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
-
-/* Optional: frosted-glass look for the slider itself */
+/* ---------- Glass slider ---------- */
 .glass-range {
   -webkit-appearance: none;
   appearance: none;
+  width: 100%;
+  height: 20px;              /* same as thumb, so nothing overflows */
+  background: transparent;   /* the track is styled below */
+  outline: none;
+  cursor: pointer;
+}
+
+/* Chrome / Safari / Edge track */
+.glass-range::-webkit-slider-runnable-track {
   height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  outline: none;
 }
+
+/* Firefox track */
+.glass-range::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
 .glass-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
+  margin-top: -6px;          /* centers the thumb on the 10px track */
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
 }
+
 .glass-range::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
 }
 
-.time.glass {
-  /* keep the real text color (Dynamic color still works), hide only the fill */
-  -webkit-text-fill-color: transparent;
-
-  /* top is brighter, bottom fades out, like light catching glass */
-  background-image: linear-gradient(
-    180deg,
-    color-mix(in srgb, currentColor 70%, transparent) 0%,
-    color-mix(in srgb, currentColor 25%, transparent) 60%,
-    color-mix(in srgb, currentColor 12%, transparent) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  /* thin bright edge */
-  -webkit-text-stroke: 1px color-mix(in srgb, currentColor 50%, transparent);
-
-  /* text-shadow can show through the clear fill, so use drop-shadow instead */
-  text-shadow: none;
-  filter:
-    drop-shadow(0 6px 20px rgba(0, 0, 0, 0.25))
-    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.35));
+.glass-range:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 4px;
+  border-radius: 999px;
 }
 
-.time span {
-  animation: blinker 1s linear infinite;
-}
+@supports (color: color-mix(in srgb, red, blue)) and
+  ((-webkit-background-clip: text) or (background-clip: text)) {
+  .time.glass {
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, currentColor 70%, transparent) 0%,
+      color-mix(in srgb, currentColor 25%, transparent) 60%,
+      color-mix(in srgb, currentColor 12%, transparent) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke: 1px color-mix(in srgb, currentColor 50%, transparent);
+    text-shadow: none;
+    filter:
+      drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25))
+      drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.35));
+    transform: translateZ(0); /* own GPU layer */
+  }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
+  .time.glass span {
+    animation: none;
+    will-change: auto;
   }
 }
 
-/* ==========================================
-   DECORATIVE ELEMENTS
-   ========================================== */
+/* ---------- Colon blink ---------- */
+.time span {
+  animation: blinker 2s ease-in-out infinite;
+  will-change: opacity; /* own compositor layer */
+}
+
+@keyframes blinker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.15; }
+}
+
 .quote-wrapper {
   max-width: 600px;
   margin: 0 auto 1rem;
@@ -244,4 +263,41 @@ table {
 
 .open-settings-btn:hover .icon i {
   transform: rotate(45deg);
+}
+
+.random-font-btn .icon i {
+  display: inline-block;          /* transforms don't work on inline elements */
+  transition: transform 0.3s ease;
+}
+
+/* Hover / keyboard focus: a little tilt and shake */
+.random-font-btn:hover .icon i,
+.random-font-btn:focus-visible .icon i {
+  animation: dice-shake 0.5s ease-in-out;
+}
+
+/* Click: a full roll */
+.random-font-btn:active .icon i {
+  animation: dice-roll 0.4s ease-in-out;
+}
+
+@keyframes dice-shake {
+  0%   { transform: rotate(0deg) translateY(0); }
+  20%  { transform: rotate(-18deg) translateY(-2px); }
+  40%  { transform: rotate(14deg) translateY(1px); }
+  60%  { transform: rotate(-10deg) translateY(-1px); }
+  80%  { transform: rotate(6deg); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+@keyframes dice-roll {
+  from { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.2); }
+  to   { transform: rotate(360deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .random-font-btn .icon i {
+    animation: none !important;
+  }
 }
