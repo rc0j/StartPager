@@ -187,16 +187,12 @@ if (timeFontWeightInput && timeFontWeightValue) {
 
 const TIME_FONTS = [
   { name: "Default", family: null },
-  { name: "Lato", family: "Lato:wght@100;300;400;700;900", fallback: "sans-serif" },
-  { name: "Roboto", family: "Roboto:wght@100;300;400;500;700;900", fallback: "sans-serif" },
-  { name: "Inter", family: "Inter:wght@100..900", fallback: "sans-serif" },
-  { name: "Poppins", family: "Poppins:wght@100;200;300;400;500;600;700;800;900", fallback: "sans-serif" },
   { name: "Raleway", family: "Raleway:wght@100..900", fallback: "sans-serif" },
-  { name: "Open Sans", family: "Open+Sans:wght@300..800", fallback: "sans-serif" },
   { name: "Oswald", family: "Oswald:wght@200..700", fallback: "sans-serif" },
   { name: "Space Grotesk", family: "Space+Grotesk:wght@300..700", fallback: "sans-serif" },
   { name: "Playfair Display", family: "Playfair+Display:wght@400..900", fallback: "serif" },
   { name: "Orbitron", family: "Orbitron:wght@400..900", fallback: "monospace" },
+  { name: "Dancing Script", family: "Dancing+Script:wght@400..700", fallback: "cursive" },
 ];
 
 const fontSelect = document.getElementById("time-font-family");

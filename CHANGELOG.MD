@@ -1,8 +1,15 @@
 # Changelog
 
 ## [Version 7.88.12]
+This feature have been in the works for a while, very much a beta/testing we will see how it goes.
+
 - Added adjustable font weight for time display.
-- Added opacity controls for time display and implemented frosted-glass effect toggle.
+- Added frosted-glass effect toggle.
+- Added settings title and enhance sidebar styling
+
+
+## Fixes: 
+- Remove changelog function completely. 
 
 
 ## [Version 7.88.11]

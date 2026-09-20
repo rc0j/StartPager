@@ -47,6 +47,7 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <div class="setting-content">
+          <h2 class="settings-title title is-5 has-text-centered m-0"><span>Settings</span></h2>
           <button
             id="close_sidebar"
             class="delete is-medium is-pulled-right close-sidebar-btn"
@@ -306,92 +307,49 @@
                 </div>
               </div>
             </div>
-
-            <!-- Time opacity -->
-<div class="settings-card mt-3">
-  <div class="settings-item">
-    <div class="settings-item-content">
-      <h5 class="settings-item-title">Time transparency</h5>
-      <h6 class="settings-item-subtitle">
-        Make the time more see-through. It never fades out completely.
-      </h6>
-    </div>
-  </div>
-  <div class="settings-item">
-    <div class="range-container">
-      <input
-        id="time-opacity"
-        class="glass-range"
-        type="range"
-        min="50"
-        max="100"
-        step="5"
-        value="100"
-      />
-      <span id="time-opacity-value" class="range-value">100%</span>
-    </div>
-  </div>
-</div>
-
-<!-- Glass time -->
-<div class="settings-card mt-3">
-  <div class="settings-item">
-    <div class="settings-item-content">
-      <h5 class="settings-item-title">Glassy time</h5>
-      <h6 class="settings-item-subtitle">
-        Give the time a translucent, frosted-glass look.
-      </h6>
-    </div>
-    <div class="settings-item-action">
-      <input id="toggle-time-glass" type="checkbox" />
-      <label for="toggle-time-glass"></label>
-    </div>
-  </div>
-</div>
-<!-- Time font -->
-<div class="settings-card mt-3">
-  <div class="settings-item">
-    <div class="settings-item-content">
-      <h5 class="settings-item-title">Time font</h5>
-      <h6 class="settings-item-subtitle">
-        Pick a font for the time, or let fate decide.
-      </h6>
-    </div>
-  </div>
-  <div class="settings-item">
-    <div class="select is-fullwidth mb-0">
-      <select id="time-font-family" aria-label="Time font"></select>
-    </div>
-  </div>
-  <div class="settings-item">
-<button
-  id="random-time-font"
-  class="button is-info is-fullwidth mb-0 random-font-btn"
-  aria-label="Random font"
->
-  <span class="icon"><i class="fas fa-dice"></i></span>
-  <span>Random font</span>
-</button>
-    </button>
-  </div>
-</div>
-            </div>
-
+            <!-- Glass time -->
             <div class="settings-card mt-3">
               <div class="settings-item">
                 <div class="settings-item-content">
-                  <h5 class="settings-item-title">Vintage time</h5>
+                  <h5 class="settings-item-title">Glassy time</h5>
                   <h6 class="settings-item-subtitle">
-                    Go back in time and make the font look like it's from the 80s. (Not really)
+                    Give the time a translucent, frosted-glass look.
                   </h6>
                 </div>
                 <div class="settings-item-action">
-                  <input id="toggle-time-font-style" type="checkbox" />
-                  <label for="toggle-time-font-style"></label>
+                  <input id="toggle-time-glass" type="checkbox" />
+                  <label for="toggle-time-glass"></label>
                 </div>
               </div>
             </div>
-
+            <!-- Time font -->
+            <div class="settings-card mt-3">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <h5 class="settings-item-title">Time font</h5>
+                  <h6 class="settings-item-subtitle">
+                    Pick a font for the time, or let fate decide.
+                  </h6>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="select is-fullwidth mb-0">
+                  <select id="time-font-family" aria-label="Time font"></select>
+                </div>
+              </div>
+              <div class="settings-item">
+            <button
+              id="random-time-font"
+              class="button is-fullwidth mb-0 random-font-btn"
+              aria-label="Random font"
+            >
+              <span class="icon"><i class="fas fa-dice"></i></span>
+              <span>Random font</span>
+            </button>
+                </button>
+              </div>
+            </div>
+          </div>
             <!-- time with a blurred background -->
             <div class="settings-card mt-3">
               <div class="settings-item">
@@ -544,7 +502,7 @@
                 <div class="settings-item-content">
                   <h5 class="settings-item-title">Start Pager</h5>
                   <h6 class="settings-item-subtitle">
-                    7.88.11.1 | bulma.io v1.0.4 (Apr 19, 2025)
+                    7.88.12 | bulma.io v1.0.4 (Apr 19, 2025)
                   </h6>
                 </div>
               </div>

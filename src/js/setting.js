@@ -61,12 +61,10 @@ document.getElementById("reset_button").addEventListener("click", function () {
 const openBtn = document.getElementById("open_settings");
 const closeBtn = document.getElementById("close_sidebar");
 const sidebar = document.querySelector(".sidebar");
-const changelog = document.getElementById("changelog-container");
 
 function closeSidebar() {
   sidebar.classList.remove("open", "blur-ready");
   openBtn.classList.remove("is-hidden");
-  changelog.innerHTML = "";
 }
 
 sidebar.addEventListener("transitionend", function (e) {
@@ -79,11 +77,7 @@ openBtn.addEventListener("click", function () {
   sidebar.classList.toggle("open");
   openBtn.classList.toggle("is-hidden");
 
-  if (sidebar.classList.contains("open")) {
-    fetchAndRenderLatestChangelog();
-  } else {
-    changelog.innerHTML = "";
-  }
+
 });
 
 closeBtn.addEventListener("click", closeSidebar);
@@ -470,4 +464,22 @@ const backupBtn = document.getElementById("backup_button");
         });
     });
   }
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const title = document.querySelector(".settings-title");
+  if (!title) return;
+
+  document.addEventListener(
+    "scroll",
+    function (e) {
+      const scroller = e.target;
+      if (scroller.contains && scroller.contains(title)) {
+        title.classList.toggle("scrolled", scroller.scrollTop > 0);
+      }
+    },
+    true // capture: catches scroll events from any element
+  );
 });
