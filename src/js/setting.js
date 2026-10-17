@@ -472,14 +472,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const title = document.querySelector(".settings-title");
   if (!title) return;
 
-  document.addEventListener(
-    "scroll",
-    function (e) {
-      const scroller = e.target;
-      if (scroller.contains && scroller.contains(title)) {
-        title.classList.toggle("scrolled", scroller.scrollTop > 0);
-      }
-    },
-    true // capture: catches scroll events from any element
-  );
+  // Cache the scrollable parent instead of re-checking on every event
+  const scroller = title.closest(".sidebar") ?? title.parentElement;
+  if (!scroller) return;
+
+  let ticking = false;
+
+  scroller.addEventListener("scroll", function () {
+    if (ticking) return;           // drop frames that arrive before rAF fires
+    ticking = true;
+    requestAnimationFrame(() => {
+      title.classList.toggle("scrolled", scroller.scrollTop > 0);
+      ticking = false;
+    });
+  }, { passive: true });           // passive: true lets the browser scroll without waiting
 });
