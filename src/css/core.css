@@ -6,13 +6,6 @@
                                                */
 
 /* ==========================================
-   IMPORTS
-   ========================================== */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css";
-@import url("./bulma.min.css");
-
-/* ==========================================
    BASE STYLES
    ========================================== */
 html,
@@ -64,62 +57,8 @@ body {
   font-family: var(--time-font-family, inherit);
   font-weight: var(--time-font-weight, 700);
   font-size: 6rem;
-  opacity: var(--time-opacity, 1);
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
-/* ---------- Glass slider ---------- */
-.glass-range {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 20px;              /* same as thumb, so nothing overflows */
-  background: transparent;   /* the track is styled below */
-  outline: none;
-  cursor: pointer;
-}
-
-/* Chrome / Safari / Edge track */
-.glass-range::-webkit-slider-runnable-track {
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-/* Firefox track */
-.glass-range::-moz-range-track {
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.glass-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  margin-top: -6px;          /* centers the thumb on the 10px track */
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.glass-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.glass-range:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.6);
-  outline-offset: 4px;
-  border-radius: 999px;
-}
-
 @supports (color: color-mix(in srgb, red, blue)) and
   ((-webkit-background-clip: text) or (background-clip: text)) {
   .time.glass {
@@ -253,7 +192,6 @@ body {
 
 table {
   border-radius: var(--bulma-radius) !important;
-  backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.795);
 }
 

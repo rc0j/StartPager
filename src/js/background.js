@@ -10,7 +10,6 @@ const imageUrlInput = document.querySelector("#image_url");
 const processingBg = document.querySelector(".processing_bg");
 const background_body = document.querySelector("body");
 const inputFile = document.getElementById("imageupload");
-const copyBgUrlBtn = document.querySelector("#copy-backgroundurl");
 
 // ─── Shared IndexedDB helper ───────────────────────────────────────────────
 window.idb = {
@@ -113,6 +112,14 @@ function savePaletteAndApply(palette) {
   }
 }
 
+let currentBgObjectUrl = null;
+
+function showBackgroundBlob(blob) {
+  if (currentBgObjectUrl) URL.revokeObjectURL(currentBgObjectUrl);
+  currentBgObjectUrl = URL.createObjectURL(blob);
+  background_body.style.backgroundImage = `url(${currentBgObjectUrl})`;
+}
+
 /**
  * Loads an image (from a URL string or a File/Blob from an <input>),
  * downsizes it onto a canvas, stores the result in IndexedDB, computes the
@@ -162,8 +169,7 @@ function processImageSource(source, successMessage) {
       try {
         await window.idb.set("background", blob);
         localStorage.removeItem("image_url");
-        const blobUrl = URL.createObjectURL(blob);
-        background_body.style.backgroundImage = `url(${blobUrl})`;
+        showBackgroundBlob(blob);
         savePaletteAndApply(palette);
         processingBg.className = "notification is-success";
         processingBg.innerHTML = successMessage;
@@ -182,11 +188,33 @@ function processImageSource(source, successMessage) {
 
   img.onerror = function () {
     if (tempObjectUrl) URL.revokeObjectURL(tempObjectUrl);
-    processingBg.className = "notification is-danger is-light";
-    processingBg.innerHTML = "Failed to load the image. Please ensure it is a valid file or link.";
+    if (isRemoteUrl) {
+      tryLiveLink(source);
+    } else {
+      showImageLoadError();
+    }
   };
 
   img.src = tempObjectUrl || source;
+}
+
+function showImageLoadError() {
+  processingBg.className = "notification is-danger is-light";
+  processingBg.innerHTML = "Failed to load the image. Please ensure it is a valid file or link.";
+}
+
+// Sites without CORS headers can't be cached, but the image can still be
+// displayed straight from the link.
+function tryLiveLink(url) {
+  const img = new Image();
+  img.onload = () => {
+    fallbackToUrl(url);
+    localStorage.removeItem("bgPalette"); // can't read the pixels, so no accent color
+    processingBg.className = "notification is-warning";
+    processingBg.innerHTML = "This site doesn't allow caching. Using a live network link instead.";
+  };
+  img.onerror = showImageLoadError;
+  img.src = url;
 }
 
 function fallbackToUrl(url) {
@@ -239,8 +267,7 @@ inputFile.addEventListener("change", (event) => {
   try {
     const blob = await window.idb.get("background");
     if (blob) {
-      const blobUrl = URL.createObjectURL(blob);
-      background_body.style.backgroundImage = `url(${blobUrl})`;
+      showBackgroundBlob(blob);
       return;
     }
   } catch (e) {
@@ -282,8 +309,6 @@ document.querySelector("#delete_custom_image").addEventListener("click", async (
       // ignore
     }
     background_body.style.backgroundImage = "";
-    imageUrlInput.style.width = "100%";
-    if (copyBgUrlBtn) copyBgUrlBtn.style.display = "none";
     processingBg.className = "notification is-success";
     processingBg.innerHTML =
       "Background image has been removed, please reload the page to see this change in effect...";
@@ -312,6 +337,8 @@ randomPicsumBtn.addEventListener("click", async () => {
 
     if (!response.ok) throw new Error("Network request failed");
 
+    // Only the redirected URL is needed; don't download the image twice
+    response.body?.cancel();
     const imageUrl = response.url;
     processImageSource(imageUrl, "Background updated successfully and cached locally.");
   } catch (error) {

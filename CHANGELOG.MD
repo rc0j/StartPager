@@ -1,5 +1,35 @@
 # Changelog
 
+## [Version 7.88.13]
+##  As usual, this release includes several optimizations fixes made with the help of Claude.
+- Added non-blocking loading for Google Fonts and Font Awesome, the new tab no longer waits on them to appear.
+- Added preconnect hints for font and icon CDNs.
+
+## Fixes
+- Fixed random background downloading the image twice.
+- Fixed shortcut icons bar rendering twice per change.
+- Fixed drop indicator being rebuilt on every pointer move when dragging shortcuts.
+- Fixed favicon fallback never running in the extension.
+- Fixed clock running up to a second late and drifting over time.
+- Fixed clock being out of date when returning to a hidden tab.
+- Fixed replaced background images staying in memory.
+- Fixed time font setting being rewritten on every load.
+- Fixed invalid markup in the settings sidebar.
+- Fixed Shift+S not opening settings.
+- Fixed custom shortcuts firing together with browser shortcuts like Cmd+T.
+- Fixed restore showing a success message for corrupted backups.
+- Fixed restore wiping all settings when given a JSON file that isn't a backup.
+- Fixed background URLs failing on sites that block caching, they now use a live link.
+- Fixed username field being empty after a reload.
+- Fixed username not being removable, and the greeting showing "Good evening, ." without one.
+- Removed lazy loading from shortcut favicons.
+- Removed `backdrop-filter` from settings tables.
+- Removed favicon URL cache.
+- Removed unused glass slider styles, white font and vintage font options, and hidden copy background button.
+- Removed duplicate `showNotification` function.
+- Moved drag-and-drop styles from JS into `settings.css`.
+
+
 ## [Version 7.88.12/7.88.12.1]
 This feature have been in the works for a while, very much a beta/testing we will see how it goes.
 
