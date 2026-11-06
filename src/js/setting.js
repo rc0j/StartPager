@@ -74,10 +74,13 @@ sidebar.addEventListener("transitionend", function (e) {
 });
 
 openBtn.addEventListener("click", function () {
-  sidebar.classList.toggle("open");
-  openBtn.classList.toggle("is-hidden");
-
-
+  // Shift+S can land here while the sidebar is already open
+  if (sidebar.classList.contains("open")) {
+    closeSidebar();
+    return;
+  }
+  sidebar.classList.add("open");
+  openBtn.classList.add("is-hidden");
 });
 
 closeBtn.addEventListener("click", closeSidebar);
@@ -88,29 +91,10 @@ document.addEventListener("click", function (event) {
   }
 });
 
-function applyWhiteFontColor(isWhite) {
-  document.documentElement.classList.toggle("white-font", !!isWhite);
-}
-
 function applyTimeFontSize(size) {
   const timeElement = document.getElementById("time");
   if (timeElement) {
     timeElement.style.fontSize = size;
-  }
-}
-
-function applyTimeFontStyle(isItalicVintage) {
-  const timeElement = document.getElementById("time");
-  if (timeElement) {
-    if (isItalicVintage) {
-      timeElement.style.fontFamily =
-        "'Playfair Display', 'Baskerville', 'Garamond', serif";
-      timeElement.style.fontWeight = "900";
-    } else {
-      timeElement.style.fontStyle = "";
-      timeElement.style.fontFamily = "";
-      timeElement.style.fontWeight = "";
-    }
   }
 }
 
@@ -126,24 +110,6 @@ function applyManualDarken() {
     body.style.backgroundColor = "transparent";
     body.style.backgroundBlendMode = "normal";
   }
-}
-
-function showNotification(message, type = "is-primary") {
-  document.querySelectorAll(".custom-notification").forEach((n) => n.remove());
-  const notif = Object.assign(document.createElement("div"), {
-    className: `notification custom-notification ${type}`,
-    innerText: message,
-  });
-  Object.assign(notif.style, {
-    position: "fixed",
-    bottom: "20px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    zIndex: "1000",
-    minWidth: "200px",
-  });
-  document.body.appendChild(notif);
-  setTimeout(() => notif.remove(), 1800);
 }
 
 // Backup all localStorage (+ the IndexedDB background image, base64-encoded) to a JSON file
@@ -190,52 +156,37 @@ async function backupLocalStorage() {
   }
 }
 
+// Every backup has at least one of these, old flat backups included
+const BACKUP_KEYS = ["welcomeShown", "user", "customShortcuts", "image_url", "darkenBgAtNight"];
+
+function isValidBackup(kvStore) {
+  if (!kvStore || typeof kvStore !== "object" || Array.isArray(kvStore)) return false;
+  const hasKnownKey = Object.keys(kvStore).some((key) => BACKUP_KEYS.includes(key));
+  return hasKnownKey && Object.values(kvStore).every((value) => typeof value === "string");
+}
+
 // Restore localStorage (+ background image, if present) from a JSON file
-function restoreLocalStorage(file) {
-  const reader = new FileReader();
-  reader.onload = async function (e) {
+async function restoreLocalStorage(file) {
+  const backup = JSON.parse(await file.text());
+  const kvStore = backup.__localStorage || backup; // support older flat backups too
+
+  // Check before clearing anything, so a wrong file can't wipe the user's data
+  if (!isValidBackup(kvStore)) throw new Error("Not a StartPager backup");
+
+  localStorage.clear();
+  for (const [key, value] of Object.entries(kvStore)) {
+    localStorage.setItem(key, value);
+  }
+
+  if (backup.__backgroundImageBase64 && window.idb) {
     try {
-      const backup = JSON.parse(e.target.result);
-      const kvStore = backup.__localStorage || backup; // support older flat backups too
-
-      localStorage.clear();
-      for (const [key, value] of Object.entries(kvStore)) {
-        localStorage.setItem(key, value);
-      }
-
-      if (backup.__backgroundImageBase64 && window.idb) {
-        try {
-          const res = await fetch(backup.__backgroundImageBase64);
-          const blob = await res.blob();
-          await window.idb.set("background", blob);
-        } catch (e) {
-          // Background restore is best-effort
-        }
-      }
-
-      showNotification(
-        "Welcome back! Data restored successfully! Refreshing page..",
-        "is-success is-light",
-      );
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-    } catch (error) {
-      console.error("Restore failed:", error);
-      showNotification(
-        "Invalid backup file. Please select a valid JSON backup.",
-        "is-danger is-light",
-      );
+      const res = await fetch(backup.__backgroundImageBase64);
+      const blob = await res.blob();
+      await window.idb.set("background", blob);
+    } catch (e) {
+      // Background restore is best-effort
     }
-  };
-  reader.onerror = function () {
-    showNotification(
-      "Failed to read file. Please try again.",
-      "is-danger is-light",
-    );
-  };
-  reader.readAsText(file);
+  }
 }
 
 // ─── Single consolidated init block ───────────────────────────────────────────
@@ -351,18 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".modal-close").addEventListener("click", closeModal);
   }
 
-  // White font color toggle
-  const whiteFontToggle = document.getElementById("toggle-white-font");
-  if (whiteFontToggle) {
-    const isWhite = localStorage.getItem("whiteFontColor") === "true";
-    whiteFontToggle.checked = isWhite;
-    applyWhiteFontColor(isWhite);
-    whiteFontToggle.addEventListener("change", function () {
-      localStorage.setItem("whiteFontColor", this.checked);
-      applyWhiteFontColor(this.checked);
-    });
-  }
-
   // Time font size slider
   const timeFontSizeInput = document.getElementById("time-font-size");
   const timeFontSizeValue = document.getElementById("time-font-size-value");
@@ -377,20 +316,6 @@ document.addEventListener("DOMContentLoaded", function () {
       timeFontSizeValue.textContent = fontSize;
       localStorage.setItem("timeFontSize", fontSize);
       applyTimeFontSize(fontSize);
-    });
-  }
-
-  // Time font style (italic/vintage) toggle
-  const timeFontStyleToggle = document.getElementById("toggle-time-font-style");
-  if (timeFontStyleToggle) {
-    const isItalicVintage = localStorage.getItem("timeFontStyleItalicVintage") === "true";
-    timeFontStyleToggle.checked = isItalicVintage;
-    applyTimeFontStyle(isItalicVintage);
-
-    timeFontStyleToggle.addEventListener("change", function () {
-      const isChecked = this.checked;
-      localStorage.setItem("timeFontStyleItalicVintage", isChecked);
-      applyTimeFontStyle(isChecked);
     });
   }
 
@@ -448,9 +373,10 @@ const backupBtn = document.getElementById("backup_button");
       const originalLabel = restoreBtn.innerHTML;
       restoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Restoring...';
 
-      Promise.resolve(restoreLocalStorage(file))
+      restoreLocalStorage(file)
         .then(() => {
-          showNotification("Backup restored successfully.", "is-success is-light");
+          showNotification("Welcome back! Data restored successfully! Refreshing page..", "is-success is-light");
+          setTimeout(() => window.location.reload(), 2000);
         })
         .catch((err) => {
           showNotification("Failed to restore backup: invalid or corrupted file.", "is-danger is-light");

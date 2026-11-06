@@ -46,13 +46,6 @@
   backdrop-filter: blur(6px);
 }
 
-.sidebar-trigger {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #00d1b2;
-}
-
 .setting-content {
   padding: 20px 16px;
   margin-top: -50px;
@@ -217,20 +210,38 @@
   border-bottom: none;
 }
 
-/* Message Styling */
-.settings-card .message {
-  border-radius: 8px;
+/* Shortcut drag-and-drop */
+.drag-handle {
+  cursor: grab;
+  padding: 0 8px;
+  color: #b5b5b5;
+  display: inline-block;
+  touch-action: none;
+  user-select: none;
 }
 
-.settings-card .message.is-warning {
-  background-color: rgba(255, 224, 138, 0.2);
+.drag-handle:hover {
+  color: #7a7a7a;
 }
 
-.settings-card .message-body {
-  border: none;
-  padding: 12px;
-  font-size: 13px;
-  border-radius: 8px;
+.dragging-source {
+  opacity: 0.25 !important;
+}
+
+.drop-indicator td {
+  height: 3px !important;
+  background: #48c78e !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.shortcut-row.flash {
+  animation: spRowFlash 0.5s ease;
+}
+
+@keyframes spRowFlash {
+  0%   { background-color: rgba(72, 199, 142, 0.25); }
+  100% { background-color: transparent; }
 }
 
 /* Close Button */

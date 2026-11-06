@@ -39,26 +39,26 @@ function getSiteName(url) {
   }
 }
 
-function getFavicon(url) {
-  try {
-    const u = new URL(url);
-    return `${u.protocol}//${u.hostname}/favicon.ico`;
-  } catch {
-    return "";
-  }
-}
-
-/* ─── Favicon cache ───────────────────────────────────────────────────────── */
-
-let faviconCacheSaveTimer = null;
-function scheduleFaviconCacheSave(cache) {
-  clearTimeout(faviconCacheSaveTimer);
-  faviconCacheSaveTimer = setTimeout(() => {
-    localStorage.setItem("shortcutIconCache", JSON.stringify(cache));
-  }, 300);
-}
-
 /* ─── Icon bar ────────────────────────────────────────────────────────────── */
+
+const GENERIC_ICON_HTML = '<span class="icon is-medium mr-2"><i class="fa-solid fa-link"></i></span>';
+
+function faviconHtml(url) {
+  let domain = "";
+  try {
+    domain = new URL(url).hostname;
+  } catch {
+    domain = url;
+  }
+
+  const iconSrc = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`;
+  const fallbackSrc = `https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico`;
+
+  return `
+        <figure class="image is-32x32 mr-2 mb-0">
+          <img class="shortcut-favicon" src="${escapeHtml(iconSrc)}" alt="" decoding="async" data-fallback="${escapeHtml(fallbackSrc)}">
+        </figure>`;
+}
 
 function renderShortcutIconsBar() {
   if (!shortcutBarNode) return;
@@ -76,64 +76,16 @@ function renderShortcutIconsBar() {
   shortcutBarNode.style.display = "flex";
   const limited = shortcuts.slice(0, 8);
 
-  if (useGeneric) {
-    shortcutBarNode.innerHTML = limited
-      .map((item) => {
-        const name = escapeHtml(getSiteName(item.url));
-        return `
-        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${escapeHtml(item.url)}">
-          <span class="icon is-medium mr-2"><i class="fa-solid fa-link"></i></span>
-          <span class="has-text-weight-medium">${name}</span>
-        </button>`;
-      })
-      .join("");
-  } else {
-    let cache = {};
-    try {
-      cache = JSON.parse(localStorage.getItem("shortcutIconCache") || "{}");
-    } catch {
-      cache = {};
-    }
-
-    shortcutBarNode.innerHTML = limited
-      .map((item) => {
-        const name = escapeHtml(getSiteName(item.url));
-        let domain = "";
-        try {
-          domain = new URL(item.url).hostname;
-        } catch {
-          domain = item.url;
-        }
-
-        const cacheKey = `favicon:${domain}`;
-        const iconSrc =
-          cache[cacheKey] ||
-          `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`;
-
-        return `
-        <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${escapeHtml(item.url)}">
-          <figure class="image is-32x32 mr-2 mb-0">
-            <img class="shortcut-favicon"
-                 src="${escapeHtml(iconSrc)}"
-                 alt="" loading="lazy" decoding="async"
-                 data-domain="${escapeHtml(domain)}"
-                 onerror="if(this.dataset.fallback!='1'){this.dataset.fallback='1';this.src='https://icons.duckduckgo.com/ip3/${encodeURIComponent(domain)}.ico';}else{this.style.display='none';}">
-          </figure>
-          <span class="has-text-weight-medium">${name}</span>
-        </button>`;
-      })
-      .join("");
-
-    shortcutBarNode.querySelectorAll(".shortcut-favicon").forEach((img) => {
-      img.onload = () => {
-        const domain = img.getAttribute("data-domain");
-        if (domain && !cache[`favicon:${domain}`] && img.dataset.fallback !== "1") {
-          cache[`favicon:${domain}`] = img.src;
-          scheduleFaviconCacheSave(cache);
-        }
-      };
-    });
-  }
+  shortcutBarNode.innerHTML = limited
+    .map((item) => {
+      const name = escapeHtml(getSiteName(item.url));
+      return `
+      <button type="button" class="shortcut-icon button is-flex is-align-items-center is-rounded has-shadow mx-1 px-3 py-2" style="gap:0.75em;" data-url="${escapeHtml(item.url)}">
+        ${useGeneric ? GENERIC_ICON_HTML : faviconHtml(item.url)}
+        <span class="has-text-weight-medium">${name}</span>
+      </button>`;
+    })
+    .join("");
 }
 
 (function setupShortcutBarClickHandler() {
@@ -145,11 +97,25 @@ function renderShortcutIconsBar() {
       if (url) window.open(url, "_blank");
     }
   });
+
+  // Delegated, because the extension CSP blocks inline onerror attributes.
+  // Image errors don't bubble, so this has to listen in the capture phase.
+  shortcutBarNode.addEventListener("error", (e) => {
+    const img = e.target;
+    if (!img.classList.contains("shortcut-favicon")) return;
+    if (img.dataset.fallback) {
+      img.src = img.dataset.fallback;
+      delete img.dataset.fallback;
+    } else {
+      img.style.display = "none";
+    }
+  }, true);
 })();
 
 /* ─── Notifications ───────────────────────────────────────────────────────── */
 
-function showNotification(message, type = "is-primary") {
+// Global so setting.js can share it, same as window.idb
+window.showNotification = function showNotification(message, type = "is-primary") {
   document.querySelectorAll(".custom-notification").forEach((n) => n.remove());
   const notif = Object.assign(document.createElement("div"), {
     className: `notification custom-notification ${type}`,
@@ -165,7 +131,7 @@ function showNotification(message, type = "is-primary") {
   });
   document.body.appendChild(notif);
   setTimeout(() => notif.remove(), 1800);
-}
+};
 
 /* ─── Add / Edit modal ────────────────────────────────────────────────────── */
 
@@ -258,29 +224,13 @@ function showCustomShortcutModal({ key = "", url = "", idx = null } = {}) {
 
 document.getElementById("open-custom-shortcut-modal").onclick = showCustomShortcutModal;
 
-/* ─── Drag-and-drop styles ────────────────────────────────────────────────── */
-
-(function injectDragStyles() {
-  if (document.getElementById("sp-drag-styles")) return;
-  const s = document.createElement("style");
-  s.id = "sp-drag-styles";
-  s.textContent = `
-    .drag-handle { cursor: grab; padding: 0 8px; color: #b5b5b5; display: inline-block; touch-action: none; user-select: none; }
-    .drag-handle:hover { color: #7a7a7a; }
-    .dragging-source { opacity: 0.25 !important; }
-    .drop-indicator td { height: 3px !important; background: #48c78e !important; padding: 0 !important; border: none !important; }
-    .shortcut-row.flash { animation: spRowFlash 0.5s ease; }
-    @keyframes spRowFlash {
-      0%   { background-color: rgba(72, 199, 142, 0.25); }
-      100% { background-color: transparent; }
-    }
-  `;
-  document.head.appendChild(s);
-})();
-
 /* ─── Drag-and-drop state ─────────────────────────────────────────────────── */
 
 let dragState = null;
+
+const dropIndicator = document.createElement("tr");
+dropIndicator.className = "drop-indicator";
+dropIndicator.innerHTML = '<td colspan="3"></td>';
 
 // Selector for "real" shortcut rows — excludes both the row currently being
 // dragged AND any leftover drop-indicator row.
@@ -387,8 +337,7 @@ function onPointerMove(e) {
   dragState.moved = true;
   moveProxy(e);
 
-  const { tbody, row } = dragState;
-  document.querySelectorAll(".drop-indicator").forEach((el) => el.remove());
+  const { tbody } = dragState;
 
   const rows = Array.from(tbody.querySelectorAll(REAL_ROW_SELECTOR));
 
@@ -401,34 +350,33 @@ function onPointerMove(e) {
     }
   }
 
-  const indicator = document.createElement("tr");
-  indicator.className = "drop-indicator";
-  indicator.innerHTML = '<td colspan="3" style="height:3px;background:#48c78e;padding:0;border:none;"></td>';
-  if (insertBefore) {
-    tbody.insertBefore(indicator, insertBefore);
-  } else {
-    tbody.appendChild(indicator);
+  // Only touch the DOM when the drop target changes, not on every pointer move
+  if (!dropIndicator.isConnected || insertBefore !== dragState.insertBefore) {
+    tbody.insertBefore(dropIndicator, insertBefore);
+    dragState.insertBefore = insertBefore;
   }
+}
 
-  dragState.insertBefore = insertBefore;
+function endDrag() {
+  dragState.proxy.remove();
+  dropIndicator.remove();
+  document.body.style.cursor = "";
+  document.removeEventListener("pointermove", onPointerMove);
+  document.removeEventListener("pointerup", onPointerUp);
+  document.removeEventListener("pointercancel", onPointerUp);
+  dragState = null;
 }
 
 function onPointerUp(e) {
   if (!dragState) return;
 
-  const { row, proxy, startIdx, tbody, insertBefore, moved } = dragState;
+  const { row, startIdx, tbody, insertBefore, moved } = dragState;
 
-  proxy.remove();
-  document.querySelectorAll(".drop-indicator").forEach((el) => el.remove());
+  endDrag();
 
   // If the pointer never moved, do nothing — don't touch order or storage.
   if (!moved) {
     row.classList.remove("dragging-source");
-    document.body.style.cursor = "";
-    document.removeEventListener("pointermove", onPointerMove);
-    document.removeEventListener("pointerup", onPointerUp);
-    document.removeEventListener("pointercancel", onPointerUp);
-    dragState = null;
     return;
   }
 
@@ -445,7 +393,6 @@ function onPointerUp(e) {
   }
 
   row.classList.remove("dragging-source");
-  document.body.style.cursor = "";
 
   if (newIdx !== startIdx) {
     const list = getCustomShortcuts();
@@ -458,12 +405,6 @@ function onPointerUp(e) {
   }
 
   updateRowIndices(tbody);
-  renderShortcutIconsBar();
-
-  document.removeEventListener("pointermove", onPointerMove);
-  document.removeEventListener("pointerup", onPointerUp);
-  document.removeEventListener("pointercancel", onPointerUp);
-  dragState = null;
 }
 
 function updateRowIndices(tbody) {
@@ -478,15 +419,7 @@ function renderCustomShortcuts() {
   if (!shortcutListContainer) return;
 
   // Abort any active drag so we don't leave ghost elements behind
-  if (dragState) {
-    dragState.proxy.remove();
-    document.querySelectorAll(".drop-indicator").forEach((el) => el.remove());
-    document.removeEventListener("pointermove", onPointerMove);
-    document.removeEventListener("pointerup", onPointerUp);
-    document.removeEventListener("pointercancel", onPointerUp);
-    dragState = null;
-    document.body.style.cursor = "";
-  }
+  if (dragState) endDrag();
 
   const list = getCustomShortcuts();
 
@@ -515,7 +448,6 @@ function renderCustomShortcuts() {
     .join("");
   table += `</tbody></table>`;
   shortcutListContainer.innerHTML = table;
-  renderShortcutIconsBar();
 }
 
 /* ─── Storage ─────────────────────────────────────────────────────────────── */
@@ -554,6 +486,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  renderShortcutIconsBar();
   renderCustomShortcuts();
 });
 
@@ -563,9 +496,11 @@ document.addEventListener("keydown", function (event) {
   const tag = document.activeElement.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA" || document.activeElement.isContentEditable) return;
 
+  // Leave browser shortcuts like Cmd+T or Ctrl+L alone
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+
   if (event.shiftKey && event.key === "S") {
-    const sidebar = document.querySelector(".sidebar-trigger");
-    if (sidebar) sidebar.click();
+    document.getElementById("open_settings").click();
     return;
   }
 

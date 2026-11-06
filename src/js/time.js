@@ -29,22 +29,25 @@ const determineGreet = (forceUpdate = false) => {
   if (greeting !== lastGreetingPeriod || forceUpdate) {
     lastGreetingPeriod = greeting;
     const user = localStorage.getItem("user") || "";
-    greetingsNode.innerText = `Good ${greeting}, ${user}.`;
+    greetingsNode.innerText = user ? `Good ${greeting}, ${user}.` : `Good ${greeting}.`;
   }
 };
 
 // ─── Time and date ────────────────────────────────────────────────────────────
 
+let lastTimeString = "";
 let lastDateString = "";
 
 const updateTimeAndDate = () => {
   const date = new Date();
 
   // 1. Update Time Component (Every minute)
-  if (timeNode) {
-    const hour = date.getHours().toString().padStart(2, "0");
-    const min = date.getMinutes().toString().padStart(2, "0");
-    timeNode.innerHTML = `${hour}<span>:</span>${min}`;
+  const hour = date.getHours().toString().padStart(2, "0");
+  const min = date.getMinutes().toString().padStart(2, "0");
+  const currentTime = `${hour}<span>:</span>${min}`;
+  if (currentTime !== lastTimeString && timeNode) {
+    lastTimeString = currentTime;
+    timeNode.innerHTML = currentTime;
   }
 
   // 2. Update Date Component (Only if day changes)
@@ -67,31 +70,33 @@ const updateTimeAndDate = () => {
 const scheduleUpdate = () => {
   updateTimeAndDate();
 
-  // Calculate exact milliseconds left to sync loop with system minute tick exactly
-  const delay = (60 - new Date().getSeconds()) * 1000;
-
-  setTimeout(() => {
-    updateTimeAndDate();
-    setInterval(updateTimeAndDate, 60000);
-  }, delay);
+  // Re-sync to the system minute on every tick so timer drift can't build up
+  const now = new Date();
+  setTimeout(scheduleUpdate, 60000 - now.getSeconds() * 1000 - now.getMilliseconds());
 };
 
 // Initialize clock tree
 scheduleUpdate();
 
+// Timers are throttled in hidden tabs, so catch up as soon as the tab is shown
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) updateTimeAndDate();
+});
+
 // ─── Username ─────────────────────────────────────────────────────────────────
 
 if (usernameInput) {
+  usernameInput.value = localStorage.getItem("user") || "";
+
   usernameInput.addEventListener("input", () => {
     const username = usernameInput.value.trim().substring(0, 20);
 
     if (username) {
       localStorage.setItem("user", username);
-      determineGreet(true); // Force domestic string rebuild
-      usernameInput.classList.replace("is-danger", "is-success");
     } else {
-      usernameInput.classList.replace("is-success", "is-danger");
+      localStorage.removeItem("user");
     }
+    determineGreet(true); // Force domestic string rebuild
   });
 }
 
@@ -222,8 +227,12 @@ function applyTimeFont(name) {
     document.documentElement.style.removeProperty("--time-font-family");
   }
   fontSelect.value = font.name;
+}
+
+function selectTimeFont(name) {
+  applyTimeFont(name);
   try {
-    localStorage.setItem("time-font-family", font.name);
+    localStorage.setItem("time-font-family", name);
   } catch (e) {}
 }
 
@@ -243,14 +252,14 @@ if (fontSelect && randomFontBtn) {
   } catch (e) {}
   applyTimeFont(saved || "Default");
 
-  fontSelect.addEventListener("change", () => applyTimeFont(fontSelect.value));
+  fontSelect.addEventListener("change", () => selectTimeFont(fontSelect.value));
 
   randomFontBtn.addEventListener("click", () => {
     const choices = TIME_FONTS.filter(
       (f) => f.family && f.name !== fontSelect.value
     );
     const pick = choices[Math.floor(Math.random() * choices.length)];
-    applyTimeFont(pick.name);
+    selectTimeFont(pick.name);
   });
 }
 
